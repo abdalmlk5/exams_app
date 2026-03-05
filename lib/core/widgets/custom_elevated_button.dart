@@ -21,7 +21,7 @@ class CustomElevatedButton extends StatelessWidget {
         onTap: isError ? null : onTap,
         child: Container(
           decoration: BoxDecoration(
-            color: isError ? AppColors.gray30 : AppColors.primary,
+            color: isError ? AppColors.black30 : AppColors.primary,
             borderRadius: BorderRadius.circular(100),
           ),
           width: double.infinity,
