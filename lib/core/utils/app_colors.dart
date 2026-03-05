@@ -15,11 +15,11 @@ class AppColors {
   static const Color blue100 = Color(0xFF000B1F);
 
   // Black/Gray Palette
-  static const Color gray10 = Color(0xFFCFCFCF);
-  static const Color gray20 = Color(0xFFAFAFAF);
-  static const Color gray30 = Color(0xFF878787);
-  static const Color gray40 = Color(0xFF5F5F5F);
-  static const Color gray50 = Color(0xFF373737);
+  static const Color black10 = Color(0xFFCFCFCF);
+  static const Color black20 = Color(0xFFAFAFAF);
+  static const Color black30 = Color(0xFF878787);
+  static const Color black40 = Color(0xFF5F5F5F);
+  static const Color black50 = Color(0xFF373737);
   static const Color black = Color(0xFF0F0F0F); // BASE
   static const Color black60 = Color(0xFF0D0D0D);
   static const Color black70 = Color(0xFF0A0A0A);
