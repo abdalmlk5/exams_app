@@ -1,7 +1,10 @@
+import 'package:exams_app/config/di/di.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  configureDependencies();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
