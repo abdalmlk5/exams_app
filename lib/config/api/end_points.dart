@@ -2,12 +2,14 @@ class EndPoints {
   EndPoints._();
 
   // Base URL:
-  static const String baseUrl = "https://y ts.mx/api/v2";
+  static const String baseUrl = "https://exam.elevateegy.com/api/v1";
 
   // API EndPoints:
-  static const String listMovies = "$baseUrl/list_movies";
+  static const String signin = "$baseUrl/auth/signin";
 
-  static const String movieDetails = "$baseUrl/movie_details";
+  static const String register = "$baseUrl/auth/signup";
 
-  static const String movieSuggestions = "$baseUrl/movie_suggestions";
+  static const String logout = "$baseUrl/auth/logout";
+
+  static const String profileData = "$baseUrl/auth/profileData";
 }
