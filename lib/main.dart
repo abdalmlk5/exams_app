@@ -1,5 +1,4 @@
 import 'package:exams_app/config/di/di.dart';
-import 'package:exams_app/core/utils/app_colors.dart';
 import 'package:exams_app/features/authentication/presentation/auth/cubit/auth_cubit.dart';
 import 'package:exams_app/features/authentication/presentation/auth/pages/auth_page.dart';
 import 'package:exams_app/features/authentication/presentation/login/cubit/login_cubit.dart';
@@ -27,15 +26,6 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-            scaffoldBackgroundColor: AppColors.white,
-            snackBarTheme: const SnackBarThemeData(
-              behavior: SnackBarBehavior.floating,
-              backgroundColor: Colors.redAccent,
-              contentTextStyle: TextStyle(color: Colors.white),
-            ),
-          ),
           home: MultiBlocProvider(
             providers: [
               BlocProvider(create: (_) => getIt<LoginCubit>()),

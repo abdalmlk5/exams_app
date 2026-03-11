@@ -1,4 +1,5 @@
 import 'package:exams_app/config/validations/app_validations.dart';
+import 'package:exams_app/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class AppTextField extends StatefulWidget {
@@ -38,17 +39,17 @@ class _AppTextFieldState extends State<AppTextField> {
         hintText: widget.fieldType.hint,
         labelStyle: WidgetStateTextStyle.resolveWith((states) {
           if (states.contains(WidgetState.error)) {
-            return const TextStyle(color: Colors.red);
+            return const TextStyle(color: AppColors.error);
           }
-          return const TextStyle(color: Colors.grey);
+          return const TextStyle(color: AppColors.black30);
         }),
-        errorStyle: const TextStyle(color: Colors.red),
+        errorStyle: const TextStyle(color: AppColors.error),
 
-        border: _border(Colors.grey),
-        enabledBorder: _border(Colors.grey),
+        border: _border(AppColors.black30),
+        enabledBorder: _border(AppColors.black30),
         focusedBorder: _border(Theme.of(context).colorScheme.primary, 2),
-        errorBorder: _border(Colors.red),
-        focusedErrorBorder: _border(Colors.red, 2),
+        errorBorder: _border(AppColors.error),
+        focusedErrorBorder: _border(AppColors.error, 2),
       ),
     );
   }
