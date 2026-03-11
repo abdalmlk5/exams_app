@@ -1,5 +1,4 @@
 import 'package:exams_app/config/validations/app_validations.dart';
-import 'package:exams_app/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class AppTextField extends StatefulWidget {
@@ -32,19 +31,24 @@ class _AppTextFieldState extends State<AppTextField> {
       keyboardType: widget.fieldType.textInputType,
       onChanged: widget.onChanged,
       validator: _validate,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
         floatingLabelBehavior: FloatingLabelBehavior.always,
         labelText: widget.fieldType.label,
         hintText: widget.fieldType.hint,
-
-        labelStyle: const TextStyle(color: Colors.grey),
+        labelStyle: WidgetStateTextStyle.resolveWith((states) {
+          if (states.contains(WidgetState.error)) {
+            return const TextStyle(color: Colors.red);
+          }
+          return const TextStyle(color: Colors.grey);
+        }),
         errorStyle: const TextStyle(color: Colors.red),
 
-        border: _border(AppColors.gray),
+        border: _border(Colors.grey),
         enabledBorder: _border(Colors.grey),
         focusedBorder: _border(Theme.of(context).colorScheme.primary, 2),
-        errorBorder: _border(AppColors.error),
-        focusedErrorBorder: _border(AppColors.error, 2),
+        errorBorder: _border(Colors.red),
+        focusedErrorBorder: _border(Colors.red, 2),
       ),
     );
   }
@@ -60,7 +64,7 @@ class _AppTextFieldState extends State<AppTextField> {
       case FieldType.email:
         return AppValidations.validateEmail(value);
       case FieldType.password:
-      case FieldType.currentPassword:
+        return AppValidations.validatePassword(value);
       case FieldType.newPassword:
         return AppValidations.validatePassword(value);
       case FieldType.confirmPassword:
@@ -85,13 +89,12 @@ class _AppTextFieldState extends State<AppTextField> {
 enum FieldType {
   email('Email', 'Enter your email', TextInputType.emailAddress),
   password('Password', 'Enter your password', TextInputType.text),
-  currentPassword('Current password', 'Current password', TextInputType.text),
   newPassword('New password', 'New password', TextInputType.text),
   confirmPassword('Confirm password', 'Confirm password', TextInputType.text),
   username('User name', 'Enter your user name', TextInputType.name),
-  phoneNumber('Phone Number', 'Enter your phone number', TextInputType.phone),
-  firstName('First name', 'Enter your first name', TextInputType.name),
-  lastName('Last name', 'Enter your last name', TextInputType.name),
+  phoneNumber('Phone Number', 'Enter phone number', TextInputType.phone),
+  firstName('First name', 'Enter first name', TextInputType.name),
+  lastName('Last name', 'Enter last name', TextInputType.name),
   none('', '', TextInputType.text);
 
   final String label;
