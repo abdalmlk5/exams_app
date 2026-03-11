@@ -1,8 +1,10 @@
 import 'package:exams_app/config/di/di.dart';
+import 'package:exams_app/core/utils/app_colors.dart';
 import 'package:exams_app/features/authentication/presentation/auth/cubit/auth_cubit.dart';
 import 'package:exams_app/features/authentication/presentation/auth/pages/auth_page.dart';
 import 'package:exams_app/features/authentication/presentation/login/cubit/login_cubit.dart';
 import 'package:exams_app/features/authentication/presentation/register/cubit/register_cubit.dart';
+import 'package:exams_app/main_page_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,7 +29,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             primarySwatch: Colors.blue,
-            scaffoldBackgroundColor: Colors.white,
+            scaffoldBackgroundColor: AppColors.white,
             snackBarTheme: const SnackBarThemeData(
               behavior: SnackBarBehavior.floating,
               backgroundColor: Colors.redAccent,
@@ -38,64 +40,44 @@ class MyApp extends StatelessWidget {
             providers: [
               BlocProvider(create: (_) => getIt<LoginCubit>()),
               BlocProvider(create: (_) => getIt<RegisterCubit>()),
-              BlocProvider(create: (_) => getIt<AuthCubit>()),
+              BlocProvider(create: (_) => getIt<AuthCubit>()..checkAuth()),
             ],
-            child: MultiBlocListener(
-              listeners: [
-                BlocListener<LoginCubit, LoginState>(
-                  listener: (context, state) {
-                    final error = state.loginState.errorMessage;
-                    if (error != null && error.isNotEmpty) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text(error)),
-                      );
-                    }
-
-                    if (state.loginState.data != null) {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                          builder: (_) => Scaffold(body: Center(child: Text("HOME PAGE"),),),
-                        ),
-                      );
-                    }
-                  },
-                ),
-
-                BlocListener<RegisterCubit, RegisterState>(
-                  listener: (context, state) {
-                    final error = state.registerState.errorMessage;
-                    if (error != null && error.isNotEmpty) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text(error)),
-                      );
-                    }
-
-                    if (state.registerState.data != null) {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                          builder: (_) => Scaffold(body: Center(child: Text("HOME PAGE"),),),
-                        ),
-                      );
-                    }
-                  },
-                ),
-
-                BlocListener<AuthCubit, AuthState>(
-                  listener: (context, state) {
-                    final error = state.authState.errorMessage;
-                    if (error != null && error.isNotEmpty) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text(error)),
-                      );
-                    }
-                  },
-                ),
-              ],
-              child: const AuthPage(),
-            ),
+            child: const AuthWrapper(),
           ),
         );
       },
     );
   }
-} 
+}
+
+/// Widget to handle authentication state and navigation
+class AuthWrapper extends StatelessWidget {
+  const AuthWrapper({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocListener<AuthCubit, AuthState>(
+      listener: (context, state) {
+        final error = state.authState.errorMessage;
+        if (error != null && error.isNotEmpty) {
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(error)));
+        }
+      },
+      child: BlocBuilder<AuthCubit, AuthState>(
+        builder: (context, state) {
+          if (state.authState.isLoading) {
+            return const Scaffold(
+              body: Center(child: CircularProgressIndicator()),
+            );
+          }
+          if (state.authState.data != null) {
+            return const MainPageTest();
+          }
+          return const AuthPage();
+        },
+      ),
+    );
+  }
+}
