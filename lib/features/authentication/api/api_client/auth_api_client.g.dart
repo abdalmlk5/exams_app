@@ -30,7 +30,7 @@ class _AuthApiClient implements AuthApiClient {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/auth/signin',
+            'https://exam.elevateegy.com/api/v1/auth/login',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -58,7 +58,7 @@ class _AuthApiClient implements AuthApiClient {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/auth/signup',
+            'https://exam.elevateegy.com/api/v1/auth/signup',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -76,17 +76,16 @@ class _AuthApiClient implements AuthApiClient {
   }
 
   @override
-  Future<void> logout(String token) async {
+  Future<void> logout() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'token': token};
-    _headers.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<void>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/auth/logout',
+            'https://exam.elevateegy.com/api/v1/auth/logout',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -96,17 +95,16 @@ class _AuthApiClient implements AuthApiClient {
   }
 
   @override
-  Future<AuthResponseModel> getUserData(String token) async {
+  Future<AuthResponseModel> getUserData() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'token': token};
-    _headers.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<AuthResponseModel>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/auth/profileData',
+            'https://exam.elevateegy.com/api/v1/auth/profileData',
             queryParameters: queryParameters,
             data: _data,
           )

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:exams_app/config/api/end_points.dart';
 import 'package:exams_app/features/authentication/data/response/auth_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
@@ -11,15 +12,15 @@ abstract class AuthApiClient {
   @factoryMethod
   factory AuthApiClient(Dio dio) = _AuthApiClient;
 
-  @POST("/auth/signin")
+  @POST(EndPoints.signin)
   Future<AuthResponseModel> login(@Body() Map<String, dynamic> body);
 
-  @POST("/auth/signup")
+  @POST(EndPoints.register)
   Future<AuthResponseModel> register(@Body() Map<String, dynamic> body);
 
-  @POST("/auth/logout")
-  Future<void> logout(@Header("token") String token);
+  @POST(EndPoints.logout)
+  Future<void> logout();
 
-  @GET("/auth/profileData")
-  Future<AuthResponseModel> getUserData(@Header("token") String token);
+  @GET(EndPoints.profileData)
+  Future<AuthResponseModel> getUserData();
 }

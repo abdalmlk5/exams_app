@@ -27,7 +27,9 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSourceContract {
         'password': password,
       });
 
-      await localDataSource.saveToken(response.token);
+      if (response.token != null) {
+        await localDataSource.saveToken(response.token!);
+      }
 
       return SuccessBaseResponse<UserModel>(response.user);
     } catch (e) {
@@ -56,7 +58,9 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSourceContract {
         'phone': phone,
       });
 
-      await localDataSource.saveToken(response.token);
+      if (response.token != null) {
+        await localDataSource.saveToken(response.token!);
+      }
 
       return SuccessBaseResponse<UserModel>(response.user);
     } catch (e) {
@@ -68,22 +72,24 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSourceContract {
   Future<void> logout() async {
     try {
       final token = await localDataSource.getToken();
-      await authApiClient.logout(token ?? '');
-      await localDataSource.deleteToken();
+      if (token == null) {
+        return;
+      }
+
+      await Future.wait([
+        authApiClient.logout(),
+        localDataSource.deleteToken(),
+      ]);
+
     } catch (e) {
-      rethrow;
+      return;
     }
   }
 
   @override
   Future<BaseResponse<UserModel>> getUserData() async {
     try {
-      final token = await localDataSource.getToken();
-      if (token == null) {
-        return ErrorBaseResponse('No token found');
-      }
-
-      final response = await authApiClient.getUserData(token);
+      final response = await authApiClient.getUserData();
 
       return SuccessBaseResponse<UserModel>(response.user);
     } catch (e) {
