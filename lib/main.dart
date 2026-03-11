@@ -1,10 +1,12 @@
 import 'package:exams_app/config/di/di.dart';
+import 'package:exams_app/core/utils/app_routes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   configureDependencies();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -12,6 +14,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp();
+    return ScreenUtilInit(
+      designSize: const Size(
+        375,
+        812,
+      ), // Adjust based on your Figma design size
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Exams App',
+          onGenerateRoute: AppRoutes.onGenerateRoute,
+          initialRoute: AppRoutes.forgetPassword,
+        );
+      },
+    );
   }
 }
