@@ -1,38 +1,47 @@
 import 'package:exams_app/core/utils/app_colors.dart';
+import 'package:exams_app/core/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class CustomElevatedButton extends StatelessWidget {
-  final String child;
-  final void Function()? onTap;
-  final bool isError;
+class CustomButton extends StatelessWidget {
+  final String text;
+  final VoidCallback? onPressed;
+  final bool isEnabled;
+  final bool isLoading;
 
-  const CustomElevatedButton({
+  const CustomButton({
     super.key,
-    required this.child,
-    required this.onTap,
-    this.isError = false,
+    required this.text,
+    this.onPressed,
+    this.isEnabled = true,
+    this.isLoading = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: GestureDetector(
-        onTap: isError ? null : onTap,
-        child: Container(
-          decoration: BoxDecoration(
-            color: isError ? AppColors.black30 : AppColors.primary,
-            borderRadius: BorderRadius.circular(100),
-          ),
-          width: double.infinity,
-          height: 48,
-          child: Center(
-            child: Text(
-              child,
-              style: const TextStyle(color: AppColors.white, fontSize: 20),
-            ),
+    return SizedBox(
+      height: 56.h,
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: (isEnabled && !isLoading) ? onPressed : null,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.primary,
+          disabledBackgroundColor: AppColors.black30,
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(100.r),
           ),
         ),
+        child: isLoading
+            ? SizedBox(
+                height: 24.h,
+                width: 24.w,
+                child: const CircularProgressIndicator(
+                  color: Colors.white,
+                  strokeWidth: 2,
+                ),
+              )
+            : Text(text, style: AppTextStyles.white16500),
       ),
     );
   }

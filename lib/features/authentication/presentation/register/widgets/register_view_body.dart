@@ -1,0 +1,162 @@
+import 'package:exams_app/core/utils/app_strings.dart';
+import 'package:exams_app/core/widgets/custom_elevated_button.dart';
+import 'package:exams_app/core/widgets/custom_text_field.dart';
+import 'package:exams_app/features/authentication/presentation/register/cubit/register_cubit.dart';
+import 'package:exams_app/features/authentication/presentation/register/cubit/register_even.dart';
+import 'package:exams_app/features/authentication/presentation/auth/widgets/widgets/auth_footer.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+class RegisterViewBody extends StatefulWidget {
+  final void Function()? togglePages;
+
+  const RegisterViewBody({super.key, this.togglePages});
+
+  @override
+  State<RegisterViewBody> createState() => _RegisterViewBodyState();
+}
+
+class _RegisterViewBodyState extends State<RegisterViewBody> {
+  final _usernameController = TextEditingController();
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _rePasswordController = TextEditingController();
+  final _phoneController = TextEditingController();
+
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _rePasswordController.dispose();
+    _phoneController.dispose();
+    super.dispose();
+  }
+
+  void _validate() {
+    context.read<RegisterCubit>().validateForm(
+      username: _usernameController.text,
+      firstName: _firstNameController.text,
+      lastName: _lastNameController.text,
+      email: _emailController.text,
+      password: _passwordController.text,
+      rePassword: _rePasswordController.text,
+      phone: _phoneController.text,
+    );
+  }
+
+  void _register() {
+    context.read<RegisterCubit>().doEvent(
+      Register(
+        username: _usernameController.text,
+        firstName: _firstNameController.text,
+        lastName: _lastNameController.text,
+        email: _emailController.text,
+        password: _passwordController.text,
+        rePassword: _rePasswordController.text,
+        phone: _phoneController.text,
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<RegisterCubit, RegisterState>(
+      builder: (context, state) {
+        return SingleChildScrollView(
+          padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 12.h),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                AppTextField(
+                  controller: _usernameController,
+                  fieldType: FieldType.username,
+                  onChanged: (_) => _validate(),
+                ),
+                SizedBox(height: 16.h),
+                Row(
+                  children: [
+                    Expanded(
+                      child: AppTextField(
+                        controller: _firstNameController,
+                        fieldType: FieldType.firstName,
+                        onChanged: (_) => _validate(),
+                      ),
+                    ),
+                    SizedBox(width: 16.w),
+                    Expanded(
+                      child: AppTextField(
+                        controller: _lastNameController,
+                        fieldType: FieldType.lastName,
+                        onChanged: (_) => _validate(),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 16.h),
+                AppTextField(
+                  controller: _emailController,
+                  fieldType: FieldType.email,
+                  onChanged: (_) => _validate(),
+                ),
+                SizedBox(height: 16.h),
+                Row(
+                  children: [
+                    Expanded(
+                      child: AppTextField(
+                        controller: _passwordController,
+                        fieldType: FieldType.password,
+                        onChanged: (_) => _validate(),
+                      ),
+                    ),
+                    SizedBox(width: 16.w),
+                    Expanded(
+                      child: AppTextField(
+                        controller: _rePasswordController,
+                        fieldType: FieldType.confirmPassword,
+                        compareController: _passwordController,
+                        onChanged: (_) => _validate(),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 16.h),
+                AppTextField(
+                  controller: _phoneController,
+                  fieldType: FieldType.phoneNumber,
+                  onChanged: (_) => _validate(),
+                ),
+                SizedBox(height: 48.h),
+                CustomButton(
+                  text: AppStrings.signup,
+                  isEnabled: state.isButtonEnabled,
+                  isLoading: state.registerState.isLoading,
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      _register();
+                    }
+                  },
+                ),
+                SizedBox(height: 24.h),
+                AuthFooter(
+                  text: AppStrings.alreadyHaveAccount,
+                  linkText: AppStrings.login,
+                  onTap: widget.togglePages ?? () {},
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
