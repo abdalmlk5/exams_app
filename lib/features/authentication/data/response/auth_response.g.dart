@@ -9,7 +9,7 @@ part of 'auth_response.dart';
 AuthResponseModel _$AuthResponseModelFromJson(Map<String, dynamic> json) =>
     AuthResponseModel(
       message: json['message'] as String,
-      token: json['token'] as String,
+      token: json['token'] as String?,
       user: UserModel.fromJson(json['user'] as Map<String, dynamic>),
     );
 
