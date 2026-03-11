@@ -30,7 +30,7 @@ class _AuthApiClient implements AuthApiClient {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'https://exam.elevateegy.com/api/v1/auth/login',
+            'https://exam.elevateegy.com/api/v1/auth/signin',
             queryParameters: queryParameters,
             data: _data,
           )
