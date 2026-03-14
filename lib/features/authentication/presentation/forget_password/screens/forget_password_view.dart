@@ -1,31 +1,42 @@
 import 'package:exams_app/config/base_state/base_state.dart';
+import 'package:exams_app/core/utils/app_routes.dart';
 import 'package:exams_app/core/utils/app_strings.dart';
 import 'package:exams_app/core/utils/app_styles.dart';
-import 'package:exams_app/core/widgets/custom_elevated_button.dart';
 import 'package:exams_app/core/widgets/custom_text_field.dart';
-import 'package:exams_app/features/forget_password/presentation/view_models/forget_password_cubit.dart';
-import 'package:exams_app/features/forget_password/presentation/view_models/forget_password_intent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ResetPasswordView extends StatelessWidget {
-  const ResetPasswordView({super.key});
+import '../../../../../core/widgets/custom_elevated_button.dart';
+import '../view_models/forget_password_cubit.dart';
+import '../view_models/forget_password_intent.dart';
+
+class ForgetPasswordView extends StatelessWidget {
+  const ForgetPasswordView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final passwordController = TextEditingController();
-    final confirmPasswordController = TextEditingController();
+    final emailController = TextEditingController();
     final formKey = GlobalKey<FormState>();
 
     return BlocListener<ForgetPasswordCubit, BaseState<String?>>(
-      listenWhen: (previous, current) => previous.data != current.data,
+      listenWhen: (previous, current) =>
+          previous.data != current.data ||
+          previous.errorMessage != current.errorMessage,
       listener: (context, state) {
-        if (state.data == "PASSWORD_RESET") {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Password reset successfully")),
+        if (state.data == "OTP_SENT") {
+          Navigator.pushNamed(
+            context,
+            AppRoutes.emailVerification,
+            arguments: context.read<ForgetPasswordCubit>(),
           );
-          Navigator.of(context).popUntil((route) => route.isFirst);
+        } else if (state.errorMessage != null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.errorMessage!),
+              backgroundColor: Colors.red,
+            ),
+          );
         }
       },
       child: Scaffold(
@@ -46,23 +57,17 @@ class ResetPasswordView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(height: 40.h),
-                Text(AppStrings.resetPassword, style: AppStyles.black18500),
+                Text(AppStrings.forgetPassword, style: AppStyles.black18500),
                 SizedBox(height: 16.h),
                 Text(
-                  AppStrings.resetPasswordSubtitle,
+                  AppStrings.forgetPasswordSubtitle,
                   style: AppStyles.gray14400,
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 32.h),
                 AppTextField(
-                  controller: passwordController,
-                  fieldType: FieldType.newPassword,
-                ),
-                SizedBox(height: 24.h),
-                AppTextField(
-                  controller: confirmPasswordController,
-                  fieldType: FieldType.confirmPassword,
-                  compareController: passwordController,
+                  controller: emailController,
+                  fieldType: FieldType.email,
                 ),
                 const Spacer(),
                 BlocBuilder<ForgetPasswordCubit, BaseState<String?>>(
@@ -70,18 +75,15 @@ class ResetPasswordView extends StatelessWidget {
                     if (state.isLoading) {
                       return const Center(child: CircularProgressIndicator());
                     }
-                    return CustomElevatedButton(
-                      child: AppStrings.continueText,
-                      onTap: () {
+                    return CustomButton(
+                      onPressed: () {
                         if (formKey.currentState!.validate()) {
                           context.read<ForgetPasswordCubit>().handleIntent(
-                            ForgetPasswordResetPasswordIntent(
-                              passwordController.text,
-                              confirmPasswordController.text,
-                            ),
+                            ForgetPasswordSendEmailIntent(emailController.text),
                           );
                         }
                       },
+                      text: AppStrings.continueText,
                     );
                   },
                 ),

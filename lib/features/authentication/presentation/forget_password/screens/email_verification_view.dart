@@ -3,11 +3,12 @@ import 'package:exams_app/core/utils/app_colors.dart';
 import 'package:exams_app/core/utils/app_routes.dart';
 import 'package:exams_app/core/utils/app_strings.dart';
 import 'package:exams_app/core/utils/app_styles.dart';
-import 'package:exams_app/features/forget_password/presentation/view_models/forget_password_cubit.dart';
-import 'package:exams_app/features/forget_password/presentation/view_models/forget_password_intent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../view_models/forget_password_cubit.dart';
+import '../view_models/forget_password_intent.dart';
 
 class EmailVerificationView extends StatefulWidget {
   const EmailVerificationView({super.key});

@@ -1,10 +1,11 @@
 import 'package:exams_app/config/di/di.dart';
-import 'package:exams_app/features/forget_password/presentation/screens/email_verification_view.dart';
-import 'package:exams_app/features/forget_password/presentation/screens/forget_password_view.dart';
-import 'package:exams_app/features/forget_password/presentation/screens/reset_password_view.dart';
-import 'package:exams_app/features/forget_password/presentation/view_models/forget_password_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../features/authentication/presentation/forget_password/screens/email_verification_view.dart';
+import '../../features/authentication/presentation/forget_password/screens/forget_password_view.dart';
+import '../../features/authentication/presentation/forget_password/screens/reset_password_view.dart';
+import '../../features/authentication/presentation/forget_password/view_models/forget_password_cubit.dart';
 
 class AppRoutes {
   static const String forgetPassword = '/forgetPassword';

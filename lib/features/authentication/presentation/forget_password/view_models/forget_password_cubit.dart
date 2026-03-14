@@ -1,11 +1,12 @@
 import 'package:exams_app/config/base_response/base_response.dart';
 import 'package:exams_app/config/base_state/base_state.dart';
-import 'package:exams_app/features/forget_password/domain/use_cases/forget_password_use_case.dart';
-import 'package:exams_app/features/forget_password/domain/use_cases/reset_password_use_case.dart';
-import 'package:exams_app/features/forget_password/domain/use_cases/verify_code_use_case.dart';
-import 'package:exams_app/features/forget_password/presentation/view_models/forget_password_intent.dart';
+import 'package:exams_app/features/authentication/domain/usecases/forget_password_use_case.dart';
+import 'package:exams_app/features/authentication/domain/usecases/verify_code_use_case.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+
+import '../../../domain/usecases/reset_password_use_case.dart';
+import 'forget_password_intent.dart';
 
 @injectable
 class ForgetPasswordCubit extends Cubit<BaseState<String?>> {

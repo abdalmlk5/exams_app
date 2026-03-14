@@ -28,6 +28,8 @@ import '../../features/authentication/data/repositories/auth_repo_impl.dart'
     as _i836;
 import '../../features/authentication/domain/repositories/auth_repo.dart'
     as _i802;
+import '../../features/authentication/domain/usecases/forget_password_use_case.dart'
+    as _i601;
 import '../../features/authentication/domain/usecases/get_user_data_usecase.dart'
     as _i932;
 import '../../features/authentication/domain/usecases/login_usecase.dart'
@@ -36,8 +38,14 @@ import '../../features/authentication/domain/usecases/logout_usecase.dart'
     as _i1067;
 import '../../features/authentication/domain/usecases/register_usecase.dart'
     as _i257;
+import '../../features/authentication/domain/usecases/reset_password_use_case.dart'
+    as _i800;
+import '../../features/authentication/domain/usecases/verify_code_use_case.dart'
+    as _i121;
 import '../../features/authentication/presentation/auth/cubit/auth_cubit.dart'
     as _i788;
+import '../../features/authentication/presentation/forget_password/view_models/forget_password_cubit.dart'
+    as _i857;
 import '../../features/authentication/presentation/login/cubit/login_cubit.dart'
     as _i339;
 import '../../features/authentication/presentation/register/cubit/register_cubit.dart'
@@ -75,6 +83,15 @@ extension GetItInjectableX on _i174.GetIt {
         authRemoteDataSourceContract: gh<_i793.AuthRemoteDataSourceContract>(),
       ),
     );
+    gh.factory<_i601.ForgetPasswordUseCase>(
+      () => _i601.ForgetPasswordUseCase(gh<_i802.AuthRepo>()),
+    );
+    gh.factory<_i800.ResetPasswordUseCase>(
+      () => _i800.ResetPasswordUseCase(gh<_i802.AuthRepo>()),
+    );
+    gh.factory<_i121.VerifyCodeUseCase>(
+      () => _i121.VerifyCodeUseCase(gh<_i802.AuthRepo>()),
+    );
     gh.factory<_i932.GetUserDataUsecase>(
       () => _i932.GetUserDataUsecase(authRepoContract: gh<_i802.AuthRepo>()),
     );
@@ -89,6 +106,13 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i633.RegisterCubit>(
       () => _i633.RegisterCubit(gh<_i257.RegisterUsecase>()),
+    );
+    gh.factory<_i857.ForgetPasswordCubit>(
+      () => _i857.ForgetPasswordCubit(
+        gh<_i601.ForgetPasswordUseCase>(),
+        gh<_i121.VerifyCodeUseCase>(),
+        gh<_i800.ResetPasswordUseCase>(),
+      ),
     );
     gh.factory<_i788.AuthCubit>(
       () => _i788.AuthCubit(

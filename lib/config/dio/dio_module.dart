@@ -2,15 +2,13 @@ import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:logger/logger.dart';
 
-import '../api/end_points.dart';
 import '../../features/authentication/data/datasources/auth_local_data_source_contract.dart';
+import '../api/end_points.dart';
 
 @module
 abstract class DioModule {
-
   @lazySingleton
   Dio dio(AuthLocalDataSourceContract authLocalDataSource) {
-
     final dio = Dio();
 
     dio.options.baseUrl = EndPoints.baseUrl;
@@ -54,7 +52,6 @@ abstract class DioModule {
       ),
     );
 
-
     dio.options.headers = {
       "Content-Type": "application/json",
       "Accept": "application/json",
@@ -63,7 +60,6 @@ abstract class DioModule {
     dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
-
           final token = await authLocalDataSource.getToken();
 
           if (token != null) {
@@ -75,12 +71,7 @@ abstract class DioModule {
       ),
     );
 
-    dio.interceptors.add(
-      LogInterceptor(
-        requestBody: true,
-        responseBody: true,
-      ),
-    );
+    dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
 
     return dio;
   }
