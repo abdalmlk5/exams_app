@@ -28,7 +28,7 @@ class AppValidations {
       return 'First name is required';
     }
     if (value.trim().length < 3) {
-      return 'Must be at least 2 characters';
+      return 'Must be at least 3 characters';
     }
     if (RegExp(r'[0-9]').hasMatch(value)) {
       return 'Name must not contain numbers';
@@ -41,7 +41,7 @@ class AppValidations {
       return 'Last name is required';
     }
     if (value.trim().length < 3) {
-      return 'Must be at least 2 characters';
+      return 'Must be at least 3 characters';
     }
     if (RegExp(r'[0-9]').hasMatch(value)) {
       return 'Name must not contain numbers';
@@ -66,9 +66,23 @@ class AppValidations {
     if (value == null || value.isEmpty) {
       return 'Password is required';
     }
+
     if (value.length < 8) {
-      return 'Must be at least 8 characters';
+      return 'Password must be at least 8 characters';
     }
+
+    if (!value.contains(RegExp(r'[a-z]'))) {
+      return 'Password must contain at least one lowercase letter';
+    }
+
+    if (!value.contains(RegExp(r'[A-Z]'))) {
+      return 'Password must contain at least one uppercase letter';
+    }
+
+    if (!value.contains(RegExp(r'[0-9]'))) {
+      return 'Password must contain at least one number';
+    }
+
     return null;
   }
 
