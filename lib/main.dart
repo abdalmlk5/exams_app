@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
       designSize: const Size(
         375,
         812,
-      ), // Adjust based on your Figma design size
+      ), 
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
@@ -44,28 +44,9 @@ class MyApp extends StatelessWidget {
         );
       },
     );
-    return ScreenUtilInit(
-      designSize: const Size(375, 812),
-      minTextAdapt: true,
-      splitScreenMode: true,
-      builder: (context, child) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          home: MultiBlocProvider(
-            providers: [
-              BlocProvider(create: (_) => getIt<LoginCubit>()),
-              BlocProvider(create: (_) => getIt<RegisterCubit>()),
-              BlocProvider(create: (_) => getIt<AuthCubit>()..checkAuth()),
-            ],
-            child: const AuthWrapper(),
-          ),
-        );
-      },
-    );
   }
 }
 
-/// Widget to handle authentication state and navigation
 class AuthWrapper extends StatelessWidget {
   const AuthWrapper({super.key});
 
