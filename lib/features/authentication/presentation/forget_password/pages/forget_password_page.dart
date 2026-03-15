@@ -9,10 +9,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../core/widgets/custom_elevated_button.dart';
 import '../view_models/forget_password_cubit.dart';
-import '../view_models/forget_password_intent.dart';
+import '../view_models/forget_password_event.dart';
 
-class ForgetPasswordView extends StatelessWidget {
-  const ForgetPasswordView({super.key});
+class ForgetPasswordPage extends StatelessWidget {
+  const ForgetPasswordPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -78,8 +78,8 @@ class ForgetPasswordView extends StatelessWidget {
                     return CustomButton(
                       onPressed: () {
                         if (formKey.currentState!.validate()) {
-                          context.read<ForgetPasswordCubit>().handleIntent(
-                            ForgetPasswordSendEmailIntent(emailController.text),
+                          context.read<ForgetPasswordCubit>().doEvent(
+                            ForgetPasswordSendEmailEvent(emailController.text),
                           );
                         }
                       },

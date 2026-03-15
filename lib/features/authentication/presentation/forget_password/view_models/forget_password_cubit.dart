@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../domain/usecases/reset_password_use_case.dart';
-import 'forget_password_intent.dart';
+import 'forget_password_event.dart';
 
 @injectable
 class ForgetPasswordCubit extends Cubit<BaseState<String?>> {
@@ -22,13 +22,13 @@ class ForgetPasswordCubit extends Cubit<BaseState<String?>> {
     this._resetPasswordUseCase,
   ) : super(const BaseState(isLoading: false, data: null));
 
-  void handleIntent(ForgetPasswordIntent intent) {
-    if (intent is ForgetPasswordSendEmailIntent) {
+  void doEvent(ForgetPasswordEvent intent) {
+    if (intent is ForgetPasswordSendEmailEvent) {
       _userEmail = intent.email;
       _forgetPassword(intent.email);
-    } else if (intent is ForgetPasswordVerifyCodeIntent) {
+    } else if (intent is ForgetPasswordVerifyCodeEvent) {
       _verifyCode(intent.code);
-    } else if (intent is ForgetPasswordResetPasswordIntent) {
+    } else if (intent is ForgetPasswordResetPasswordEvent) {
       _resetPassword(intent.password, intent.confirmPassword);
     }
   }

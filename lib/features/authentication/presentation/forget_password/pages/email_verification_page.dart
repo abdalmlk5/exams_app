@@ -8,16 +8,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../view_models/forget_password_cubit.dart';
-import '../view_models/forget_password_intent.dart';
+import '../view_models/forget_password_event.dart';
 
-class EmailVerificationView extends StatefulWidget {
-  const EmailVerificationView({super.key});
+class EmailVerificationPage extends StatefulWidget {
+  const EmailVerificationPage({super.key});
 
   @override
-  State<EmailVerificationView> createState() => _EmailVerificationViewState();
+  State<EmailVerificationPage> createState() => _EmailVerificationPageState();
 }
 
-class _EmailVerificationViewState extends State<EmailVerificationView> {
+class _EmailVerificationPageState extends State<EmailVerificationPage> {
   final List<TextEditingController> _controllers = List.generate(
     6,
     (_) => TextEditingController(),
@@ -117,8 +117,8 @@ class _EmailVerificationViewState extends State<EmailVerificationView> {
                           _focusNodes[index - 1].requestFocus();
                         }
                         if (_otpCode.length == 6) {
-                          context.read<ForgetPasswordCubit>().handleIntent(
-                            ForgetPasswordVerifyCodeIntent(_otpCode),
+                          context.read<ForgetPasswordCubit>().doEvent(
+                            ForgetPasswordVerifyCodeEvent(_otpCode),
                           );
                         }
                       },

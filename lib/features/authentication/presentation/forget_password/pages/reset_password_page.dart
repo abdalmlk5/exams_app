@@ -8,10 +8,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../view_models/forget_password_cubit.dart';
-import '../view_models/forget_password_intent.dart';
+import '../view_models/forget_password_event.dart';
 
-class ResetPasswordView extends StatelessWidget {
-  const ResetPasswordView({super.key});
+class ResetPasswordPage extends StatelessWidget {
+  const ResetPasswordPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -76,8 +76,8 @@ class ResetPasswordView extends StatelessWidget {
                         text: AppStrings.continueText,
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
-                            context.read<ForgetPasswordCubit>().handleIntent(
-                              ForgetPasswordResetPasswordIntent(
+                            context.read<ForgetPasswordCubit>().doEvent(
+                              ForgetPasswordResetPasswordEvent(
                                 passwordController.text,
                                 confirmPasswordController.text,
                               ),
