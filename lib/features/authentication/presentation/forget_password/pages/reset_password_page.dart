@@ -1,14 +1,14 @@
-import 'package:exams_app/config/base_state/base_state.dart';
 import 'package:exams_app/core/utils/app_strings.dart';
 import 'package:exams_app/core/utils/app_styles.dart';
-import 'package:exams_app/core/widgets/custom_elevated_button.dart';
 import 'package:exams_app/core/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../view_models/forget_password_cubit.dart';
+import '../../../../../core/widgets/custom_elevated_button.dart';
 import '../view_models/forget_password_event.dart';
+import '../view_models/forget_password_state.dart';
+import '../view_models/forget_password_view_model.dart';
 
 class ResetPasswordPage extends StatelessWidget {
   const ResetPasswordPage({super.key});
@@ -19,14 +19,25 @@ class ResetPasswordPage extends StatelessWidget {
     final confirmPasswordController = TextEditingController();
     final formKey = GlobalKey<FormState>();
 
-    return BlocListener<ForgetPasswordCubit, BaseState<String?>>(
-      listenWhen: (previous, current) => previous.data != current.data,
+    return BlocListener<ForgetPasswordViewModel, ForgetPasswordState>(
+      listenWhen: (previous, current) =>
+          previous.forgetPasswordState.data != current.forgetPasswordState.data ||
+          previous.forgetPasswordState.errorMessage !=
+              current.forgetPasswordState.errorMessage,
       listener: (context, state) {
-        if (state.data == "PASSWORD_RESET") {
+        final innerState = state.forgetPasswordState;
+        if (innerState.data != null) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text("Password reset successfully")),
           );
           Navigator.of(context).popUntil((route) => route.isFirst);
+        } else if (innerState.errorMessage != null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(innerState.errorMessage!),
+              backgroundColor: Colors.red,
+            ),
+          );
         }
       },
       child: Scaffold(
@@ -67,21 +78,21 @@ class ResetPasswordPage extends StatelessWidget {
                     compareController: passwordController,
                   ),
                   SizedBox(height: 40.h),
-                  BlocBuilder<ForgetPasswordCubit, BaseState<String?>>(
+                  BlocBuilder<ForgetPasswordViewModel, ForgetPasswordState>(
                     builder: (context, state) {
-                      if (state.isLoading) {
+                      if (state.forgetPasswordState.isLoading) {
                         return const Center(child: CircularProgressIndicator());
                       }
                       return CustomButton(
                         text: AppStrings.continueText,
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
-                            context.read<ForgetPasswordCubit>().doEvent(
-                              ForgetPasswordResetPasswordEvent(
-                                passwordController.text,
-                                confirmPasswordController.text,
-                              ),
-                            );
+                            context.read<ForgetPasswordViewModel>().doEvent(
+                                  ForgetPasswordResetPasswordEvent(
+                                    passwordController.text,
+                                    confirmPasswordController.text,
+                                  ),
+                                );
                           }
                         },
                       );

@@ -1,4 +1,3 @@
-import 'package:exams_app/config/base_state/base_state.dart';
 import 'package:exams_app/core/utils/app_routes.dart';
 import 'package:exams_app/core/utils/app_strings.dart';
 import 'package:exams_app/core/utils/app_styles.dart';
@@ -8,8 +7,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../core/widgets/custom_elevated_button.dart';
-import '../view_models/forget_password_cubit.dart';
 import '../view_models/forget_password_event.dart';
+import '../view_models/forget_password_state.dart';
+import '../view_models/forget_password_view_model.dart';
 
 class ForgetPasswordPage extends StatelessWidget {
   const ForgetPasswordPage({super.key});
@@ -19,21 +19,24 @@ class ForgetPasswordPage extends StatelessWidget {
     final emailController = TextEditingController();
     final formKey = GlobalKey<FormState>();
 
-    return BlocListener<ForgetPasswordCubit, BaseState<String?>>(
+    return BlocListener<ForgetPasswordViewModel, ForgetPasswordState>(
       listenWhen: (previous, current) =>
-          previous.data != current.data ||
-          previous.errorMessage != current.errorMessage,
+          previous.forgetPasswordState.data !=
+              current.forgetPasswordState.data ||
+          previous.forgetPasswordState.errorMessage !=
+              current.forgetPasswordState.errorMessage,
       listener: (context, state) {
-        if (state.data == "OTP_SENT") {
+        final innerState = state.forgetPasswordState;
+        if (innerState.data != null) {
           Navigator.pushNamed(
             context,
             AppRoutes.emailVerification,
-            arguments: context.read<ForgetPasswordCubit>(),
+            arguments: context.read<ForgetPasswordViewModel>(),
           );
-        } else if (state.errorMessage != null) {
+        } else if (innerState.errorMessage != null) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(state.errorMessage!),
+              content: Text(innerState.errorMessage!),
               backgroundColor: Colors.red,
             ),
           );
@@ -70,15 +73,15 @@ class ForgetPasswordPage extends StatelessWidget {
                   fieldType: FieldType.email,
                 ),
                 const Spacer(),
-                BlocBuilder<ForgetPasswordCubit, BaseState<String?>>(
+                BlocBuilder<ForgetPasswordViewModel, ForgetPasswordState>(
                   builder: (context, state) {
-                    if (state.isLoading) {
+                    if (state.forgetPasswordState.isLoading) {
                       return const Center(child: CircularProgressIndicator());
                     }
                     return CustomButton(
                       onPressed: () {
                         if (formKey.currentState!.validate()) {
-                          context.read<ForgetPasswordCubit>().doEvent(
+                          context.read<ForgetPasswordViewModel>().doEvent(
                             ForgetPasswordSendEmailEvent(emailController.text),
                           );
                         }

@@ -1,19 +1,17 @@
-abstract class ForgetPasswordState {}
+import 'package:exams_app/config/base_state/base_state.dart';
 
-class ForgetPasswordInitial extends ForgetPasswordState {}
+class ForgetPasswordState {
+  BaseState<String?> forgetPasswordState = BaseState<String?>(
+    isLoading: true,
+    data: null,
+  );
 
-class ForgetPasswordLoading extends ForgetPasswordState {}
+  ForgetPasswordState({BaseState<String?>? state}) {
+    forgetPasswordState =
+        state ?? BaseState<String?>(isLoading: false, data: null);
+  }
 
-class ForgetPasswordSuccess extends ForgetPasswordState {
-  final String message;
-  ForgetPasswordSuccess(this.message);
+  ForgetPasswordState copyWith({BaseState<String?>? stateParam}) {
+    return ForgetPasswordState(state: stateParam ?? forgetPasswordState);
+  }
 }
-
-class ForgetPasswordError extends ForgetPasswordState {
-  final String message;
-  ForgetPasswordError(this.message);
-}
-
-class VerifyCodeSuccess extends ForgetPasswordState {}
-
-class ResetPasswordSuccess extends ForgetPasswordState {}

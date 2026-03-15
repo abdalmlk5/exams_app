@@ -1,4 +1,3 @@
-import 'package:exams_app/config/base_state/base_state.dart';
 import 'package:exams_app/core/utils/app_colors.dart';
 import 'package:exams_app/core/utils/app_routes.dart';
 import 'package:exams_app/core/utils/app_strings.dart';
@@ -7,8 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../view_models/forget_password_cubit.dart';
 import '../view_models/forget_password_event.dart';
+import '../view_models/forget_password_state.dart';
+import '../view_models/forget_password_view_model.dart';
 
 class EmailVerificationPage extends StatefulWidget {
   const EmailVerificationPage({super.key});
@@ -39,21 +39,24 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<ForgetPasswordCubit, BaseState<String?>>(
+    return BlocListener<ForgetPasswordViewModel, ForgetPasswordState>(
       listenWhen: (previous, current) =>
-          previous.data != current.data ||
-          previous.errorMessage != current.errorMessage,
+          previous.forgetPasswordState.data !=
+              current.forgetPasswordState.data ||
+          previous.forgetPasswordState.errorMessage !=
+              current.forgetPasswordState.errorMessage,
       listener: (context, state) {
-        if (state.data == "CODE_VERIFIED") {
+        final innerState = state.forgetPasswordState;
+        if (innerState.data != null) {
           Navigator.pushNamed(
             context,
             AppRoutes.resetPassword,
-            arguments: context.read<ForgetPasswordCubit>(),
+            arguments: context.read<ForgetPasswordViewModel>(),
           );
-        } else if (state.errorMessage != null) {
+        } else if (innerState.errorMessage != null) {
           ScaffoldMessenger.of(
             context,
-          ).showSnackBar(SnackBar(content: Text(state.errorMessage!)));
+          ).showSnackBar(SnackBar(content: Text(innerState.errorMessage!)));
         }
       },
       child: Scaffold(
@@ -117,7 +120,7 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
                           _focusNodes[index - 1].requestFocus();
                         }
                         if (_otpCode.length == 6) {
-                          context.read<ForgetPasswordCubit>().doEvent(
+                          context.read<ForgetPasswordViewModel>().doEvent(
                             ForgetPasswordVerifyCodeEvent(_otpCode),
                           );
                         }
@@ -127,9 +130,9 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
                 ),
               ),
               SizedBox(height: 32.h),
-              BlocBuilder<ForgetPasswordCubit, BaseState<String?>>(
+              BlocBuilder<ForgetPasswordViewModel, ForgetPasswordState>(
                 builder: (context, state) {
-                  if (state.isLoading) {
+                  if (state.forgetPasswordState.isLoading) {
                     return const CircularProgressIndicator();
                   }
                   return const SizedBox.shrink();
