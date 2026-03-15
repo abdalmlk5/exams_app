@@ -43,51 +43,53 @@ class ResetPasswordView extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: Form(
             key: formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(height: 40.h),
-                Text(AppStrings.resetPassword, style: AppStyles.black18500),
-                SizedBox(height: 16.h),
-                Text(
-                  AppStrings.resetPasswordSubtitle,
-                  style: AppStyles.gray14400,
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(height: 32.h),
-                AppTextField(
-                  controller: passwordController,
-                  fieldType: FieldType.newPassword,
-                ),
-                SizedBox(height: 24.h),
-                AppTextField(
-                  controller: confirmPasswordController,
-                  fieldType: FieldType.confirmPassword,
-                  compareController: passwordController,
-                ),
-                const Spacer(),
-                BlocBuilder<ForgetPasswordCubit, BaseState<String?>>(
-                  builder: (context, state) {
-                    if (state.isLoading) {
-                      return const Center(child: CircularProgressIndicator());
-                    }
-                    return CustomButton(
-                      text: AppStrings.continueText,
-                      onPressed: () {
-                        if (formKey.currentState!.validate()) {
-                          context.read<ForgetPasswordCubit>().handleIntent(
-                            ForgetPasswordResetPasswordIntent(
-                              passwordController.text,
-                              confirmPasswordController.text,
-                            ),
-                          );
-                        }
-                      },
-                    );
-                  },
-                ),
-                SizedBox(height: 40.h),
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(height: 40.h),
+                  Text(AppStrings.resetPassword, style: AppStyles.black18500),
+                  SizedBox(height: 16.h),
+                  Text(
+                    AppStrings.resetPasswordSubtitle,
+                    style: AppStyles.gray14400,
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 32.h),
+                  AppTextField(
+                    controller: passwordController,
+                    fieldType: FieldType.newPassword,
+                  ),
+                  SizedBox(height: 24.h),
+                  AppTextField(
+                    controller: confirmPasswordController,
+                    fieldType: FieldType.confirmPassword,
+                    compareController: passwordController,
+                  ),
+                  SizedBox(height: 40.h),
+                  BlocBuilder<ForgetPasswordCubit, BaseState<String?>>(
+                    builder: (context, state) {
+                      if (state.isLoading) {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                      return CustomButton(
+                        text: AppStrings.continueText,
+                        onPressed: () {
+                          if (formKey.currentState!.validate()) {
+                            context.read<ForgetPasswordCubit>().handleIntent(
+                              ForgetPasswordResetPasswordIntent(
+                                passwordController.text,
+                                confirmPasswordController.text,
+                              ),
+                            );
+                          }
+                        },
+                      );
+                    },
+                  ),
+                  SizedBox(height: 40.h),
+                ],
+              ),
             ),
           ),
         ),
