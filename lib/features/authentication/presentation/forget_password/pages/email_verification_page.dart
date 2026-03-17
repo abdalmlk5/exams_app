@@ -28,11 +28,11 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
 
   @override
   void dispose() {
-    for (var controller in _controllers) {
-      controller.dispose();
+    for (var c in _controllers) {
+      c.dispose();
     }
-    for (var node in _focusNodes) {
-      node.dispose();
+    for (var n in _focusNodes) {
+      n.dispose();
     }
     super.dispose();
   }
@@ -42,18 +42,17 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<ForgetPasswordCubit, ForgetPasswordState>(
-      listenWhen: (previous, current) =>
-          previous.forgetPasswordState.data !=
-              current.forgetPasswordState.data ||
-          previous.forgetPasswordState.errorMessage !=
-              current.forgetPasswordState.errorMessage,
+      listenWhen: (prev, curr) =>
+          prev.forgetPasswordState.data != curr.forgetPasswordState.data ||
+          prev.forgetPasswordState.errorMessage !=
+              curr.forgetPasswordState.errorMessage,
       listener: (context, state) {
-        final innerState = state.forgetPasswordState;
-        if (innerState.data != null) {
+        if (state.forgetPasswordState.errorMessage != null) {
+          CustomSnackBar.error(context, state.forgetPasswordState.errorMessage!);
+          return;
+        }
+        if (state.forgetPasswordState.data != null) {
           Navigator.pushNamed(context, AppRoutes.resetPassword);
-        } else if (innerState.errorMessage != null &&
-            innerState.errorMessage!.isNotEmpty) {
-          CustomSnackBar.error(context, innerState.errorMessage!);
         }
       },
       child: Scaffold(
@@ -97,9 +96,7 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.r),
-                          borderSide: const BorderSide(
-                            color: AppColors.primary,
-                          ),
+                          borderSide: const BorderSide(color: AppColors.primary),
                         ),
                         filled: true,
                         fillColor: AppColors.lightBlue,
@@ -134,10 +131,7 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    AppStrings.didntReceiveCode,
-                    style: AppTextStyles.gray14400,
-                  ),
+                  Text(AppStrings.didntReceiveCode, style: AppTextStyles.gray14400),
                   TextButton(
                     onPressed: () {
                       // Resend logic

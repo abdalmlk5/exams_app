@@ -47,11 +47,7 @@ class RegisterCubit extends Cubit<RegisterState> {
 
   Future<void> _register(Register event) async {
     try {
-      emit(
-        state.copyWith(
-          registerState: state.registerState.copyWith(isLoading: true),
-        ),
-      );
+      emit(state.copyWith(registerState: const BaseState(isLoading: true)));
 
       final result = await _registerUsecase.call(
         username: event.username,
@@ -65,33 +61,24 @@ class RegisterCubit extends Cubit<RegisterState> {
 
       switch (result) {
         case SuccessBaseResponse<UserEntity>():
-          emit(
-            state.copyWith(
-              registerState: state.registerState.copyWith(
-                isLoading: false,
-                data: result.data,
-              ),
-            ),
-          );
+          emit(state.copyWith(
+            registerState: BaseState(data: result.data, isLoading: false),
+          ));
         case ErrorBaseResponse<UserEntity>():
-          emit(
-            state.copyWith(
-              registerState: state.registerState.copyWith(
-                isLoading: false,
-                errorMessage: result.error,
-              ),
+          emit(state.copyWith(
+            registerState: BaseState(
+              isLoading: false,
+              errorMessage: result.error,
             ),
-          );
+          ));
       }
     } catch (e) {
-      emit(
-        state.copyWith(
-          registerState: state.registerState.copyWith(
-            isLoading: false,
-            errorMessage: ErrorHandler.handle(e),
-          ),
+      emit(state.copyWith(
+        registerState: BaseState(
+          isLoading: false,
+          errorMessage: ErrorHandler.handle(e),
         ),
-      );
+      ));
     }
   }
 }

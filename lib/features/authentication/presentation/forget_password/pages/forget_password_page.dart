@@ -22,18 +22,17 @@ class ForgetPasswordPage extends StatelessWidget {
     final formKey = GlobalKey<FormState>();
 
     return BlocListener<ForgetPasswordCubit, ForgetPasswordState>(
-      listenWhen: (previous, current) =>
-          previous.forgetPasswordState.data !=
-              current.forgetPasswordState.data ||
-          previous.forgetPasswordState.errorMessage !=
-              current.forgetPasswordState.errorMessage,
+      listenWhen: (prev, curr) =>
+          prev.forgetPasswordState.data != curr.forgetPasswordState.data ||
+          prev.forgetPasswordState.errorMessage !=
+              curr.forgetPasswordState.errorMessage,
       listener: (context, state) {
-        final innerState = state.forgetPasswordState;
-        if (innerState.data != null) {
+        if (state.forgetPasswordState.errorMessage != null) {
+          CustomSnackBar.error(context, state.forgetPasswordState.errorMessage!);
+          return;
+        }
+        if (state.forgetPasswordState.data != null) {
           Navigator.pushNamed(context, AppRoutes.emailVerification);
-        } else if (innerState.errorMessage != null &&
-            innerState.errorMessage!.isNotEmpty) {
-          CustomSnackBar.error(context, innerState.errorMessage!);
         }
       },
       child: Scaffold(
