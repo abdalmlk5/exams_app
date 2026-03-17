@@ -1,5 +1,6 @@
 import 'package:exams_app/config/validations/app_validations.dart';
 import 'package:exams_app/core/utils/app_colors.dart';
+import 'package:exams_app/core/utils/app_strings.dart';
 import 'package:flutter/material.dart';
 
 class AppTextField extends StatefulWidget {
@@ -25,6 +26,13 @@ class AppTextField extends StatefulWidget {
 }
 
 class _AppTextFieldState extends State<AppTextField> {
+  bool _isObscured = true;
+
+  bool get _isPasswordField =>
+      widget.fieldType == FieldType.password ||
+      widget.fieldType == FieldType.newPassword ||
+      widget.fieldType == FieldType.confirmPassword;
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -32,11 +40,34 @@ class _AppTextFieldState extends State<AppTextField> {
       keyboardType: widget.fieldType.textInputType,
       onChanged: widget.onChanged,
       validator: _validate,
+      obscureText: _isPasswordField && _isObscured,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
         floatingLabelBehavior: FloatingLabelBehavior.always,
         labelText: widget.fieldType.label,
         hintText: widget.fieldType.hint,
+        suffixIcon:
+            _isPasswordField
+                ? IconButton(
+                  icon: Icon(
+                    _isObscured ? Icons.visibility_off : Icons.visibility,
+                    color: AppColors.black30,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _isObscured = !_isObscured;
+                    });
+                  },
+                )
+                : widget.suffixText != null
+                ? TextButton(
+                  onPressed: widget.onSuffixPressed,
+                  child: Text(
+                    widget.suffixText!,
+                    style: const TextStyle(color: AppColors.primary),
+                  ),
+                )
+                : null,
         labelStyle: WidgetStateTextStyle.resolveWith((states) {
           if (states.contains(WidgetState.error)) {
             return const TextStyle(color: AppColors.error);
@@ -44,7 +75,6 @@ class _AppTextFieldState extends State<AppTextField> {
           return const TextStyle(color: AppColors.black30);
         }),
         errorStyle: const TextStyle(color: AppColors.error),
-
         border: _border(AppColors.black30),
         enabledBorder: _border(AppColors.black30),
         focusedBorder: _border(Theme.of(context).colorScheme.primary, 2),
@@ -88,14 +118,14 @@ class _AppTextFieldState extends State<AppTextField> {
 }
 
 enum FieldType {
-  email('Email', 'Enter your email', TextInputType.emailAddress),
-  password('Password', 'Enter your password', TextInputType.text),
-  newPassword('New password', 'New password', TextInputType.text),
-  confirmPassword('Confirm password', 'Confirm password', TextInputType.text),
-  username('User name', 'Enter your user name', TextInputType.name),
-  phoneNumber('Phone Number', 'Enter phone number', TextInputType.phone),
-  firstName('First name', 'Enter first name', TextInputType.name),
-  lastName('Last name', 'Enter last name', TextInputType.name),
+  email(AppStrings.email, AppStrings.enterYourEmail, TextInputType.emailAddress),
+  password(AppStrings.password, AppStrings.enterYourPassword, TextInputType.text),
+  newPassword(AppStrings.newPassword, AppStrings.newPassword, TextInputType.text),
+  confirmPassword(AppStrings.confirmPassword, AppStrings.confirmPassword, TextInputType.text),
+  username(AppStrings.userName, AppStrings.enterYourUserName, TextInputType.name),
+  phoneNumber(AppStrings.phoneNumber, AppStrings.enterPhoneNumber, TextInputType.phone),
+  firstName(AppStrings.firstName, AppStrings.enterFirstName, TextInputType.name),
+  lastName(AppStrings.lastName, AppStrings.enterLastName, TextInputType.name),
   none('', '', TextInputType.text);
 
   final String label;
