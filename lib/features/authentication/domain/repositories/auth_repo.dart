@@ -9,6 +9,7 @@ abstract class AuthRepo {
   Future<BaseResponse<UserEntity>> login({
     required String email,
     required String password,
+    bool rememberMe = false,
   });
   Future<BaseResponse<UserEntity>> register({
     required String username,
@@ -18,6 +19,7 @@ abstract class AuthRepo {
     required String password,
     required String rePassword,
     required String phone,
+    bool rememberMe = false,
   });
 
   Future<BaseResponse<void>> logout();
@@ -28,4 +30,5 @@ abstract class AuthRepo {
     String email,
     String newPassword,
   );
+  Future<bool> isRemembered();
 }

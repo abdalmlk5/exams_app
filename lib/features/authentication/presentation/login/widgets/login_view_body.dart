@@ -21,6 +21,7 @@ class LoginViewBody extends StatefulWidget {
 class _LoginViewBodyState extends State<LoginViewBody> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  bool _rememberMe = false;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -35,7 +36,9 @@ class _LoginViewBodyState extends State<LoginViewBody> {
     final String email = _emailController.text;
     final String password = _passwordController.text;
 
-    context.read<LoginCubit>().doEvent(Login(email: email, password: password));
+    context.read<LoginCubit>().doEvent(
+      Login(email: email, password: password, rememberMe: _rememberMe),
+    );
   }
 
   @override
@@ -70,8 +73,15 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                     );
                   },
                 ),
-                SizedBox(height: 12.h),
-                const RememberMeAndForgetPassword(),
+                const SizedBox(height: 12),
+                RememberMeAndForgetPassword(
+                  value: _rememberMe,
+                  onChanged: (value) {
+                    setState(() {
+                      _rememberMe = value ?? false;
+                    });
+                  },
+                ),
                 SizedBox(height: 48.h),
                 CustomButton(
                   text: AppStrings.login,

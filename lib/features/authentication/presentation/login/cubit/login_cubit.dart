@@ -19,7 +19,11 @@ class LoginCubit extends Cubit<LoginState> {
   void doEvent(LoginEven event) {
     switch (event) {
       case Login():
-        _login(email: event.email, password: event.password);
+        _login(
+          email: event.email,
+          password: event.password,
+          rememberMe: event.rememberMe,
+        );
         break;
     }
   }
@@ -36,13 +40,18 @@ class LoginCubit extends Cubit<LoginState> {
   Future<void> _login({
     required String email,
     required final String password,
+    bool rememberMe = false,
   }) async {
     try {
       emit(
         state.copyWith(loginState: state.loginState.copyWith(isLoading: true)),
       );
-
-      final result = await _loginUsecase.call(email: email, password: password);
+ 
+      final result = await _loginUsecase.call(
+        email: email,
+        password: password,
+        rememberMe: rememberMe,
+      );
 
       switch (result) {
         case SuccessBaseResponse<UserEntity>():

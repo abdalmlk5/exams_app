@@ -9,6 +9,7 @@ abstract class AuthRemoteDataSourceContract {
   Future<BaseResponse<UserModel>> login({
     required String email,
     required String password,
+    bool rememberMe = false,
   });
   Future<BaseResponse<UserModel>> register({
     required String username,
@@ -18,6 +19,7 @@ abstract class AuthRemoteDataSourceContract {
     required String password,
     required String rePassword,
     required String phone,
+    bool rememberMe = false,
   });
 
   Future<void> logout();

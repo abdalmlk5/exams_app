@@ -24,6 +24,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSourceContract {
   Future<BaseResponse<UserModel>> login({
     required String email,
     required String password,
+    bool rememberMe = false,
   }) async {
     try {
       final response = await authApiClient.login({
@@ -33,6 +34,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSourceContract {
 
       if (response.token != null) {
         await localDataSource.saveToken(response.token!);
+        await localDataSource.saveRememberMe(rememberMe);
       }
 
       return SuccessBaseResponse<UserModel>(response.user);
@@ -50,6 +52,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSourceContract {
     required String password,
     required String rePassword,
     required String phone,
+    bool rememberMe = false,
   }) async {
     try {
       final response = await authApiClient.register({
@@ -64,6 +67,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSourceContract {
 
       if (response.token != null) {
         await localDataSource.saveToken(response.token!);
+        await localDataSource.saveRememberMe(rememberMe);
       }
 
       return SuccessBaseResponse<UserModel>(response.user);
@@ -83,6 +87,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSourceContract {
       await Future.wait([
         authApiClient.logout(),
         localDataSource.deleteToken(),
+        localDataSource.deleteRememberMe(),
       ]);
     } catch (e) {
       return;
