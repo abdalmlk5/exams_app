@@ -14,33 +14,59 @@ class AppRoutes {
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
+
       case forgetPassword:
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
-            create: (context) => getIt<ForgetPasswordCubit>(),
+            create: (_) => getIt<ForgetPasswordCubit>(),
             child: const ForgetPasswordPage(),
           ),
         );
+
       case emailVerification:
-        return MaterialPageRoute(
-          builder: (_) => BlocProvider.value(
-            value: settings.arguments as ForgetPasswordCubit,
-            child: const EmailVerificationPage(),
-          ),
+        return _withCubit(
+          settings,
+          const EmailVerificationPage(),
         );
+
       case resetPassword:
-        return MaterialPageRoute(
-          builder: (_) => BlocProvider.value(
-            value: settings.arguments as ForgetPasswordCubit,
-            child: const ResetPasswordPage(),
-          ),
+        return _withCubit(
+          settings,
+          const ResetPasswordPage(),
         );
+
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
-            body: Center(child: Text('No route defined for ${settings.name}')),
+            body: Center(
+              child: Text('No route defined for ${settings.name}'),
+            ),
           ),
         );
     }
+  }
+
+  static MaterialPageRoute _withCubit(
+    RouteSettings settings,
+    Widget page,
+  ) {
+    final cubit = settings.arguments as ForgetPasswordCubit?;
+
+    if (cubit == null) {
+      return MaterialPageRoute(
+        builder: (_) => const Scaffold(
+          body: Center(
+            child: Text('Cubit not provided'),
+          ),
+        ),
+      );
+    }
+
+    return MaterialPageRoute(
+      builder: (_) => BlocProvider.value(
+        value: cubit,
+        child: page,
+      ),
+    );
   }
 }
