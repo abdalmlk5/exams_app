@@ -18,14 +18,16 @@ class AuthAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: AppColors.white,
       elevation: 0,
-      // leading: IconButton(
-      //   icon: Icon(
-      //     Icons.arrow_back_ios,
-      //     color: Colors.black,
-      //     size: 20.sp,
-      //   ),
-      //        onPressed: (){},
-      // ),
+      leading: onBack != null
+          ? IconButton(
+              icon: Icon(
+                Icons.arrow_back_ios,
+                color: Colors.black,
+                size: 20.sp,
+              ),
+              onPressed: onBack,
+            )
+          : null,
       title: Text(
         title,
         style: AppTextStyles.black18500,

@@ -23,9 +23,9 @@ class CustomButton extends StatelessWidget {
       height: 56.h,
       width: double.infinity,
       child: ElevatedButton(
-        onPressed: !isLoading ? onPressed : null,
+        onPressed: (isEnabled && !isLoading) ? onPressed : null,
         style: ElevatedButton.styleFrom(
-          backgroundColor: isEnabled ? AppColors.black30 : AppColors.primary,
+          backgroundColor: AppColors.primary,
           disabledBackgroundColor: AppColors.black30,
           elevation: 0,
           shape: RoundedRectangleBorder(
