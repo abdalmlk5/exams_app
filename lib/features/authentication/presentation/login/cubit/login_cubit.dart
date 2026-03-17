@@ -37,6 +37,10 @@ class LoginCubit extends Cubit<LoginState> {
     emit(state.copyWith(isButtonEnabled: isValid));
   }
 
+  void toggleRememberMe(bool value) {
+    emit(state.copyWith(rememberMe: value));
+  }
+
   Future<void> _login({
     required String email,
     required final String password,

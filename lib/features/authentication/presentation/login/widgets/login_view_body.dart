@@ -21,7 +21,6 @@ class LoginViewBody extends StatefulWidget {
 class _LoginViewBodyState extends State<LoginViewBody> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  bool _rememberMe = false;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -35,9 +34,10 @@ class _LoginViewBodyState extends State<LoginViewBody> {
   void _login() {
     final String email = _emailController.text;
     final String password = _passwordController.text;
+    final bool rememberMe = context.read<LoginCubit>().state.rememberMe;
 
     context.read<LoginCubit>().doEvent(
-      Login(email: email, password: password, rememberMe: _rememberMe),
+      Login(email: email, password: password, rememberMe: rememberMe),
     );
   }
 
@@ -75,11 +75,9 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                 ),
                 const SizedBox(height: 12),
                 RememberMeAndForgetPassword(
-                  value: _rememberMe,
+                  value: state.rememberMe,
                   onChanged: (value) {
-                    setState(() {
-                      _rememberMe = value ?? false;
-                    });
+                    context.read<LoginCubit>().toggleRememberMe(value ?? false);
                   },
                 ),
                 SizedBox(height: 48.h),
