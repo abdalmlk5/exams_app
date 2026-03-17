@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'features/authentication/presentation/auth/cubit/auth_cubit.dart';
 import 'features/authentication/presentation/auth/pages/auth_page.dart';
+import 'features/authentication/presentation/forget_password/cubit/forget_password_cubit.dart';
 import 'features/authentication/presentation/login/cubit/login_cubit.dart';
 import 'features/authentication/presentation/register/cubit/register_cubit.dart';
 import 'main_page_test.dart';
@@ -32,13 +33,14 @@ class MyApp extends StatelessWidget {
             BlocProvider(create: (_) => getIt<LoginCubit>()),
             BlocProvider(create: (_) => getIt<RegisterCubit>()),
             BlocProvider(create: (_) => getIt<AuthCubit>()..checkAuth()),
+            BlocProvider(create: (_) => getIt<ForgetPasswordCubit>()),
           ],
           child: MaterialApp(
             theme: ThemeData(scaffoldBackgroundColor: AppColors.white),
             debugShowCheckedModeBanner: false,
             title: 'Exams App',
             onGenerateRoute: AppRoutes.onGenerateRoute,
-            home: AuthWrapper(),
+            home: const AuthWrapper(),
           ),
         );
       },

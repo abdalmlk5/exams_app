@@ -80,17 +80,18 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSourceContract {
   Future<void> logout() async {
     try {
       final token = await localDataSource.getToken();
-      if (token == null) {
-        return;
+      if (token != null) {
+        try {
+          await authApiClient.logout();
+        } catch (_) {
+          // Ignore API error during logout
+        }
       }
-
+    } finally {
       await Future.wait([
-        authApiClient.logout(),
         localDataSource.deleteToken(),
         localDataSource.deleteRememberMe(),
       ]);
-    } catch (e) {
-      return;
     }
   }
 
