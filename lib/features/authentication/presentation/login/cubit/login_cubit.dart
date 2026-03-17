@@ -28,10 +28,7 @@ class LoginCubit extends Cubit<LoginState> {
     final emailError = AppValidations.validateEmail(email);
     final passwordError = AppValidations.validatePassword(password);
 
-    final isValid = emailError == null &&
-        passwordError == null &&
-        email.trim().isNotEmpty &&
-        password.trim().isNotEmpty;
+    final isValid = emailError == null && passwordError == null;
 
     emit(state.copyWith(isButtonEnabled: isValid));
   }

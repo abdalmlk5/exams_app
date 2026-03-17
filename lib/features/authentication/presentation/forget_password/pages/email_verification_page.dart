@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../view_models/forget_password_event.dart';
-import '../view_models/forget_password_state.dart';
-import '../view_models/forget_password_view_model.dart';
+import '../cubit/forget_password_event.dart';
+import '../cubit/forget_password_state.dart';
+import '../cubit/forget_password_cubit.dart';
 
 class EmailVerificationPage extends StatefulWidget {
   const EmailVerificationPage({super.key});
@@ -39,7 +39,7 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<ForgetPasswordViewModel, ForgetPasswordState>(
+    return BlocListener<ForgetPasswordCubit, ForgetPasswordState>(
       listenWhen: (previous, current) =>
           previous.forgetPasswordState.data !=
               current.forgetPasswordState.data ||
@@ -51,7 +51,7 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
           Navigator.pushNamed(
             context,
             AppRoutes.resetPassword,
-            arguments: context.read<ForgetPasswordViewModel>(),
+            arguments: context.read<ForgetPasswordCubit>(),
           );
         } else if (innerState.errorMessage != null) {
           ScaffoldMessenger.of(
@@ -120,7 +120,7 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
                           _focusNodes[index - 1].requestFocus();
                         }
                         if (_otpCode.length == 6) {
-                          context.read<ForgetPasswordViewModel>().doEvent(
+                          context.read<ForgetPasswordCubit>().doEvent(
                             ForgetPasswordVerifyCodeEvent(_otpCode),
                           );
                         }
@@ -130,7 +130,7 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
                 ),
               ),
               SizedBox(height: 32.h),
-              BlocBuilder<ForgetPasswordViewModel, ForgetPasswordState>(
+              BlocBuilder<ForgetPasswordCubit, ForgetPasswordState>(
                 builder: (context, state) {
                   if (state.forgetPasswordState.isLoading) {
                     return const CircularProgressIndicator();

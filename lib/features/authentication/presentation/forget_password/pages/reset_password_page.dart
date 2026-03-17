@@ -6,9 +6,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../core/widgets/custom_elevated_button.dart';
-import '../view_models/forget_password_event.dart';
-import '../view_models/forget_password_state.dart';
-import '../view_models/forget_password_view_model.dart';
+import '../cubit/forget_password_event.dart';
+import '../cubit/forget_password_state.dart';
+import '../cubit/forget_password_cubit.dart';
 
 class ResetPasswordPage extends StatelessWidget {
   const ResetPasswordPage({super.key});
@@ -19,9 +19,10 @@ class ResetPasswordPage extends StatelessWidget {
     final confirmPasswordController = TextEditingController();
     final formKey = GlobalKey<FormState>();
 
-    return BlocListener<ForgetPasswordViewModel, ForgetPasswordState>(
+    return BlocListener<ForgetPasswordCubit, ForgetPasswordState>(
       listenWhen: (previous, current) =>
-          previous.forgetPasswordState.data != current.forgetPasswordState.data ||
+          previous.forgetPasswordState.data !=
+              current.forgetPasswordState.data ||
           previous.forgetPasswordState.errorMessage !=
               current.forgetPasswordState.errorMessage,
       listener: (context, state) {
@@ -78,7 +79,7 @@ class ResetPasswordPage extends StatelessWidget {
                     compareController: passwordController,
                   ),
                   SizedBox(height: 40.h),
-                  BlocBuilder<ForgetPasswordViewModel, ForgetPasswordState>(
+                  BlocBuilder<ForgetPasswordCubit, ForgetPasswordState>(
                     builder: (context, state) {
                       if (state.forgetPasswordState.isLoading) {
                         return const Center(child: CircularProgressIndicator());
@@ -87,12 +88,12 @@ class ResetPasswordPage extends StatelessWidget {
                         text: AppStrings.continueText,
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
-                            context.read<ForgetPasswordViewModel>().doEvent(
-                                  ForgetPasswordResetPasswordEvent(
-                                    passwordController.text,
-                                    confirmPasswordController.text,
-                                  ),
-                                );
+                            context.read<ForgetPasswordCubit>().doEvent(
+                              ForgetPasswordResetPasswordEvent(
+                                passwordController.text,
+                                confirmPasswordController.text,
+                              ),
+                            );
                           }
                         },
                       );

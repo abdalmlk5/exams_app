@@ -4,7 +4,6 @@ import 'package:exams_app/core/utils/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'features/authentication/presentation/auth/cubit/auth_cubit.dart';
 import 'features/authentication/presentation/auth/pages/auth_page.dart';
 import 'features/authentication/presentation/login/cubit/login_cubit.dart';

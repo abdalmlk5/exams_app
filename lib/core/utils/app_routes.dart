@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../features/authentication/presentation/forget_password/pages/email_verification_page.dart';
 import '../../features/authentication/presentation/forget_password/pages/forget_password_page.dart';
 import '../../features/authentication/presentation/forget_password/pages/reset_password_page.dart';
-import '../../features/authentication/presentation/forget_password/view_models/forget_password_view_model.dart';
+import '../../features/authentication/presentation/forget_password/cubit/forget_password_cubit.dart';
 
 class AppRoutes {
   static const String forgetPassword = '/forgetPassword';
@@ -17,21 +17,21 @@ class AppRoutes {
       case forgetPassword:
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
-            create: (context) => getIt<ForgetPasswordViewModel>(),
+            create: (context) => getIt<ForgetPasswordCubit>(),
             child: const ForgetPasswordPage(),
           ),
         );
       case emailVerification:
         return MaterialPageRoute(
           builder: (_) => BlocProvider.value(
-            value: settings.arguments as ForgetPasswordViewModel,
+            value: settings.arguments as ForgetPasswordCubit,
             child: const EmailVerificationPage(),
           ),
         );
       case resetPassword:
         return MaterialPageRoute(
           builder: (_) => BlocProvider.value(
-            value: settings.arguments as ForgetPasswordViewModel,
+            value: settings.arguments as ForgetPasswordCubit,
             child: const ResetPasswordPage(),
           ),
         );

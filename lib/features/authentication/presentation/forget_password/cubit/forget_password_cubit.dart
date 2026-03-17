@@ -1,7 +1,7 @@
 import 'package:exams_app/config/base_response/base_response.dart';
 import 'package:exams_app/features/authentication/domain/usecases/forget_password_use_case.dart';
 import 'package:exams_app/features/authentication/domain/usecases/verify_code_use_case.dart';
-import 'package:exams_app/features/authentication/presentation/forget_password/view_models/forget_password_state.dart';
+import 'package:exams_app/features/authentication/presentation/forget_password/cubit/forget_password_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
@@ -9,14 +9,14 @@ import '../../../domain/usecases/reset_password_use_case.dart';
 import 'forget_password_event.dart';
 
 @injectable
-class ForgetPasswordViewModel extends Cubit<ForgetPasswordState> {
+class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
   final ForgetPasswordUseCase _forgetPasswordUseCase;
   final VerifyCodeUseCase _verifyCodeUseCase;
   final ResetPasswordUseCase _resetPasswordUseCase;
 
   String? _userEmail;
 
-  ForgetPasswordViewModel(
+  ForgetPasswordCubit(
     this._forgetPasswordUseCase,
     this._verifyCodeUseCase,
     this._resetPasswordUseCase,

@@ -8,7 +8,6 @@ import 'package:exams_app/features/authentication/presentation/register/cubit/re
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
-
 part 'register_state.dart';
 
 @injectable
@@ -41,14 +40,7 @@ class RegisterCubit extends Cubit<RegisterState> {
         AppValidations.validateEmail(email) == null &&
         AppValidations.validatePassword(password) == null &&
         AppValidations.validateConfirmPassword(rePassword, password) == null &&
-        AppValidations.validatePhoneNumber(phone) == null &&
-        username.isNotEmpty &&
-        firstName.isNotEmpty &&
-        lastName.isNotEmpty &&
-        email.isNotEmpty &&
-        password.isNotEmpty &&
-        rePassword.isNotEmpty &&
-        phone.isNotEmpty;
+        AppValidations.validatePhoneNumber(phone) == null;
 
     emit(state.copyWith(isButtonEnabled: isValid));
   }
