@@ -1,6 +1,7 @@
 import 'package:exams_app/config/di/di.dart';
 import 'package:exams_app/core/utils/app_colors.dart';
 import 'package:exams_app/core/utils/app_routes.dart';
+import 'package:exams_app/core/widgets/custom_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,18 +27,18 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
-        return MaterialApp(
-          theme: ThemeData(scaffoldBackgroundColor: AppColors.white),
-          debugShowCheckedModeBanner: false,
-          title: 'Exams App',
-          onGenerateRoute: AppRoutes.onGenerateRoute,
-          home: MultiBlocProvider(
-            providers: [
-              BlocProvider(create: (_) => getIt<LoginCubit>()),
-              BlocProvider(create: (_) => getIt<RegisterCubit>()),
-              BlocProvider(create: (_) => getIt<AuthCubit>()..checkAuth()),
-            ],
-            child: const AuthWrapper(),
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (_) => getIt<LoginCubit>()),
+            BlocProvider(create: (_) => getIt<RegisterCubit>()),
+            BlocProvider(create: (_) => getIt<AuthCubit>()..checkAuth()),
+          ],
+          child: MaterialApp(
+            theme: ThemeData(scaffoldBackgroundColor: AppColors.white),
+            debugShowCheckedModeBanner: false,
+            title: 'Exams App',
+            onGenerateRoute: AppRoutes.onGenerateRoute,
+            home: AuthWrapper(),
           ),
         );
       },
@@ -51,12 +52,12 @@ class AuthWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthCubit, AuthState>(
+      listenWhen: (previous, current) =>
+          previous.authState.errorMessage != current.authState.errorMessage,
       listener: (context, state) {
         final error = state.authState.errorMessage;
         if (error != null && error.isNotEmpty) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(error)));
+          CustomSnackBar.error(context, error);
         }
       },
       child: BlocBuilder<AuthCubit, AuthState>(
