@@ -1,8 +1,10 @@
+import 'package:exams_app/core/widgets/custom_snack_bar.dart';
+import 'package:exams_app/features/authentication/presentation/auth/cubit/auth_cubit.dart';
+import 'package:exams_app/features/authentication/presentation/auth/cubit/auth_even.dart';
 import 'package:exams_app/features/authentication/presentation/login/cubit/login_cubit.dart';
 import 'package:exams_app/features/authentication/presentation/login/pages/login_page.dart';
 import 'package:exams_app/features/authentication/presentation/register/cubit/register_cubit.dart';
 import 'package:exams_app/features/authentication/presentation/register/pages/register_page.dart';
-import 'package:exams_app/main_page_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,16 +25,12 @@ class _AuthPageState extends State<AuthPage> {
   }
 
   void _navigateToHome() {
-    Navigator.of(
-      context,
-    ).pushReplacement(MaterialPageRoute(builder: (_) => const MainPageTest()));
+    context.read<AuthCubit>().doEvent(GetUserData());
   }
 
   void _showError(String message) {
     if (message.isNotEmpty) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(message)));
+      CustomSnackBar.error(context, message);
     }
   }
 

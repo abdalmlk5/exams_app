@@ -1,7 +1,9 @@
 import 'package:exams_app/core/utils/app_colors.dart';
 import 'package:exams_app/core/utils/app_routes.dart';
 import 'package:exams_app/core/utils/app_strings.dart';
-import 'package:exams_app/core/utils/app_styles.dart';
+import 'package:exams_app/core/utils/app_text_styles.dart';
+import 'package:exams_app/features/authentication/presentation/auth/widgets/widgets/auth_app_bar.dart';
+import 'package:exams_app/core/widgets/custom_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -48,26 +50,16 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
       listener: (context, state) {
         final innerState = state.forgetPasswordState;
         if (innerState.data != null) {
-          Navigator.pushNamed(
-            context,
-            AppRoutes.resetPassword,
-            arguments: context.read<ForgetPasswordCubit>(),
-          );
-        } else if (innerState.errorMessage != null) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(innerState.errorMessage!)));
+          Navigator.pushNamed(context, AppRoutes.resetPassword);
+        } else if (innerState.errorMessage != null &&
+            innerState.errorMessage!.isNotEmpty) {
+          CustomSnackBar.error(context, innerState.errorMessage!);
         }
       },
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(AppStrings.password, style: AppStyles.black20500),
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
-            onPressed: () => Navigator.pop(context),
-          ),
-          backgroundColor: Colors.transparent,
-          elevation: 0,
+        appBar: AuthAppBar(
+          title: AppStrings.password,
+          onBack: () => Navigator.pop(context),
         ),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -75,11 +67,11 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: 40.h),
-              Text(AppStrings.emailVerification, style: AppStyles.black18500),
+              Text(AppStrings.emailVerification, style: AppTextStyles.black18500),
               SizedBox(height: 16.h),
               Text(
                 AppStrings.emailVerificationSubtitle,
-                style: AppStyles.gray14400,
+                style: AppTextStyles.gray14400,
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 32.h),
@@ -96,7 +88,7 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
                       textAlign: TextAlign.center,
                       keyboardType: TextInputType.number,
                       maxLength: 1,
-                      style: AppStyles.black20500,
+                      style: AppTextStyles.black18500,
                       decoration: InputDecoration(
                         counterText: "",
                         enabledBorder: OutlineInputBorder(
@@ -138,12 +130,13 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
                   return const SizedBox.shrink();
                 },
               ),
+              const Spacer(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     AppStrings.didntReceiveCode,
-                    style: AppStyles.black16400,
+                    style: AppTextStyles.gray14400,
                   ),
                   TextButton(
                     onPressed: () {
@@ -151,7 +144,7 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
                     },
                     child: Text(
                       AppStrings.resend,
-                      style: AppStyles.black16400.copyWith(
+                      style: AppTextStyles.gray14400.copyWith(
                         color: AppColors.primary,
                         decoration: TextDecoration.underline,
                       ),
@@ -159,6 +152,7 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
                   ),
                 ],
               ),
+              SizedBox(height: 40.h),
             ],
           ),
         ),

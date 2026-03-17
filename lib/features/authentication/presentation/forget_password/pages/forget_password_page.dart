@@ -1,7 +1,9 @@
 import 'package:exams_app/core/utils/app_routes.dart';
 import 'package:exams_app/core/utils/app_strings.dart';
-import 'package:exams_app/core/utils/app_styles.dart';
+import 'package:exams_app/core/utils/app_text_styles.dart';
 import 'package:exams_app/core/widgets/custom_text_field.dart';
+import 'package:exams_app/features/authentication/presentation/auth/widgets/widgets/auth_app_bar.dart';
+import 'package:exams_app/core/widgets/custom_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -28,29 +30,16 @@ class ForgetPasswordPage extends StatelessWidget {
       listener: (context, state) {
         final innerState = state.forgetPasswordState;
         if (innerState.data != null) {
-          Navigator.pushNamed(
-            context,
-            AppRoutes.emailVerification,
-            arguments: context.read<ForgetPasswordCubit>(),
-          );
-        } else if (innerState.errorMessage != null) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(innerState.errorMessage!),
-              backgroundColor: Colors.red,
-            ),
-          );
+          Navigator.pushNamed(context, AppRoutes.emailVerification);
+        } else if (innerState.errorMessage != null &&
+            innerState.errorMessage!.isNotEmpty) {
+          CustomSnackBar.error(context, innerState.errorMessage!);
         }
       },
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(AppStrings.password, style: AppStyles.black20500),
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
-            onPressed: () => Navigator.pop(context),
-          ),
-          backgroundColor: Colors.transparent,
-          elevation: 0,
+        appBar: AuthAppBar(
+          title: AppStrings.password,
+          onBack: () => Navigator.pop(context),
         ),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -60,11 +49,11 @@ class ForgetPasswordPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(height: 40.h),
-                Text(AppStrings.forgetPassword, style: AppStyles.black18500),
+                Text(AppStrings.forgetPassword, style: AppTextStyles.black18500),
                 SizedBox(height: 16.h),
                 Text(
                   AppStrings.forgetPasswordSubtitle,
-                  style: AppStyles.gray14400,
+                  style: AppTextStyles.gray14400,
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 32.h),
@@ -75,10 +64,9 @@ class ForgetPasswordPage extends StatelessWidget {
                 const Spacer(),
                 BlocBuilder<ForgetPasswordCubit, ForgetPasswordState>(
                   builder: (context, state) {
-                    if (state.forgetPasswordState.isLoading) {
-                      return const Center(child: CircularProgressIndicator());
-                    }
                     return CustomButton(
+                      isEnabled: true,
+                      isLoading: state.forgetPasswordState.isLoading,
                       onPressed: () {
                         if (formKey.currentState!.validate()) {
                           context.read<ForgetPasswordCubit>().doEvent(
