@@ -6,7 +6,7 @@ class RegisterState extends Equatable {
 
   const RegisterState({
     this.registerState = const BaseState(),
-    this.isButtonEnabled = false,
+    this.isButtonEnabled = true,
   });
 
   RegisterState copyWith({

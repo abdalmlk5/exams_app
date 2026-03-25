@@ -7,7 +7,7 @@ class LoginState extends Equatable {
 
   const LoginState({
     this.loginState = const BaseState(),
-    this.isButtonEnabled = false,
+    this.isButtonEnabled = true,
     this.rememberMe = false,
   });
 
