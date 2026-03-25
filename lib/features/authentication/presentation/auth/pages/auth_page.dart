@@ -1,8 +1,10 @@
+import 'package:exams_app/core/widgets/custom_snack_bar.dart';
+import 'package:exams_app/features/authentication/presentation/auth/cubit/auth_cubit.dart';
+import 'package:exams_app/features/authentication/presentation/auth/cubit/auth_even.dart';
 import 'package:exams_app/features/authentication/presentation/login/cubit/login_cubit.dart';
 import 'package:exams_app/features/authentication/presentation/login/pages/login_page.dart';
 import 'package:exams_app/features/authentication/presentation/register/cubit/register_cubit.dart';
 import 'package:exams_app/features/authentication/presentation/register/pages/register_page.dart';
-import 'package:exams_app/main_page_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -22,44 +24,35 @@ class _AuthPageState extends State<AuthPage> {
     });
   }
 
-  void _navigateToHome() {
-    Navigator.of(
-      context,
-    ).pushReplacement(MaterialPageRoute(builder: (_) => const MainPageTest()));
-  }
-
-  void _showError(String message) {
-    if (message.isNotEmpty) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(message)));
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     if (showLoginPage) {
       return BlocConsumer<LoginCubit, LoginState>(
+        // Only fire when errorMessage or data actually changes value
+        listenWhen: (prev, curr) =>
+            prev.loginState.errorMessage != curr.loginState.errorMessage ||
+            prev.loginState.data != curr.loginState.data,
         listener: (context, state) {
-          // Show error if exists
-          _showError(state.loginState.errorMessage ?? '');
-
-          // Navigate on success
+          if (state.loginState.errorMessage != null) {
+            CustomSnackBar.error(context, state.loginState.errorMessage!);
+          }
           if (state.loginState.data != null) {
-            _navigateToHome();
+            context.read<AuthCubit>().doEvent(GetUserData());
           }
         },
         builder: (context, state) => LoginPage(togglePages: togglePages),
       );
     } else {
       return BlocConsumer<RegisterCubit, RegisterState>(
+        listenWhen: (prev, curr) =>
+            prev.registerState.errorMessage != curr.registerState.errorMessage ||
+            prev.registerState.data != curr.registerState.data,
         listener: (context, state) {
-          // Show error if exists
-          _showError(state.registerState.errorMessage ?? '');
-
-          // Navigate on success
+          if (state.registerState.errorMessage != null) {
+            CustomSnackBar.error(context, state.registerState.errorMessage!);
+          }
           if (state.registerState.data != null) {
-            _navigateToHome();
+            context.read<AuthCubit>().doEvent(GetUserData());
           }
         },
         builder: (context, state) => RegisterPage(togglePages: togglePages),

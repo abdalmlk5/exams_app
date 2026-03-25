@@ -28,16 +28,26 @@ import '../../features/authentication/data/repositories/auth_repo_impl.dart'
     as _i836;
 import '../../features/authentication/domain/repositories/auth_repo.dart'
     as _i802;
+import '../../features/authentication/domain/usecases/forget_password_use_case.dart'
+    as _i601;
 import '../../features/authentication/domain/usecases/get_user_data_usecase.dart'
     as _i932;
+import '../../features/authentication/domain/usecases/is_remembered_usecase.dart'
+    as _i330;
 import '../../features/authentication/domain/usecases/login_usecase.dart'
     as _i995;
 import '../../features/authentication/domain/usecases/logout_usecase.dart'
     as _i1067;
 import '../../features/authentication/domain/usecases/register_usecase.dart'
     as _i257;
+import '../../features/authentication/domain/usecases/reset_password_use_case.dart'
+    as _i800;
+import '../../features/authentication/domain/usecases/verify_code_use_case.dart'
+    as _i121;
 import '../../features/authentication/presentation/auth/cubit/auth_cubit.dart'
     as _i788;
+import '../../features/authentication/presentation/forget_password/cubit/forget_password_cubit.dart'
+    as _i34;
 import '../../features/authentication/presentation/login/cubit/login_cubit.dart'
     as _i339;
 import '../../features/authentication/presentation/register/cubit/register_cubit.dart'
@@ -73,10 +83,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i802.AuthRepo>(
       () => _i836.AuthRepoImpl(
         authRemoteDataSourceContract: gh<_i793.AuthRemoteDataSourceContract>(),
+        authLocalDataSourceContract: gh<_i741.AuthLocalDataSourceContract>(),
       ),
     );
     gh.factory<_i932.GetUserDataUsecase>(
       () => _i932.GetUserDataUsecase(authRepoContract: gh<_i802.AuthRepo>()),
+    );
+    gh.factory<_i330.IsRememberedUsecase>(
+      () => _i330.IsRememberedUsecase(authRepoContract: gh<_i802.AuthRepo>()),
     );
     gh.factory<_i995.LoginUsecase>(
       () => _i995.LoginUsecase(authRepoContract: gh<_i802.AuthRepo>()),
@@ -94,10 +108,27 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i788.AuthCubit(
         gh<_i1067.LogoutUsecase>(),
         gh<_i932.GetUserDataUsecase>(),
+        gh<_i330.IsRememberedUsecase>(),
       ),
+    );
+    gh.factory<_i601.ForgetPasswordUseCase>(
+      () => _i601.ForgetPasswordUseCase(gh<_i802.AuthRepo>()),
+    );
+    gh.factory<_i800.ResetPasswordUseCase>(
+      () => _i800.ResetPasswordUseCase(gh<_i802.AuthRepo>()),
+    );
+    gh.factory<_i121.VerifyCodeUseCase>(
+      () => _i121.VerifyCodeUseCase(gh<_i802.AuthRepo>()),
     );
     gh.factory<_i339.LoginCubit>(
       () => _i339.LoginCubit(gh<_i995.LoginUsecase>()),
+    );
+    gh.factory<_i34.ForgetPasswordCubit>(
+      () => _i34.ForgetPasswordCubit(
+        gh<_i601.ForgetPasswordUseCase>(),
+        gh<_i121.VerifyCodeUseCase>(),
+        gh<_i800.ResetPasswordUseCase>(),
+      ),
     );
     return this;
   }

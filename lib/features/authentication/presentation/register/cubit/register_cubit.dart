@@ -8,7 +8,6 @@ import 'package:exams_app/features/authentication/presentation/register/cubit/re
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
-
 part 'register_state.dart';
 
 @injectable
@@ -41,25 +40,14 @@ class RegisterCubit extends Cubit<RegisterState> {
         AppValidations.validateEmail(email) == null &&
         AppValidations.validatePassword(password) == null &&
         AppValidations.validateConfirmPassword(rePassword, password) == null &&
-        AppValidations.validatePhoneNumber(phone) == null &&
-        username.isNotEmpty &&
-        firstName.isNotEmpty &&
-        lastName.isNotEmpty &&
-        email.isNotEmpty &&
-        password.isNotEmpty &&
-        rePassword.isNotEmpty &&
-        phone.isNotEmpty;
+        AppValidations.validatePhoneNumber(phone) == null;
 
     emit(state.copyWith(isButtonEnabled: isValid));
   }
 
   Future<void> _register(Register event) async {
     try {
-      emit(
-        state.copyWith(
-          registerState: state.registerState.copyWith(isLoading: true),
-        ),
-      );
+      emit(state.copyWith(registerState: const BaseState(isLoading: true)));
 
       final result = await _registerUsecase.call(
         username: event.username,
@@ -73,33 +61,24 @@ class RegisterCubit extends Cubit<RegisterState> {
 
       switch (result) {
         case SuccessBaseResponse<UserEntity>():
-          emit(
-            state.copyWith(
-              registerState: state.registerState.copyWith(
-                isLoading: false,
-                data: result.data,
-              ),
-            ),
-          );
+          emit(state.copyWith(
+            registerState: BaseState(data: result.data, isLoading: false),
+          ));
         case ErrorBaseResponse<UserEntity>():
-          emit(
-            state.copyWith(
-              registerState: state.registerState.copyWith(
-                isLoading: false,
-                errorMessage: result.error,
-              ),
+          emit(state.copyWith(
+            registerState: BaseState(
+              isLoading: false,
+              errorMessage: result.error,
             ),
-          );
+          ));
       }
     } catch (e) {
-      emit(
-        state.copyWith(
-          registerState: state.registerState.copyWith(
-            isLoading: false,
-            errorMessage: ErrorHandler.handle(e),
-          ),
+      emit(state.copyWith(
+        registerState: BaseState(
+          isLoading: false,
+          errorMessage: ErrorHandler.handle(e),
         ),
-      );
+      ));
     }
   }
 }
