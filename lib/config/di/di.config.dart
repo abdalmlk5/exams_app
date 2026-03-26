@@ -52,6 +52,7 @@ import '../../features/authentication/presentation/login/cubit/login_cubit.dart'
     as _i339;
 import '../../features/authentication/presentation/register/cubit/register_cubit.dart'
     as _i633;
+import '../../features/home_screen/presentation/cubit/home_cubit.dart' as _i881;
 import '../dio/dio_module.dart' as _i977;
 import '../local/local_module.dart' as _i722;
 
@@ -64,6 +65,7 @@ extension GetItInjectableX on _i174.GetIt {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final localModule = _$LocalModule();
     final dioModule = _$DioModule();
+    gh.factory<_i881.HomeCubit>(() => _i881.HomeCubit());
     gh.lazySingleton<_i558.FlutterSecureStorage>(
       () => localModule.secureStorage,
     );
