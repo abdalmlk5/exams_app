@@ -2,15 +2,17 @@ import 'package:exams_app/config/di/di.dart';
 import 'package:exams_app/core/utils/app_colors.dart';
 import 'package:exams_app/core/utils/app_routes.dart';
 import 'package:exams_app/core/widgets/custom_snack_bar.dart';
+import 'package:exams_app/features/home_screen/presentation/pages/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'features/authentication/presentation/auth/cubit/auth_cubit.dart';
 import 'features/authentication/presentation/auth/pages/auth_page.dart';
 import 'features/authentication/presentation/forget_password/cubit/forget_password_cubit.dart';
 import 'features/authentication/presentation/login/cubit/login_cubit.dart';
 import 'features/authentication/presentation/register/cubit/register_cubit.dart';
-import 'main_page_test.dart';
+import 'features/home_screen/presentation/cubit/home_cubit.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,6 +36,7 @@ class MyApp extends StatelessWidget {
             BlocProvider(create: (_) => getIt<RegisterCubit>()),
             BlocProvider(create: (_) => getIt<AuthCubit>()..checkAuth()),
             BlocProvider(create: (_) => getIt<ForgetPasswordCubit>()),
+            BlocProvider(create: (_) => getIt<HomeCubit>()),
           ],
           child: MaterialApp(
             theme: ThemeData(scaffoldBackgroundColor: AppColors.white),
@@ -70,7 +73,7 @@ class AuthWrapper extends StatelessWidget {
             );
           }
           if (state.authState.data != null) {
-            return const MainPageTest();
+            return const HomeScreen();
           }
           return const AuthPage();
         },
