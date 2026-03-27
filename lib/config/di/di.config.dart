@@ -52,6 +52,22 @@ import '../../features/authentication/presentation/login/cubit/login_cubit.dart'
     as _i339;
 import '../../features/authentication/presentation/register/cubit/register_cubit.dart'
     as _i633;
+import '../../features/questions/api/api_client/question_api_client.dart'
+    as _i266;
+import '../../features/questions/api/datasources/question_remote_data_source_impl.dart'
+    as _i258;
+import '../../features/questions/data/datasources/question_remote_data_source_contract.dart'
+    as _i470;
+import '../../features/questions/data/repositories/question_repo_impl.dart'
+    as _i804;
+import '../../features/questions/domain/repositories/question_repo.dart'
+    as _i342;
+import '../../features/questions/domain/usecases/get_questions_usecase.dart'
+    as _i309;
+import '../../features/questions/domain/usecases/submit_answers_usecase.dart'
+    as _i912;
+import '../../features/questions/presentation/cubit/questions_cubit.dart'
+    as _i19;
 import '../dio/dio_module.dart' as _i977;
 import '../local/local_module.dart' as _i722;
 
@@ -74,6 +90,20 @@ extension GetItInjectableX on _i174.GetIt {
       () => dioModule.dio(gh<_i741.AuthLocalDataSourceContract>()),
     );
     gh.factory<_i326.AuthApiClient>(() => _i326.AuthApiClient(gh<_i361.Dio>()));
+    gh.factory<_i266.QuestionApiClient>(
+      () => _i266.QuestionApiClient(gh<_i361.Dio>()),
+    );
+    gh.lazySingleton<_i470.QuestionRemoteDataSourceContract>(
+      () => _i258.QuestionRemoteDataSourceImpl(
+        questionApiClient: gh<_i266.QuestionApiClient>(),
+      ),
+    );
+    gh.lazySingleton<_i342.QuestionRepoContract>(
+      () => _i804.QuestionRepoImpl(
+        questionRemoteDataSourceContract:
+            gh<_i470.QuestionRemoteDataSourceContract>(),
+      ),
+    );
     gh.factory<_i793.AuthRemoteDataSourceContract>(
       () => _i356.AuthRemoteDataSourceImpl(
         authApiClient: gh<_i326.AuthApiClient>(),
@@ -84,6 +114,16 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i836.AuthRepoImpl(
         authRemoteDataSourceContract: gh<_i793.AuthRemoteDataSourceContract>(),
         authLocalDataSourceContract: gh<_i741.AuthLocalDataSourceContract>(),
+      ),
+    );
+    gh.factory<_i309.GetQuestionsUsecase>(
+      () => _i309.GetQuestionsUsecase(
+        questionRepoContract: gh<_i342.QuestionRepoContract>(),
+      ),
+    );
+    gh.factory<_i912.SubmitAnswersUsecase>(
+      () => _i912.SubmitAnswersUsecase(
+        questionRepoContract: gh<_i342.QuestionRepoContract>(),
       ),
     );
     gh.factory<_i932.GetUserDataUsecase>(
@@ -103,6 +143,12 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i633.RegisterCubit>(
       () => _i633.RegisterCubit(gh<_i257.RegisterUsecase>()),
+    );
+    gh.factory<_i19.QuestionsCubit>(
+      () => _i19.QuestionsCubit(
+        gh<_i309.GetQuestionsUsecase>(),
+        gh<_i912.SubmitAnswersUsecase>(),
+      ),
     );
     gh.factory<_i788.AuthCubit>(
       () => _i788.AuthCubit(
