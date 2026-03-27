@@ -1,7 +1,5 @@
-import 'package:exams_app/features/authentication/presentation/auth/cubit/auth_cubit.dart';
-import 'package:exams_app/features/authentication/presentation/auth/cubit/auth_even.dart';
+import 'package:exams_app/features/questions/presentation/pages/question_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MainPageTest extends StatelessWidget {
   const MainPageTest({super.key});
@@ -13,9 +11,15 @@ class MainPageTest extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           onPressed: () {
-            context.read<AuthCubit>().doEvent(Logout());
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    const QuestionPage(examId: '670070a830a3c3c1944a9c63'),
+              ),
+            );
           },
-          child: const Text('Logout'),
+          child: const Text('Start Exam'),
         ),
       ),
     );
