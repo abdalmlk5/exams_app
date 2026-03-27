@@ -69,4 +69,15 @@ abstract class AppStyles {
     fontWeight: FontWeight.w400,
     color: AppColors.placeholder,
   );
+
+  static TextStyle timerRed = GoogleFonts.inter(
+    fontSize: 18.sp,
+    fontWeight: FontWeight.w500,
+    color: AppColors.error,
+  );
+  static TextStyle timerGreen = GoogleFonts.inter(
+    fontSize: 18.sp,
+    fontWeight: FontWeight.w500,
+    color: AppColors.success,
+  );
 }
