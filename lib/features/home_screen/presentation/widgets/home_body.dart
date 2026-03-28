@@ -1,3 +1,4 @@
+import 'package:exams_app/features/explore/presentation/pages/home_tab.dart';
 import 'package:flutter/material.dart';
 
 class HomeBody extends StatelessWidget {
@@ -9,7 +10,7 @@ class HomeBody extends StatelessWidget {
   Widget build(BuildContext context) {
     switch (selectedTab) {
       case 0:
-        return Placeholder(color: Colors.blue);
+        return HomeTab();
       case 1:
         return Placeholder(color: Colors.red);
       case 2:

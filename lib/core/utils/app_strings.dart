@@ -50,6 +50,9 @@ class AppStrings {
   // Home Screen
   static const String browseBySubject = 'Browse by subject';
 
+  // Error messages
+  static const String someThingWentWrong = 'Something went wrong';
+
   // Validation messages
   static const String emailRequired = 'Email is required';
   static const String invalidEmail = 'Enter a valid email address';

@@ -37,7 +37,7 @@ class AuthRepoImpl implements AuthRepo {
       case SuccessBaseResponse<UserModel>():
         return SuccessBaseResponse<UserEntity>(response.data.toEntity());
       case ErrorBaseResponse<UserModel>():
-        return ErrorBaseResponse<UserEntity>(response.error);
+        return ErrorBaseResponse<UserEntity>(response.errorMessage);
     }
   }
 
@@ -67,7 +67,7 @@ class AuthRepoImpl implements AuthRepo {
       case SuccessBaseResponse<UserModel>():
         return SuccessBaseResponse<UserEntity>(response.data.toEntity());
       case ErrorBaseResponse<UserModel>():
-        return ErrorBaseResponse<UserEntity>(response.error);
+        return ErrorBaseResponse<UserEntity>(response.errorMessage);
     }
   }
 
@@ -89,7 +89,7 @@ class AuthRepoImpl implements AuthRepo {
       case SuccessBaseResponse<UserModel>():
         return SuccessBaseResponse<UserEntity>(response.data.toEntity());
       case ErrorBaseResponse<UserModel>():
-        return ErrorBaseResponse<UserEntity>(response.error);
+        return ErrorBaseResponse<UserEntity>(response.errorMessage);
     }
   }
 

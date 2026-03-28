@@ -12,6 +12,7 @@ import 'features/authentication/presentation/auth/pages/auth_page.dart';
 import 'features/authentication/presentation/forget_password/cubit/forget_password_cubit.dart';
 import 'features/authentication/presentation/login/cubit/login_cubit.dart';
 import 'features/authentication/presentation/register/cubit/register_cubit.dart';
+import 'features/explore/presentation/cubit/explore_cubit.dart';
 import 'features/home_screen/presentation/cubit/home_cubit.dart';
 
 void main() {
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
             BlocProvider(create: (_) => getIt<AuthCubit>()..checkAuth()),
             BlocProvider(create: (_) => getIt<ForgetPasswordCubit>()),
             BlocProvider(create: (_) => getIt<HomeCubit>()),
+            BlocProvider(create: (_) => getIt<ExploreCubit>()),
           ],
           child: MaterialApp(
             theme: ThemeData(scaffoldBackgroundColor: AppColors.white),

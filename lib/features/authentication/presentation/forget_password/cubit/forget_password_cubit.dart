@@ -40,83 +40,91 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
   void _forgetPassword(String email) async {
     _userEmail = email;
     // Fresh BaseState clears any previous error/data automatically
-    emit(state.copyWith(
-      stateParam: const BaseState<String?>(isLoading: true),
-    ));
+    emit(state.copyWith(stateParam: const BaseState<String?>(isLoading: true)));
 
     final result = await _forgetPasswordUseCase.call(email);
     switch (result) {
       case SuccessBaseResponse():
-        emit(state.copyWith(
-          stateParam: BaseState<String?>(
-            isLoading: false,
-            data: result.data.info,
+        emit(
+          state.copyWith(
+            stateParam: BaseState<String?>(
+              isLoading: false,
+              data: result.data.info,
+            ),
           ),
-        ));
+        );
       case ErrorBaseResponse():
-        emit(state.copyWith(
-          stateParam: BaseState<String?>(
-            isLoading: false,
-            errorMessage: result.error,
+        emit(
+          state.copyWith(
+            stateParam: BaseState<String?>(
+              isLoading: false,
+              errorMessage: result.errorMessage,
+            ),
           ),
-        ));
+        );
     }
   }
 
   void _verifyCode(String code) async {
-    emit(state.copyWith(
-      stateParam: const BaseState<String?>(isLoading: true),
-    ));
+    emit(state.copyWith(stateParam: const BaseState<String?>(isLoading: true)));
     final result = await _verifyCodeUseCase.call(code);
     switch (result) {
       case SuccessBaseResponse():
-        emit(state.copyWith(
-          stateParam: BaseState<String?>(
-            isLoading: false,
-            data: result.data.status,
+        emit(
+          state.copyWith(
+            stateParam: BaseState<String?>(
+              isLoading: false,
+              data: result.data.status,
+            ),
           ),
-        ));
+        );
       case ErrorBaseResponse():
-        emit(state.copyWith(
-          stateParam: BaseState<String?>(
-            isLoading: false,
-            errorMessage: result.error,
+        emit(
+          state.copyWith(
+            stateParam: BaseState<String?>(
+              isLoading: false,
+              errorMessage: result.errorMessage,
+            ),
           ),
-        ));
+        );
     }
   }
 
   void _resetPassword(String password, String confirmPassword) async {
     if (_userEmail == null) {
-      emit(state.copyWith(
-        stateParam: const BaseState<String?>(
-          isLoading: false,
-          errorMessage: "Email is missing, please go back to step 1",
+      emit(
+        state.copyWith(
+          stateParam: const BaseState<String?>(
+            isLoading: false,
+            errorMessage: "Email is missing, please go back to step 1",
+          ),
         ),
-      ));
+      );
       return;
     }
 
-    emit(state.copyWith(
-      stateParam: const BaseState<String?>(isLoading: true),
-    ));
+    emit(state.copyWith(stateParam: const BaseState<String?>(isLoading: true)));
 
     final result = await _resetPasswordUseCase.call(_userEmail!, password);
     switch (result) {
       case SuccessBaseResponse():
-        emit(state.copyWith(
-          stateParam: BaseState<String?>(
-            isLoading: false,
-            data: result.data.message,
+        emit(
+          state.copyWith(
+            stateParam: BaseState<String?>(
+              isLoading: false,
+              data: result.data.message,
+            ),
           ),
-        ));
+        );
       case ErrorBaseResponse():
-        emit(state.copyWith(
-          stateParam: BaseState<String?>(
-            isLoading: false,
-            errorMessage: result.error,
+        emit(
+          state.copyWith(
+            stateParam: BaseState<String?>(
+              isLoading: false,
+              errorMessage: result.errorMessage,
+            ),
           ),
-        ));
+        );
     }
   }
 }
