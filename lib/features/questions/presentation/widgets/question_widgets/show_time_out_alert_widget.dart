@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:exams_app/core/utils/app_styles.dart';
 import 'package:exams_app/features/questions/presentation/cubit/questions_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ShowTimeOutAlert {
   static void show(BuildContext context) {
@@ -30,7 +31,7 @@ class ShowTimeOutAlert {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text("⏳", style: TextStyle(fontSize: 40)),
+                          SvgPicture.asset("assets/3DIcons/sand-clock.svg"),
                           const SizedBox(width: 12),
                           Text(
                             "Time out !!",
@@ -50,9 +51,9 @@ class ShowTimeOutAlert {
                           onPressed: (state.isLoading)
                               ? null
                               : () {
-                                  context
-                                      .read<QuestionsCubit>()
-                                      .submitAnswers(fromTimeOut: true);
+                                  context.read<QuestionsCubit>().submitAnswers(
+                                    fromTimeOut: true,
+                                  );
                                 },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF02369C),
