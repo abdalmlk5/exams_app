@@ -2,6 +2,7 @@ import 'package:exams_app/config/di/di.dart';
 import 'package:exams_app/config/base_state/base_state.dart';
 import 'package:exams_app/core/utils/app_colors.dart';
 import 'package:exams_app/core/utils/app_styles.dart';
+import 'package:exams_app/core/widgets/custom_snack_bar.dart';
 import 'package:exams_app/features/questions/presentation/cubit/questions_cubit.dart';
 import 'package:exams_app/features/questions/presentation/pages/exam_score_page.dart';
 import 'package:exams_app/features/questions/presentation/widgets/question_widgets/answer_widget.dart';
@@ -33,23 +34,15 @@ class QuestionPage extends StatelessWidget {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => ExamScorePage(result: state.data!.result!),
+                builder: (context) =>
+                    ExamScorePage(result: state.data!.result!),
               ),
             );
             return;
           }
           // If we have data and an error, it's a validation warning (skip/submit check)
           if (state.errorMessage != null && state.data != null) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  state.errorMessage!,
-                  style: const TextStyle(color: AppColors.white),
-                ),
-                backgroundColor: AppColors.error,
-                duration: const Duration(seconds: 2),
-              ),
-            );
+            CustomSnackBar.error(context, state.errorMessage!);
           }
 
           // Trigger the 'Time out !!' Dialog
