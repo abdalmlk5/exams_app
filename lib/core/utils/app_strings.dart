@@ -50,6 +50,16 @@ class AppStrings {
   // Home Screen
   static const String browseBySubject = 'Browse by subject';
 
+  // Exams & Details
+  static const String exams = 'Exams';
+  static const String minutes = 'Minutes';
+  static const String highLevel = 'High level';
+  static const String question = 'Question';
+  static const String instructions = 'Instructions';
+  static const String start = 'Start';
+  static const String from = 'From';
+  static const String to = 'To';
+
   // Error messages
   static const String someThingWentWrong = 'Something went wrong';
 
