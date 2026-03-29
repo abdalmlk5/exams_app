@@ -1,6 +1,5 @@
 import 'package:exams_app/config/di/di.dart';
 import 'package:exams_app/config/base_state/base_state.dart';
-import 'package:exams_app/core/utils/app_colors.dart';
 import 'package:exams_app/core/utils/app_styles.dart';
 import 'package:exams_app/core/widgets/custom_snack_bar.dart';
 import 'package:exams_app/features/questions/presentation/cubit/questions_cubit.dart';
