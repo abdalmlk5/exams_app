@@ -9,15 +9,22 @@ import '../../../../config/di/di.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../data/models/exam_model.dart';
 import '../cubit/exams_cubit.dart';
+import '../cubit/exams_event.dart';
 import '../cubit/exams_state.dart';
 
 class ExamsPage extends StatelessWidget {
-  const ExamsPage({super.key});
-
+  final String? subject;
+  const ExamsPage({super.key, this.subject});
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => getIt<ExamsCubit>(),
+      create: (context) => getIt<ExamsCubit>()
+        ..doEvent(
+          GetAllExamsEvent(
+            //todo: send subject id here to get subjet exams
+            /*subject: subject*/
+          ),
+        ),
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(

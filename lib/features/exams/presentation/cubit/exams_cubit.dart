@@ -13,19 +13,17 @@ import 'exams_state.dart';
 class ExamsCubit extends Cubit<ExamsState> {
   final GetExamsUseCase getSubjectsUseCase;
 
-  ExamsCubit(this.getSubjectsUseCase) : super(ExamsState()) {
-    _getSubjects();
-  }
+  ExamsCubit(this.getSubjectsUseCase) : super(ExamsState());
 
   void doEvent(ExamsEvent event) {
     switch (event) {
       case GetAllExamsEvent():
-        _getSubjects();
+        _getSubjects(subject: event.subject);
         break;
     }
   }
 
-  void _getSubjects({String? token}) async {
+  void _getSubjects({String? token, String? subject}) async {
     String? effectiveToken = token ?? await CacheHelper.getToken();
 
     if (effectiveToken == null) {
@@ -45,7 +43,10 @@ class ExamsCubit extends Cubit<ExamsState> {
         stateParam: const BaseState<List<ExamModel>>(isLoading: true),
       ),
     );
-    final result = await getSubjectsUseCase.call(effectiveToken);
+    final result = await getSubjectsUseCase.call(
+      effectiveToken,
+      subject: subject,
+    );
     switch (result) {
       case SuccessBaseResponse():
         emit(

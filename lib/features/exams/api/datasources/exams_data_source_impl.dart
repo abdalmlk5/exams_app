@@ -13,9 +13,15 @@ class ExamsDataSourceImpl extends ExamsDataSourceContract {
   ExamsDataSourceImpl(this.apiClient);
 
   @override
-  Future<BaseResponse<ExamsResponse>> getExams({required String token}) async {
+  Future<BaseResponse<ExamsResponse>> getExams({
+    required String token,
+    String? subject,
+  }) async {
     try {
-      final response = await apiClient.getExams({"token": token});
+      final response = await apiClient.getExams({
+        "token": token,
+        "subject": subject ?? '',
+      });
 
       return SuccessBaseResponse<ExamsResponse>(response);
     } catch (e) {

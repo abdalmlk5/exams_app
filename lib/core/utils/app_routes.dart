@@ -27,10 +27,13 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => const ResetPasswordPage());
 
       case examsPage:
-        return MaterialPageRoute(builder: (_) => ExamsPage());
+        final subject = settings.arguments as String?;
+        return MaterialPageRoute(builder: (_) => ExamsPage(subject: subject));
+
       case examDetailsPage:
         final exam = settings.arguments as ExamModel;
         return MaterialPageRoute(builder: (_) => ExamDetailsPage(exam: exam));
+
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

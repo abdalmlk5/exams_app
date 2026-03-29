@@ -3,6 +3,7 @@ sealed class ExamsEvent {
 }
 
 class GetAllExamsEvent extends ExamsEvent {
-  final String token;
-  const GetAllExamsEvent(this.token);
+  final String? token;
+  final String? subject;
+  const GetAllExamsEvent({this.token, this.subject});
 }
