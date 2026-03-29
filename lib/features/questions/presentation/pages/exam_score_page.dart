@@ -19,9 +19,9 @@ class ExamScorePage extends StatelessWidget {
     final totalPercent = double.tryParse(totalPercentString) ?? 0.0;
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.white,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: AppColors.black),
