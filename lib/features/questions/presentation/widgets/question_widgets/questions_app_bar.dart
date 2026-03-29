@@ -1,6 +1,7 @@
 import 'package:exams_app/core/utils/app_colors.dart';
 import 'package:exams_app/core/utils/app_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class QuestionsAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -62,11 +63,16 @@ class QuestionsAppBar extends StatelessWidget implements PreferredSizeWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Center(
-            child: Text(
-              "⏰ $time",
-              style: remainingSeconds <= 30
-                  ? AppStyles.timerRed
-                  : AppStyles.timerGreen,
+            child: Row(
+              children: [
+                SvgPicture.asset('assets/3DIcons/alarm.svg'),
+                Text(
+                  "⏰ $time",
+                  style: remainingSeconds <= 1800
+                      ? AppStyles.timerRed
+                      : AppStyles.timerGreen,
+                ),
+              ],
             ),
           ),
         ),

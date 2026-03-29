@@ -45,14 +45,17 @@ class QuestionsCubit extends Cubit<BaseState<ExamData>> {
               ? questions.first.exam!.duration
               : 30; // default 30 minutes
 
+              //TODO  1 for test
+
+
           // emit the data
           emit(
             state.copyWith(
               isLoading: false,
               data: ExamData(
                 questions: questions,
-                totalTimeInMinuts: totalTime,
-                remainingTimeInMinuts: totalTime,
+                totalTimeInMinutes: totalTime,
+                remainingTimeInSeconds: totalTime * 60,
               ),
             ),
           );
@@ -81,12 +84,12 @@ class QuestionsCubit extends Cubit<BaseState<ExamData>> {
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (state.data == null) return;
 
-      final currentRemaining = state.data!.remainingTimeInMinuts;
+      final currentRemaining = state.data!.remainingTimeInSeconds;
       if (currentRemaining > 0) {
         emit(
           state.copyWith(
             data: state.data!.copyWith(
-              remainingTimeInMinuts: currentRemaining - 1,
+              remainingTimeInSeconds: currentRemaining - 1,
             ),
           ),
         );
@@ -196,7 +199,7 @@ class QuestionsCubit extends Cubit<BaseState<ExamData>> {
       emit(state.copyWith(isLoading: true, errorMessage: null));
 
       final timeTaken =
-          state.data!.totalTimeInMinuts - state.data!.remainingTimeInMinuts;
+          state.data!.totalTimeInMinutes - (state.data!.remainingTimeInSeconds ~/ 60);
 
       final answersPayload = state.data!.questions.map((q) {
         final answerKey = state.data!.selectedAnswers[q.id];
