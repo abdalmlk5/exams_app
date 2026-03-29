@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:exams_app/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -10,8 +11,8 @@ class ScoreDonutChart extends StatelessWidget {
   const ScoreDonutChart({
     super.key,
     required this.percentage,
-    this.backgroundColor = const Color(0xFFC00000),
-    this.progressColor = const Color(0xFF02369C),
+    this.backgroundColor = AppColors.error,
+    this.progressColor = AppColors.primary,
   });
 
   @override

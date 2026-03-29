@@ -1,5 +1,6 @@
 import 'package:exams_app/config/di/di.dart';
 import 'package:exams_app/config/base_state/base_state.dart';
+import 'package:exams_app/core/utils/app_colors.dart';
 import 'package:exams_app/core/utils/app_styles.dart';
 import 'package:exams_app/features/questions/presentation/cubit/questions_cubit.dart';
 import 'package:exams_app/features/questions/presentation/pages/exam_score_page.dart';
@@ -43,9 +44,9 @@ class QuestionPage extends StatelessWidget {
               SnackBar(
                 content: Text(
                   state.errorMessage!,
-                  style: const TextStyle(color: Colors.white),
+                  style: const TextStyle(color: AppColors.white),
                 ),
-                backgroundColor: Colors.red,
+                backgroundColor: AppColors.error,
                 duration: const Duration(seconds: 2),
               ),
             );

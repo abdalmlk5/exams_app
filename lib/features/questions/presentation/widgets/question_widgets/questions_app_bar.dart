@@ -1,7 +1,6 @@
 import 'package:exams_app/core/utils/app_colors.dart';
 import 'package:exams_app/core/utils/app_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class QuestionsAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -47,7 +46,7 @@ class QuestionsAppBar extends StatelessWidget implements PreferredSizeWidget {
                     },
                     child: const Text(
                       "Exit",
-                      style: TextStyle(color: Colors.red),
+                      style: TextStyle(color: AppColors.error),
                     ),
                   ),
                 ],
@@ -63,16 +62,14 @@ class QuestionsAppBar extends StatelessWidget implements PreferredSizeWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Center(
-            child: Row(
-              children: [
-                SvgPicture.asset('assets/3DIcons/alarm.svg'),
-                Text(
-                  "⏰ $time",
-                  style: remainingSeconds <= 1800
-                      ? AppStyles.timerRed
-                      : AppStyles.timerGreen,
-                ),
-              ],
+            child: SizedBox(
+              width: 90,
+              child: Text(
+                "⏰ $time",
+                style: remainingSeconds <= 1800
+                    ? AppStyles.timerRed
+                    : AppStyles.timerGreen,
+              ),
             ),
           ),
         ),

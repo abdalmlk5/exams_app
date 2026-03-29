@@ -1,3 +1,4 @@
+import 'package:exams_app/core/utils/app_colors.dart';
 import 'package:exams_app/features/questions/domain/entities/check_questions_response_entity.dart';
 import 'package:exams_app/features/questions/presentation/widgets/exam_score_widgets/score_donut_chart.dart';
 import 'package:exams_app/features/questions/presentation/widgets/exam_score_widgets/score_metric_row.dart';
@@ -23,7 +24,7 @@ class ExamScorePage extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
+          icon: const Icon(Icons.arrow_back_ios, color: AppColors.black),
           onPressed: () => Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => const MainPageTest()),
@@ -71,13 +72,13 @@ class ExamScorePage extends StatelessWidget {
                     ScoreMetricRow(
                       label: "Correct",
                       count: result.correct,
-                      color: const Color(0xFF02369C),
+                      color: AppColors.primary,
                     ),
                     SizedBox(height: 12.h),
                     ScoreMetricRow(
                       label: "Incorrect",
                       count: result.wrong,
-                      color: const Color(0xFFC00000),
+                      color: AppColors.error,
                     ),
                   ],
                 ),
@@ -92,7 +93,7 @@ class ExamScorePage extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF02369C),
+                  backgroundColor: AppColors.primary,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(100),
                   ),
@@ -115,7 +116,7 @@ class ExamScorePage extends StatelessWidget {
                   );
                 },
                 style: OutlinedButton.styleFrom(
-                  side: const BorderSide(color: Color(0xFF02369C)),
+                  side: const BorderSide(color: AppColors.primary),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(100),
                   ),
@@ -123,7 +124,7 @@ class ExamScorePage extends StatelessWidget {
                 child: Text(
                   "Start again",
                   style: AppStyles.black16400.copyWith(
-                    color: const Color(0xFF02369C),
+                    color: AppColors.primary,
                   ),
                 ),
               ),

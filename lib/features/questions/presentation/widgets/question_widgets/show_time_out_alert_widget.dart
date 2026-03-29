@@ -1,4 +1,5 @@
 import 'package:exams_app/config/base_state/base_state.dart';
+import 'package:exams_app/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:exams_app/core/utils/app_styles.dart';
 import 'package:exams_app/features/questions/presentation/cubit/questions_cubit.dart';
@@ -56,7 +57,7 @@ class ShowTimeOutAlert {
                                   );
                                 },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF02369C),
+                            backgroundColor: AppColors.primary,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(100),
                             ),
@@ -66,14 +67,14 @@ class ShowTimeOutAlert {
                                   height: 20,
                                   width: 20,
                                   child: CircularProgressIndicator(
-                                    color: Colors.white,
+                                    color: AppColors.white,
                                     strokeWidth: 2,
                                   ),
                                 )
                               : const Text(
                                   "View score",
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: AppColors.white,
                                     fontSize: 16,
                                     fontWeight: FontWeight.w600,
                                   ),
