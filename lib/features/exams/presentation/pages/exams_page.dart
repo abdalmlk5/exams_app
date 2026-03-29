@@ -43,6 +43,9 @@ class ExamsPage extends StatelessWidget {
                 state.examsState.errorMessage ?? AppStrings.someThingWentWrong,
               );
               return SizedBox();
+            }
+            if (state.examsState.data == null) {
+              return const Center(child: Text('No exams found'));
             } else {
               List<ExamModel> exams = state.examsState.data ?? [];
               return ListView.separated(
