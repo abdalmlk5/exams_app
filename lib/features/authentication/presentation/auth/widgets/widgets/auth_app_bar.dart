@@ -22,7 +22,7 @@ class AuthAppBar extends StatelessWidget implements PreferredSizeWidget {
           ? IconButton(
               icon: Icon(
                 Icons.arrow_back_ios,
-                color: Colors.black,
+                color: AppColors.black,
                 size: 20.sp,
               ),
               onPressed: onBack,

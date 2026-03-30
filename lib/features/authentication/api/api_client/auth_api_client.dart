@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:exams_app/config/api/end_points.dart';
-import 'package:exams_app/features/authentication/data/response/auth_response.dart';
+import 'package:exams_app/features/authentication/data/response/auth_response_model.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 
