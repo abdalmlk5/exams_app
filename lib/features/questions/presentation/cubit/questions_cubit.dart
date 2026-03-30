@@ -185,9 +185,17 @@ class QuestionsCubit extends Cubit<BaseState<ExamData>> {
   /// submit the answers after finishing the exam
   Future<void> _submitAnswers() async {
     try {
-      // once the data from the response not null
-      if (state.data == null) return;
+      // once the data from the response is not null
+      if (state.data == null) {
+        emit(
+          state.copyWith(
+            errorMessage: "No data found.",
+          ),
+        );
+        return;
+      }
 
+      // if the answers are not submitted
       if (state.data!.selectedAnswers.length < state.data!.questions.length) {
         emit(
           state.copyWith(
