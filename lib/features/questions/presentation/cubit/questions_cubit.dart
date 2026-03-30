@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:exams_app/config/error_handler/error_handler.dart';
+import 'package:exams_app/features/questions/presentation/cubit/question_event.dart';
 import 'package:injectable/injectable.dart';
 import 'package:exams_app/config/base_state/base_state.dart';
 import 'package:exams_app/features/questions/domain/usecases/get_questions_usecase.dart';
@@ -23,8 +24,24 @@ class QuestionsCubit extends Cubit<BaseState<ExamData>> {
   QuestionsCubit(this.getQuestionsUsecase, this.submitAnswersUsecase)
     : super(const BaseState<ExamData>());
 
+  void doEvent(QuestionEvent event) {
+    switch (event) {
+      case GetQuestionsEvent():
+        _getQuestions(event.examId);
+
+      case SubmitAnswersEvent():
+        _submitAnswers();
+      case NextQuestionsEvent():
+        _nextQuestion();
+      case PerviousQuestionsEvent():
+        _previousQuestion();
+      case SelectAnswersEvent():
+        _selectAnswer(event.questionId, event.answerKey);
+    }
+  }
+
   /// get questions
-  Future<void> getQuestions(String examId) async {
+  Future<void> _getQuestions(String examId) async {
     try {
       // louding
       emit(state.copyWith(isLoading: true, errorMessage: null));
@@ -41,12 +58,11 @@ class QuestionsCubit extends Cubit<BaseState<ExamData>> {
           // handle the data
           final questions = result.data;
 
-          final totalTime = questions.isNotEmpty && questions.first.exam != null
-              ? questions.first.exam!.duration
-              : 30; // default 30 minutes
+          // final totalTime = questions.isNotEmpty && questions.first.exam != null
+          //     ? questions.first.exam!.duration
+          //     : 30; // default 30 minutes
 
-              //TODO  1 for test
-
+          final totalTime = 0;
 
           // emit the data
           emit(
@@ -100,7 +116,7 @@ class QuestionsCubit extends Cubit<BaseState<ExamData>> {
     });
   }
 
-  void selectAnswer(String questionId, String answerKey) {
+  void _selectAnswer(String questionId, String answerKey) {
     if (state.data == null || state.data!.isTimeOut) return;
 
     final newAnswers = Map<String, String>.from(state.data!.selectedAnswers);
@@ -112,7 +128,7 @@ class QuestionsCubit extends Cubit<BaseState<ExamData>> {
   }
 
   /// go to next question
-  void nextQuestion() {
+  void _nextQuestion() {
     if (state.data == null) return;
 
     final currentQuestionId =
@@ -152,7 +168,7 @@ class QuestionsCubit extends Cubit<BaseState<ExamData>> {
   }
 
   /// back to previous question
-  void previousQuestion() {
+  void _previousQuestion() {
     if (state.data == null) return;
 
     if (state.data!.currentIndex > 0) {
@@ -167,31 +183,26 @@ class QuestionsCubit extends Cubit<BaseState<ExamData>> {
   }
 
   /// submit the answers after finishing the exam
-  Future<void> submitAnswers({bool fromTimeOut = false}) async {
+  Future<void> _submitAnswers() async {
     try {
       // once the data from the response not null
       if (state.data == null) return;
 
       if (state.data!.selectedAnswers.length < state.data!.questions.length) {
-          emit(
-            state.copyWith(
-              errorMessage: "Please answer all questions before submitting.",
-            ),
-          );
-          // Clear the error message so it doesn't linger
-          emit(
-            BaseState<ExamData>(data: state.data, isLoading: state.isLoading),
-          );
-          emit(
-            state.copyWith(
-              errorMessage: "You submitted the exam with unanswered questions.",
-            ),
-          );
-          // Clear the error message so it doesn't linger
-          emit(
-            BaseState<ExamData>(data: state.data, isLoading: state.isLoading),
-          );
-        
+        emit(
+          state.copyWith(
+            errorMessage: "Please answer all questions before submitting.",
+          ),
+        );
+        // Clear the error message so it doesn't linger
+        emit(BaseState<ExamData>(data: state.data, isLoading: state.isLoading));
+        emit(
+          state.copyWith(
+            errorMessage: "You submitted the exam with unanswered questions.",
+          ),
+        );
+        // Clear the error message so it doesn't linger
+        emit(BaseState<ExamData>(data: state.data, isLoading: state.isLoading));
       }
 
       // cancel the timer
@@ -199,7 +210,8 @@ class QuestionsCubit extends Cubit<BaseState<ExamData>> {
       emit(state.copyWith(isLoading: true, errorMessage: null));
 
       final timeTaken =
-          state.data!.totalTimeInMinutes - (state.data!.remainingTimeInSeconds ~/ 60);
+          state.data!.totalTimeInMinutes -
+          (state.data!.remainingTimeInSeconds ~/ 60);
 
       final answersPayload = state.data!.questions.map((q) {
         final answerKey = state.data!.selectedAnswers[q.id];
@@ -227,7 +239,9 @@ class QuestionsCubit extends Cubit<BaseState<ExamData>> {
             ),
           );
         case ErrorBaseResponse<CheckQuestionsResponseEntity>():
-          emit(state.copyWith(isLoading: false, errorMessage: result.errorMessage));
+          emit(
+            state.copyWith(isLoading: false, errorMessage: result.errorMessage),
+          );
       }
     } catch (e) {
       emit(

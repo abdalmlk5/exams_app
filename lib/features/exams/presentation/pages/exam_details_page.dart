@@ -1,5 +1,9 @@
+import 'package:exams_app/config/di/di.dart';
+import 'package:exams_app/features/questions/presentation/cubit/question_event.dart';
+import 'package:exams_app/features/questions/presentation/cubit/questions_cubit.dart';
 import 'package:exams_app/features/questions/presentation/pages/question_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/utils/app_assets.dart';
@@ -98,12 +102,14 @@ class ExamDetailsPage extends StatelessWidget {
               text: AppStrings.start,
               onPressed: () {
                 Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) =>
-                    QuestionPage(examId: exam.id!),
-              ),
-            );
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => BlocProvider(
+                      create: (context) => getIt<QuestionsCubit>()..doEvent(GetQuestionsEvent(examId: exam.id!)),
+                      child: QuestionPage(examId: exam.id!),
+                    ),
+                  ),
+                );
               },
             ),
             SizedBox(height: 16.h),

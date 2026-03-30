@@ -1,5 +1,3 @@
-import 'package:exams_app/features/questions/domain/entities/submit_answers_request_entity.dart';
-
 sealed class QuestionEvent {}
 
 class GetQuestionsEvent extends QuestionEvent {
@@ -7,15 +5,18 @@ class GetQuestionsEvent extends QuestionEvent {
   final int? page;
   final int? limit;
 
-  GetQuestionsEvent({
-    required this.examId,
-    this.page,
-    this.limit,
-  });
+  GetQuestionsEvent({required this.examId, this.page, this.limit});
 }
 
-class SubmitAnswersEvent extends QuestionEvent {
-  final SubmitAnswersRequestEntity body;
+class NextQuestionsEvent extends QuestionEvent {}
 
-  SubmitAnswersEvent({required this.body});
+class PerviousQuestionsEvent extends QuestionEvent {}
+
+class SelectAnswersEvent extends QuestionEvent {
+  final String questionId;
+  final String answerKey;
+
+  SelectAnswersEvent({required this.questionId, required this.answerKey});
 }
+
+class SubmitAnswersEvent extends QuestionEvent {}
