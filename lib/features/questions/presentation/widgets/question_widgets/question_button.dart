@@ -30,7 +30,7 @@ class QuestionButton extends StatelessWidget {
               ? AppColors.primary
               : AppColors.white,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(100),
           ),
         ),
         child: isLoading
