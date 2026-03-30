@@ -58,11 +58,12 @@ class QuestionsCubit extends Cubit<BaseState<ExamData>> {
           // handle the data
           final questions = result.data;
 
-          // final totalTime = questions.isNotEmpty && questions.first.exam != null
-          //     ? questions.first.exam!.duration
-          //     : 30; // default 30 minutes
+          final totalTime = questions.isNotEmpty && questions.first.exam != null
+              ? questions.first.exam!.duration
+              : 30; // default 30 minutes
 
-          final totalTime = 0;
+          // TODO
+          // final totalTime = 0;
 
           // emit the data
           emit(
@@ -187,30 +188,8 @@ class QuestionsCubit extends Cubit<BaseState<ExamData>> {
     try {
       // once the data from the response is not null
       if (state.data == null) {
-        emit(
-          state.copyWith(
-            errorMessage: "No data found.",
-          ),
-        );
+        emit(state.copyWith(errorMessage: "No data found."));
         return;
-      }
-
-      // if the answers are not submitted
-      if (state.data!.selectedAnswers.length < state.data!.questions.length) {
-        emit(
-          state.copyWith(
-            errorMessage: "Please answer all questions before submitting.",
-          ),
-        );
-        // Clear the error message so it doesn't linger
-        emit(BaseState<ExamData>(data: state.data, isLoading: state.isLoading));
-        emit(
-          state.copyWith(
-            errorMessage: "You submitted the exam with unanswered questions.",
-          ),
-        );
-        // Clear the error message so it doesn't linger
-        emit(BaseState<ExamData>(data: state.data, isLoading: state.isLoading));
       }
 
       // cancel the timer
