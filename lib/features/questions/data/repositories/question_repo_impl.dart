@@ -36,7 +36,7 @@ class QuestionRepoImpl implements QuestionRepoContract {
           response.data.map((e) => e.toEntity()).toList(),
         );
       case ErrorBaseResponse<List<QuestionModel>>():
-        return ErrorBaseResponse<List<QuestionEntity>>(response.error);
+        return ErrorBaseResponse<List<QuestionEntity>>(response.errorMessage);
     }
   }
 
@@ -54,7 +54,7 @@ class QuestionRepoImpl implements QuestionRepoContract {
           response.data.toEntity(),
         );
       case ErrorBaseResponse<CheckQuestionsResponseModel>():
-        return ErrorBaseResponse<CheckQuestionsResponseEntity>(response.error);
+        return ErrorBaseResponse<CheckQuestionsResponseEntity>(response.errorMessage);
     }
   }
 }

@@ -1,8 +1,8 @@
 import 'package:exams_app/core/utils/app_colors.dart';
+import 'package:exams_app/features/home_screen/presentation/pages/home_screen.dart';
 import 'package:exams_app/features/questions/domain/entities/check_questions_response_entity.dart';
 import 'package:exams_app/features/questions/presentation/widgets/exam_score_widgets/score_donut_chart.dart';
 import 'package:exams_app/features/questions/presentation/widgets/exam_score_widgets/score_metric_row.dart';
-import 'package:exams_app/main_page_test.dart';
 import 'package:flutter/material.dart';
 import 'package:exams_app/core/utils/app_styles.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,7 +27,7 @@ class ExamScorePage extends StatelessWidget {
           icon: const Icon(Icons.arrow_back_ios, color: AppColors.black),
           onPressed: () => Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => const MainPageTest()),
+            MaterialPageRoute(builder: (context) => const HomeScreen()),
             (route) => false,
           ),
         ),
@@ -110,7 +110,7 @@ class ExamScorePage extends StatelessWidget {
                   Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const MainPageTest(),
+                      builder: (context) => const HomeScreen(),
                     ),
                     (route) => false,
                   );

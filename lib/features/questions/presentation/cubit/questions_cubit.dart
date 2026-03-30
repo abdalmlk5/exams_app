@@ -68,7 +68,7 @@ class QuestionsCubit extends Cubit<BaseState<ExamData>> {
           emit(
             state.copyWith(
               isLoading: false,
-              errorMessage: ErrorHandler.handle(result.error),
+              errorMessage: ErrorHandler.handle(result.errorMessage),
             ),
           );
       }
@@ -227,7 +227,7 @@ class QuestionsCubit extends Cubit<BaseState<ExamData>> {
             ),
           );
         case ErrorBaseResponse<CheckQuestionsResponseEntity>():
-          emit(state.copyWith(isLoading: false, errorMessage: result.error));
+          emit(state.copyWith(isLoading: false, errorMessage: result.errorMessage));
       }
     } catch (e) {
       emit(

@@ -1,3 +1,4 @@
+import 'package:exams_app/features/questions/presentation/pages/question_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -96,7 +97,13 @@ class ExamDetailsPage extends StatelessWidget {
             CustomButton(
               text: AppStrings.start,
               onPressed: () {
-                // Navigate to questions
+                Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    QuestionPage(examId: exam.id!),
+              ),
+            );
               },
             ),
             SizedBox(height: 16.h),
