@@ -1,4 +1,3 @@
-import 'package:exams_app/config/di/di.dart';
 import 'package:exams_app/config/base_state/base_state.dart';
 import 'package:exams_app/core/utils/app_colors.dart';
 import 'package:exams_app/core/utils/app_styles.dart';
