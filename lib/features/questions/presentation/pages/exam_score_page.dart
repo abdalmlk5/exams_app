@@ -1,4 +1,5 @@
 import 'package:exams_app/core/utils/app_colors.dart';
+import 'package:exams_app/core/widgets/custom_snack_bar.dart';
 import 'package:exams_app/features/home_screen/presentation/pages/home_screen.dart';
 import 'package:exams_app/features/questions/domain/entities/check_questions_response_entity.dart';
 import 'package:exams_app/features/questions/presentation/widgets/exam_score_widgets/score_donut_chart.dart';
@@ -91,7 +92,9 @@ class ExamScorePage extends StatelessWidget {
               width: double.infinity,
               height: 50.h,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  CustomSnackBar.error(context, "Under Developing");
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
                   shape: RoundedRectangleBorder(
@@ -109,9 +112,7 @@ class ExamScorePage extends StatelessWidget {
                 onPressed: () {
                   Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => const HomeScreen(),
-                    ),
+                    MaterialPageRoute(builder: (context) => const HomeScreen()),
                     (route) => false,
                   );
                 },
