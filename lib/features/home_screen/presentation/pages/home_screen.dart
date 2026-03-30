@@ -1,8 +1,8 @@
+import 'package:exams_app/features/explore/presentation/pages/home_tab.dart';
 import 'package:exams_app/features/home_screen/presentation/cubit/home_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../widgets/home_body.dart';
 import '../widgets/home_bottom_nav_bar.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -13,7 +13,15 @@ class HomeScreen extends StatelessWidget {
     return BlocBuilder<HomeCubit, HomeState>(
       builder: (BuildContext context, HomeState state) {
         return Scaffold(
-          body: HomeBody(selectedTab: state.selectedTab),
+          body: IndexedStack(
+            index: state.selectedTab,
+            children: [
+              HomeTab(),
+              Scaffold(body: Center(child: Text("Result"))),
+              Scaffold(body: Center(child: Text("Profile"))),
+            ],
+          ),
+
           bottomNavigationBar: HomeBottomNavBar(selectedTab: state.selectedTab),
         );
       },
