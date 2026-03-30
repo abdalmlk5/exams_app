@@ -42,7 +42,7 @@ class ExamData extends Equatable {
     );
   }
 
-  // UI Helper
+  // UI Helpers
   QuestionEntity? get currentQuestion =>
       questions.isNotEmpty &&
           currentIndex >= 0 &&

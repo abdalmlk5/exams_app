@@ -38,6 +38,8 @@ class QuestionPage extends StatelessWidget {
             );
             return;
           }
+
+          
           // If we have data and an error, it's a validation warning (skip/submit check)
           if (state.errorMessage != null && state.data != null) {
             ScaffoldMessenger.of(context).showSnackBar(
