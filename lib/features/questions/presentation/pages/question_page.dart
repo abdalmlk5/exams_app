@@ -25,8 +25,8 @@ class QuestionPage extends StatelessWidget {
           previous.data?.isTimeOut != current.data?.isTimeOut ||
           previous.data?.result != current.data?.result,
       listener: (context, state) {
-        // If result is present, navigate to ResultPage and replace current page
-        if (state.data?.result != null) {
+        // If result is present, navigate to ScorePage and replace current page
+        if (state.data?.result != null && state.isLoading == false) {
           // If the timeout dialog is open when results arrive, we need to ensure the dialog context is dismissed or the new page is pushed on top appropriately
           // Navigator.pop(context) might be dangerous if no dialog is open, so we use pushReplacement for the scaffold
           Navigator.pushReplacement(
