@@ -8,13 +8,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class ShowTimeOutAlert {
-  static void show(BuildContext context) {
+  static void show(BuildContext parentContext) {
     showDialog(
-      context: context,
+      context: parentContext,
       barrierDismissible: false,
-      builder: (dialogContext) {
+      barrierColor: AppColors.black20,
+      builder: (context) {
         return PopScope(
-          canPop: false, // Prevents Android hardware back button
+          canPop:
+              false, // Prevents Android hardware back button from closing the dialog
           child: AlertDialog(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
@@ -24,7 +26,7 @@ class ShowTimeOutAlert {
               vertical: 32,
             ),
             content: BlocProvider.value(
-              value: context.read<QuestionsCubit>(),
+              value: parentContext.read<QuestionsCubit>(),
               child: BlocBuilder<QuestionsCubit, BaseState<ExamData>>(
                 builder: (context, state) {
                   return Column(
