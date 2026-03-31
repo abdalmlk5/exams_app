@@ -12,7 +12,12 @@ class LoginUsecase {
   Future<BaseResponse<UserEntity>> call({
     required String email,
     required final String password,
+    bool rememberMe = false,
   }) async {
-    return await authRepoContract.login(email: email, password: password);
+    return await authRepoContract.login(
+      email: email,
+      password: password,
+      rememberMe: rememberMe,
+    );
   }
 }

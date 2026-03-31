@@ -10,6 +10,7 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSourceContract {
   AuthLocalDataSourceImpl(this.secureStorage);
 
   static const String _tokenKey = 'auth_token';
+  static const String _rememberMeKey = 'remember_me';
 
   @override
   Future<void> saveToken(String token) async {
@@ -24,5 +25,21 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSourceContract {
   @override
   Future<void> deleteToken() async {
     await secureStorage.delete(key: _tokenKey);
+  }
+
+  @override
+  Future<void> saveRememberMe(bool value) async {
+    await secureStorage.write(key: _rememberMeKey, value: value.toString());
+  }
+
+  @override
+  Future<bool> getRememberMe() async {
+    final value = await secureStorage.read(key: _rememberMeKey);
+    return value == 'true';
+  }
+
+  @override
+  Future<void> deleteRememberMe() async {
+    await secureStorage.delete(key: _rememberMeKey);
   }
 }

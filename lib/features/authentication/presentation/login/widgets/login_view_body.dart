@@ -34,8 +34,11 @@ class _LoginViewBodyState extends State<LoginViewBody> {
   void _login() {
     final String email = _emailController.text;
     final String password = _passwordController.text;
+    final bool rememberMe = context.read<LoginCubit>().state.rememberMe;
 
-    context.read<LoginCubit>().doEvent(Login(email: email, password: password));
+    context.read<LoginCubit>().doEvent(
+      Login(email: email, password: password, rememberMe: rememberMe),
+    );
   }
 
   @override
@@ -70,8 +73,13 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                     );
                   },
                 ),
-                SizedBox(height: 12.h),
-                const RememberMeAndForgetPassword(),
+                const SizedBox(height: 12),
+                RememberMeAndForgetPassword(
+                  value: state.rememberMe,
+                  onChanged: (value) {
+                    context.read<LoginCubit>().toggleRememberMe(value ?? false);
+                  },
+                ),
                 SizedBox(height: 48.h),
                 CustomButton(
                   text: AppStrings.login,
