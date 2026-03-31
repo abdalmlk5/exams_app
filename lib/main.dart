@@ -41,7 +41,18 @@ class MyApp extends StatelessWidget {
             BlocProvider(create: (_) => getIt<ExploreCubit>()),
           ],
           child: MaterialApp(
-            theme: ThemeData(scaffoldBackgroundColor: AppColors.white),
+            theme: ThemeData(scaffoldBackgroundColor: AppColors.white,appBarTheme: AppBarTheme(
+              backgroundColor: AppColors.white,
+              elevation: 0,
+              centerTitle: true,
+              titleTextStyle: TextStyle(
+                color: AppColors.black,
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+              ),
+              iconTheme: IconThemeData(color: AppColors.black),
+              toolbarHeight: 10.h,
+            )),
             debugShowCheckedModeBanner: false,
             title: 'Exams App',
             onGenerateRoute: AppRoutes.onGenerateRoute,
