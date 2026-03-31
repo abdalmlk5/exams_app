@@ -11,6 +11,7 @@ import 'explore_state.dart';
 
 @injectable
 class ExploreCubit extends Cubit<ExploreState> {
+  List<SubjectModel> allSubjects = [];
   final GetSubjectsUseCase getSubjectsUseCase;
 
   ExploreCubit(this.getSubjectsUseCase) : super(ExploreState()) {
@@ -21,6 +22,9 @@ class ExploreCubit extends Cubit<ExploreState> {
     switch (event) {
       case GetAllSubjectsEvent():
         _getSubjects();
+        break;
+      case GetFilteredSubjectsListEvent():
+        _getFilteredSubjectsList(event.searchText);
         break;
     }
   }
@@ -48,6 +52,8 @@ class ExploreCubit extends Cubit<ExploreState> {
     final result = await getSubjectsUseCase.call(effectiveToken);
     switch (result) {
       case SuccessBaseResponse():
+        allSubjects.clear();
+        allSubjects = result.data;
         emit(
           state.copyWith(
             stateParam: BaseState<List<SubjectModel>>(
@@ -66,5 +72,23 @@ class ExploreCubit extends Cubit<ExploreState> {
           ),
         );
     }
+  }
+
+  void _getFilteredSubjectsList(String searchText) {
+    final filteredSubjects = allSubjects
+        .where(
+          (subject) =>
+              subject.name?.toLowerCase().contains(searchText.toLowerCase()) ??
+              false,
+        )
+        .toList();
+    emit(
+      state.copyWith(
+        stateParam: BaseState<List<SubjectModel>>(
+          isLoading: false,
+          data: filteredSubjects,
+        ),
+      ),
+    );
   }
 }

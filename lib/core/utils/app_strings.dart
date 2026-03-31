@@ -48,6 +48,8 @@ class AppStrings {
   static const String newPassword = 'New password';
 
   // Home Screen
+  static const String search = 'Search';
+  static const String survey = 'Survey';
   static const String browseBySubject = 'Browse by subject';
 
   // Exams & Details
