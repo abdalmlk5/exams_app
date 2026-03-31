@@ -13,6 +13,8 @@ class HomeScreen extends StatelessWidget {
     return BlocBuilder<HomeCubit, HomeState>(
       builder: (BuildContext context, HomeState state) {
         return Scaffold(
+          appBar: AppBar(
+          ),
           body: HomeBody(selectedTab: state.selectedTab),
           bottomNavigationBar: HomeBottomNavBar(selectedTab: state.selectedTab),
         );
