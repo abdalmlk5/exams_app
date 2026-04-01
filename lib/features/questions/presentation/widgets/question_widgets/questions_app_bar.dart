@@ -74,6 +74,7 @@ class QuestionsAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ),
       ],
+      toolbarHeight: 60,
     );
   }
 }

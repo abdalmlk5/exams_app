@@ -17,6 +17,12 @@ abstract class AppStyles {
     fontWeight: FontWeight.w500,
     color: AppColors.primary,
   );
+  
+  static TextStyle primary20500 = GoogleFonts.inter(
+    fontSize: 20.sp,
+    fontWeight: FontWeight.w500,
+    color: AppColors.primary,
+  );
 
   // Black Styles
   static TextStyle black20500 = GoogleFonts.inter(
