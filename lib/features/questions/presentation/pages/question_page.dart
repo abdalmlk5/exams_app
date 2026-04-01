@@ -32,7 +32,7 @@ class QuestionPage extends StatelessWidget {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => ExamScorePage(result: state.data!.result!),
+              builder: (context) => ExamScorePage(score: state.data!.result!),
             ),
           );
           return;

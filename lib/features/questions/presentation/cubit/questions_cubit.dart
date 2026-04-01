@@ -222,7 +222,7 @@ class QuestionsCubit extends Cubit<BaseState<ExamData>> {
           emit(
             state.copyWith(
               isLoading: false,
-              data: state.data!.copyWith(result: result.data),
+              data: state.data!.copyWith(score: result.data),
             ),
           );
         case ErrorBaseResponse<CheckQuestionsResponseEntity>():

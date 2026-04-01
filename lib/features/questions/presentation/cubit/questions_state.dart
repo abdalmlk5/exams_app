@@ -25,7 +25,7 @@ class ExamData extends Equatable {
     List<QuestionEntity>? questions,
     int? currentIndex,
     Map<String, String>? selectedAnswers,
-    CheckQuestionsResponseEntity? result,
+    CheckQuestionsResponseEntity? score,
     int? remainingTimeInSeconds,
     int? totalTimeInMinutes,
     bool? isTimeOut,
@@ -34,7 +34,7 @@ class ExamData extends Equatable {
       questions: questions ?? this.questions,
       currentIndex: currentIndex ?? this.currentIndex,
       selectedAnswers: selectedAnswers ?? this.selectedAnswers,
-      result: result ?? this.result,
+      result: score ?? this.result,
       remainingTimeInSeconds:
           remainingTimeInSeconds ?? this.remainingTimeInSeconds,
       totalTimeInMinutes: totalTimeInMinutes ?? this.totalTimeInMinutes,

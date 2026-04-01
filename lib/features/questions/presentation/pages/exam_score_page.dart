@@ -9,14 +9,14 @@ import 'package:exams_app/core/utils/app_styles.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ExamScorePage extends StatelessWidget {
-  final CheckQuestionsResponseEntity result;
+  final CheckQuestionsResponseEntity score;
 
-  const ExamScorePage({super.key, required this.result});
+  const ExamScorePage({super.key, required this.score});
 
   @override
   Widget build(BuildContext context) {
     // Parse percentage
-    final totalPercentString = result.total.replaceAll('%', '').trim();
+    final totalPercentString = score.total.replaceAll('%', '').trim();
     final totalPercent = double.tryParse(totalPercentString) ?? 0.0;
 
     return Scaffold(
@@ -72,13 +72,13 @@ class ExamScorePage extends StatelessWidget {
                   children: [
                     ScoreMetricRow(
                       label: "Correct",
-                      count: result.correct,
+                      count: score.correct,
                       color: AppColors.primary,
                     ),
                     SizedBox(height: 12.h),
                     ScoreMetricRow(
                       label: "Incorrect",
-                      count: result.wrong,
+                      count: score.wrong,
                       color: AppColors.error,
                     ),
                   ],
