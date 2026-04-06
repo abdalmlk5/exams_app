@@ -3,6 +3,7 @@ import 'package:exams_app/features/explore/data/models/explore_response.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../config/error_handler/error_handler.dart';
+import '../../../../core/dummy_data/dummy_data.dart';
 import '../../data/datasources/explore_data_source_contract.dart';
 import '../api_client/explore_api_client.dart';
 
@@ -17,7 +18,8 @@ class ExploreDataSourceImpl extends ExploreDataSourceContract {
     required String token,
   }) async {
     try {
-      final response = await apiClient.getSubjects({"token": token});
+      // final response = await apiClient.getSubjects({"token": token});
+      final response = DummyData.exploreResponse;
 
       return SuccessBaseResponse<ExploreResponse>(response);
     } catch (e) {

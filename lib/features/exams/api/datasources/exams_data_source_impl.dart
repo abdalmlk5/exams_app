@@ -2,6 +2,7 @@ import 'package:exams_app/config/base_response/base_response.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../config/error_handler/error_handler.dart';
+import '../../../../core/dummy_data/dummy_data.dart';
 import '../../data/datasources/exams_data_source_contract.dart';
 import '../../data/models/exams_response.dart';
 import '../api_client/exams_api_client.dart';
@@ -18,10 +19,11 @@ class ExamsDataSourceImpl extends ExamsDataSourceContract {
     String? subject,
   }) async {
     try {
-      final response = await apiClient.getExams({
-        "token": token,
-        "subject": subject ?? '',
-      });
+      // final response = await apiClient.getExams({
+      //   "token": token,
+      //   "subject": subject ?? '',
+      // });
+      final response = DummyData.examsResponse;
 
       return SuccessBaseResponse<ExamsResponse>(response);
     } catch (e) {

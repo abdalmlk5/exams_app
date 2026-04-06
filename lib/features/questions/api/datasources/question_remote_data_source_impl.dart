@@ -7,6 +7,8 @@ import 'package:exams_app/features/questions/data/models/question_model.dart';
 import 'package:exams_app/features/questions/data/models/submit_answers_request_model.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../core/dummy_data/dummy_data.dart';
+
 @LazySingleton(as: QuestionRemoteDataSourceContract)
 class QuestionRemoteDataSourceImpl implements QuestionRemoteDataSourceContract {
   final QuestionApiClient _questionApiClient;
@@ -20,13 +22,14 @@ class QuestionRemoteDataSourceImpl implements QuestionRemoteDataSourceContract {
     int? limit,
   }) async {
     try {
-      final response = await _questionApiClient.getQuestions(
-        examId: examId,
-        page: page,
-        limit: limit,
-      );
+      // final response = await _questionApiClient.getQuestions(
+      //   examId: examId,
+      //   page: page,
+      //   limit: limit,
+      // );
+      final response = DummyData.questions;
 
-      return SuccessBaseResponse(response.questions);
+      return SuccessBaseResponse(response);
     } catch (e) {
       return ErrorBaseResponse(ErrorHandler.handle(e));
     }
@@ -37,7 +40,9 @@ class QuestionRemoteDataSourceImpl implements QuestionRemoteDataSourceContract {
     required SubmitAnswersRequestModel body,
   }) async {
     try {
-      final response = await _questionApiClient.checkQuestions(body: body);
+      // final response = await _questionApiClient.checkQuestions(body: body);
+      final response = DummyData.checkQuestionsResponse;
+
       return SuccessBaseResponse(response);
     } catch (e) {
       return ErrorBaseResponse(ErrorHandler.handle(e));

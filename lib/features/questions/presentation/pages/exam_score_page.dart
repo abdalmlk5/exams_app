@@ -130,7 +130,6 @@ class ExamScorePage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 32.h),
           ],
         ),
       ),
