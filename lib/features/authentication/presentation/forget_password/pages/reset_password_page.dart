@@ -44,7 +44,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
           return;
         }
         if (state.forgetPasswordState.data != null) {
-          CustomSnackBar.success(context, "Password reset successfully");
+          CustomSnackBar.success(context, AppStrings.passwordResetSuccessfully);
           Navigator.of(context).popUntil((route) => route.isFirst);
         }
       },
