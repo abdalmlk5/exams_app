@@ -49,14 +49,12 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
       case SuccessBaseResponse():
         emit(state.copyWith(
           stateParam: BaseState<String?>(
-            isLoading: false,
             data: result.data.info,
           ),
         ));
       case ErrorBaseResponse():
         emit(state.copyWith(
           stateParam: BaseState<String?>(
-            isLoading: false,
             errorMessage: result.error,
           ),
         ));
@@ -72,14 +70,12 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
       case SuccessBaseResponse():
         emit(state.copyWith(
           stateParam: BaseState<String?>(
-            isLoading: false,
             data: result.data.status,
           ),
         ));
       case ErrorBaseResponse():
         emit(state.copyWith(
           stateParam: BaseState<String?>(
-            isLoading: false,
             errorMessage: result.error,
           ),
         ));
@@ -90,7 +86,6 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
     if (_userEmail == null) {
       emit(state.copyWith(
         stateParam: const BaseState<String?>(
-          isLoading: false,
           errorMessage: "Email is missing, please go back to step 1",
         ),
       ));
@@ -106,14 +101,12 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
       case SuccessBaseResponse():
         emit(state.copyWith(
           stateParam: BaseState<String?>(
-            isLoading: false,
             data: result.data.message,
           ),
         ));
       case ErrorBaseResponse():
         emit(state.copyWith(
           stateParam: BaseState<String?>(
-            isLoading: false,
             errorMessage: result.error,
           ),
         ));
