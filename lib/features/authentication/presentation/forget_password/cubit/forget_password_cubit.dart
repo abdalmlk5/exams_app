@@ -6,6 +6,7 @@ import 'package:exams_app/features/authentication/presentation/forget_password/c
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../../core/utils/app_strings.dart';
 import '../../../domain/usecases/reset_password_use_case.dart';
 import 'forget_password_event.dart';
 
@@ -39,68 +40,73 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
 
   void _forgetPassword(String email) async {
     // Fresh BaseState clears any previous error/data automatically
-    emit(state.copyWith(
-      stateParam: const BaseState<String?>(isLoading: true),
-    ));
+    emit(state.copyWith(stateParam: const BaseState<String?>(isLoading: true)));
 
     final result = await _forgetPasswordUseCase.call(email);
     switch (result) {
       case SuccessBaseResponse():
         _userEmail = email;
-        emit(state.copyWith(
-          stateParam: BaseState<String?>(
-            data: result.data.info,
+        emit(
+          state.copyWith(
+            stateParam: BaseState<String?>(data: result.data.info),
           ),
-        ));
+        );
       case ErrorBaseResponse():
-        emit(state.copyWith(
-          stateParam: BaseState<String?>(
-            errorMessage: result.error,
+        emit(
+          state.copyWith(
+            stateParam: BaseState<String?>(errorMessage: result.error),
           ),
-        ));
+        );
     }
   }
 
   void _verifyCode(String code) async {
-    emit(state.copyWith(
-      stateParam: const BaseState<String?>(isLoading: true),
-    ));
+    emit(state.copyWith(stateParam: const BaseState<String?>(isLoading: true)));
     final result = await _verifyCodeUseCase.call(code);
     switch (result) {
       case SuccessBaseResponse():
-        emit(state.copyWith(
-          stateParam: BaseState<String?>(
-            data: result.data.status,
+        emit(
+          state.copyWith(
+            stateParam: BaseState<String?>(data: result.data.status),
           ),
-        ));
+        );
       case ErrorBaseResponse():
-        emit(state.copyWith(
-          stateParam: BaseState<String?>(
-            errorMessage: result.error,
+        emit(
+          state.copyWith(
+            stateParam: BaseState<String?>(errorMessage: result.error),
           ),
-        ));
+        );
     }
   }
 
   void _resetPassword(String password, String confirmPassword) async {
-    emit(state.copyWith(
-      stateParam: const BaseState<String?>(isLoading: true),
-    ));
+    if (password != confirmPassword) {
+      emit(
+        state.copyWith(
+          stateParam: const BaseState<String?>(
+            errorMessage: AppStrings.passwordNotMatched,
+          ),
+        ),
+      );
+      return;
+    }
+
+    emit(state.copyWith(stateParam: const BaseState<String?>(isLoading: true)));
 
     final result = await _resetPasswordUseCase.call(_userEmail!, password);
     switch (result) {
       case SuccessBaseResponse():
-        emit(state.copyWith(
-          stateParam: BaseState<String?>(
-            data: result.data.message,
+        emit(
+          state.copyWith(
+            stateParam: BaseState<String?>(data: result.data.message),
           ),
-        ));
+        );
       case ErrorBaseResponse():
-        emit(state.copyWith(
-          stateParam: BaseState<String?>(
-            errorMessage: result.error,
+        emit(
+          state.copyWith(
+            stateParam: BaseState<String?>(errorMessage: result.error),
           ),
-        ));
+        );
     }
   }
 }
