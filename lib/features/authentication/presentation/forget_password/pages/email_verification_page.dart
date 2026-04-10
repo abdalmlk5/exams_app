@@ -2,15 +2,15 @@ import 'package:exams_app/core/utils/app_colors.dart';
 import 'package:exams_app/core/utils/app_routes.dart';
 import 'package:exams_app/core/utils/app_strings.dart';
 import 'package:exams_app/core/utils/app_text_styles.dart';
-import 'package:exams_app/features/authentication/presentation/auth/widgets/widgets/auth_app_bar.dart';
 import 'package:exams_app/core/widgets/custom_snack_bar.dart';
+import 'package:exams_app/features/authentication/presentation/auth/widgets/widgets/auth_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../cubit/forget_password_cubit.dart';
 import '../cubit/forget_password_event.dart';
 import '../cubit/forget_password_state.dart';
-import '../cubit/forget_password_cubit.dart';
 
 class EmailVerificationPage extends StatefulWidget {
   const EmailVerificationPage({super.key});
@@ -48,7 +48,10 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
               curr.forgetPasswordState.errorMessage,
       listener: (context, state) {
         if (state.forgetPasswordState.errorMessage != null) {
-          CustomSnackBar.error(context, state.forgetPasswordState.errorMessage!);
+          CustomSnackBar.error(
+            context,
+            state.forgetPasswordState.errorMessage!,
+          );
           return;
         }
         if (state.forgetPasswordState.data != null) {
@@ -66,7 +69,10 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: 40.h),
-              Text(AppStrings.emailVerification, style: AppTextStyles.black18500),
+              Text(
+                AppStrings.emailVerification,
+                style: AppTextStyles.black18500,
+              ),
               SizedBox(height: 16.h),
               Text(
                 AppStrings.emailVerificationSubtitle,
@@ -96,7 +102,9 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.r),
-                          borderSide: const BorderSide(color: AppColors.primary),
+                          borderSide: const BorderSide(
+                            color: AppColors.primary,
+                          ),
                         ),
                         filled: true,
                         fillColor: AppColors.lightBlue,
@@ -109,9 +117,12 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
                           _focusNodes[index - 1].requestFocus();
                         }
                         if (_otpCode.length == 6) {
-                          context.read<ForgetPasswordCubit>().doEvent(
-                            ForgetPasswordVerifyCodeEvent(_otpCode),
-                          );
+                          final cubit = context.read<ForgetPasswordCubit>();
+                          if (!cubit.state.forgetPasswordState.isLoading) {
+                            cubit.doEvent(
+                              ForgetPasswordVerifyCodeEvent(_otpCode),
+                            );
+                          }
                         }
                       },
                     ),
@@ -131,7 +142,10 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(AppStrings.didntReceiveCode, style: AppTextStyles.gray14400),
+                  Text(
+                    AppStrings.didntReceiveCode,
+                    style: AppTextStyles.gray14400,
+                  ),
                   TextButton(
                     onPressed: () {
                       // Resend logic
