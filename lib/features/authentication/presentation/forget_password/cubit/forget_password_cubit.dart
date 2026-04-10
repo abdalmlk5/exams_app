@@ -38,7 +38,6 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
   }
 
   void _forgetPassword(String email) async {
-    _userEmail = email;
     // Fresh BaseState clears any previous error/data automatically
     emit(state.copyWith(
       stateParam: const BaseState<String?>(isLoading: true),
@@ -47,6 +46,7 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
     final result = await _forgetPasswordUseCase.call(email);
     switch (result) {
       case SuccessBaseResponse():
+        _userEmail = email;
         emit(state.copyWith(
           stateParam: BaseState<String?>(
             data: result.data.info,
@@ -83,15 +83,6 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
   }
 
   void _resetPassword(String password, String confirmPassword) async {
-    if (_userEmail == null) {
-      emit(state.copyWith(
-        stateParam: const BaseState<String?>(
-          errorMessage: "Email is missing, please go back to step 1",
-        ),
-      ));
-      return;
-    }
-
     emit(state.copyWith(
       stateParam: const BaseState<String?>(isLoading: true),
     ));
