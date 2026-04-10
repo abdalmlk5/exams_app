@@ -13,14 +13,25 @@ import '../cubit/forget_password_event.dart';
 import '../cubit/forget_password_state.dart';
 import '../cubit/forget_password_cubit.dart';
 
-class ForgetPasswordPage extends StatelessWidget {
+class ForgetPasswordPage extends StatefulWidget {
   const ForgetPasswordPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final emailController = TextEditingController();
-    final formKey = GlobalKey<FormState>();
+  State<ForgetPasswordPage> createState() => _ForgetPasswordPageState();
+}
 
+class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
+  final emailController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return BlocListener<ForgetPasswordCubit, ForgetPasswordState>(
       listenWhen: (prev, curr) =>
           prev.forgetPasswordState.data != curr.forgetPasswordState.data ||

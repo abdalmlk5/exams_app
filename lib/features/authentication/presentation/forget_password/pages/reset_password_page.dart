@@ -12,15 +12,27 @@ import '../cubit/forget_password_event.dart';
 import '../cubit/forget_password_state.dart';
 import '../cubit/forget_password_cubit.dart';
 
-class ResetPasswordPage extends StatelessWidget {
+class ResetPasswordPage extends StatefulWidget {
   const ResetPasswordPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final passwordController = TextEditingController();
-    final confirmPasswordController = TextEditingController();
-    final formKey = GlobalKey<FormState>();
+  State<ResetPasswordPage> createState() => _ResetPasswordPageState();
+}
 
+class _ResetPasswordPageState extends State<ResetPasswordPage> {
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return BlocListener<ForgetPasswordCubit, ForgetPasswordState>(
       listenWhen: (prev, curr) =>
           prev.forgetPasswordState.data != curr.forgetPasswordState.data ||
