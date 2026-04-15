@@ -1,9 +1,9 @@
 import 'package:exams_app/config/base_response/base_response.dart';
 import 'package:exams_app/features/authentication/domain/entities/user_entity.dart';
 
-import '../../api/models/forget_password_models/forget_password_response.dart';
-import '../../api/models/forget_password_models/reset_password_response.dart';
-import '../../api/models/forget_password_models/verify_code_response.dart';
+import '../../data/response/forget_password_models/forget_password_response.dart';
+import '../../data/response/forget_password_models/reset_password_response.dart';
+import '../../data/response/forget_password_models/verify_code_response.dart';
 
 abstract class AuthRepo {
   Future<BaseResponse<UserEntity>> login({

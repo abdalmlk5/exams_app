@@ -7,9 +7,9 @@ import 'package:exams_app/features/authentication/domain/entities/user_entity.da
 import 'package:exams_app/features/authentication/domain/repositories/auth_repo.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../api/models/forget_password_models/forget_password_response.dart';
-import '../../api/models/forget_password_models/reset_password_response.dart';
-import '../../api/models/forget_password_models/verify_code_response.dart';
+import '../response/forget_password_models/forget_password_response.dart';
+import '../response/forget_password_models/reset_password_response.dart';
+import '../response/forget_password_models/verify_code_response.dart';
 
 @Injectable(as: AuthRepo)
 class AuthRepoImpl implements AuthRepo {
@@ -93,6 +93,8 @@ class AuthRepoImpl implements AuthRepo {
     }
   }
 
+
+//TODO: Use Switch case to check the errorBaseResponse and successBaseResponse that come from the remote data source
   @override
   Future<BaseResponse<ForgetPasswordResponse>> forgetPassword(
     String email,
