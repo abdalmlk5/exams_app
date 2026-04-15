@@ -31,7 +31,7 @@ abstract class AppTextStyles {
   );
 
   static TextStyle black18500 = GoogleFonts.inter(
-    fontSize: 24.sp,
+    fontSize: 18.sp,
     fontWeight: FontWeight.w500,
     color: AppColors.black,
   );

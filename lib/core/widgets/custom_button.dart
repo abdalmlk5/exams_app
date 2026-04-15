@@ -3,8 +3,6 @@ import 'package:exams_app/core/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-
-
 class CustomButton extends StatelessWidget {
   final String text;
   final VoidCallback? onPressed;
@@ -21,30 +19,18 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 56.h,
-      width: double.infinity,
-      child: ElevatedButton(
-        onPressed: (isEnabled && !isLoading) ? onPressed : null,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.primary,
-          disabledBackgroundColor: AppColors.black30,
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(100.r),
-          ),
-        ),
-        child: isLoading
-            ? SizedBox(
-                height: 24.h,
-                width: 24.w,
-                child: const CircularProgressIndicator(
-                  color: AppColors.white,
-                  strokeWidth: 2,
-                ),
-              )
-            : Text(text, style: AppTextStyles.white16500),
-      ),
+    return ElevatedButton(
+      onPressed: (isEnabled && !isLoading) ? onPressed : null,
+      child: isLoading
+          ? SizedBox(
+              height: 24.h,
+              width: 24.w,
+              child: const CircularProgressIndicator(
+                color: AppColors.white,
+                strokeWidth: 2,
+              ),
+            )
+          : Text(text),
     );
   }
 }
