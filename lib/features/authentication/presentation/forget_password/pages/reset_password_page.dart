@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../../core/widgets/custom_elevated_button.dart';
+import '../../../../../core/widgets/custom_button.dart';
 import '../cubit/forget_password_event.dart';
 import '../cubit/forget_password_state.dart';
 import '../cubit/forget_password_cubit.dart';
@@ -40,7 +40,10 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
               curr.forgetPasswordState.errorMessage,
       listener: (context, state) {
         if (state.forgetPasswordState.errorMessage != null) {
-          CustomSnackBar.error(context, state.forgetPasswordState.errorMessage!);
+          CustomSnackBar.error(
+            context,
+            state.forgetPasswordState.errorMessage!,
+          );
           return;
         }
         if (state.forgetPasswordState.data != null) {
@@ -62,7 +65,10 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(height: 40.h),
-                  Text(AppStrings.resetPassword, style: AppTextStyles.black18500),
+                  Text(
+                    AppStrings.resetPassword,
+                    style: AppTextStyles.black18500,
+                  ),
                   SizedBox(height: 16.h),
                   Text(
                     AppStrings.resetPasswordSubtitle,
@@ -90,11 +96,11 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
                             context.read<ForgetPasswordCubit>().doEvent(
-                                  ForgetPasswordResetPasswordEvent(
-                                    passwordController.text,
-                                    confirmPasswordController.text,
-                                  ),
-                                );
+                              ForgetPasswordResetPasswordEvent(
+                                passwordController.text,
+                                confirmPasswordController.text,
+                              ),
+                            );
                           }
                         },
                       );
