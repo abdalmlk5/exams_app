@@ -1,5 +1,4 @@
 import 'package:exams_app/config/base_state/base_state.dart';
-import 'package:exams_app/config/validations/app_validations.dart';
 import 'package:exams_app/config/base_response/base_response.dart';
 import 'package:exams_app/config/error_handler/error_handler.dart';
 import 'package:exams_app/features/authentication/domain/entities/user_entity.dart';
@@ -28,12 +27,6 @@ class LoginCubit extends Cubit<LoginState> {
     }
   }
 
-  void validateForm(String email, String password) {
-    final emailError = AppValidations.validateEmail(email);
-    final passwordError = AppValidations.validatePassword(password);
-    final isValid = emailError == null && passwordError == null;
-    emit(state.copyWith(isButtonEnabled: isValid));
-  }
 
   void toggleRememberMe(bool value) {
     emit(state.copyWith(rememberMe: value));

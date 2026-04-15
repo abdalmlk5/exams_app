@@ -1,5 +1,4 @@
 import 'package:exams_app/config/base_state/base_state.dart';
-import 'package:exams_app/config/validations/app_validations.dart';
 import 'package:exams_app/config/base_response/base_response.dart';
 import 'package:exams_app/config/error_handler/error_handler.dart';
 import 'package:exams_app/features/authentication/domain/entities/user_entity.dart';
@@ -24,26 +23,6 @@ class RegisterCubit extends Cubit<RegisterState> {
     }
   }
 
-  void validateForm({
-    required String username,
-    required String firstName,
-    required String lastName,
-    required String email,
-    required String password,
-    required String rePassword,
-    required String phone,
-  }) {
-    final isValid =
-        AppValidations.validateUserName(username) == null &&
-        AppValidations.validateFirstName(firstName) == null &&
-        AppValidations.validateLastName(lastName) == null &&
-        AppValidations.validateEmail(email) == null &&
-        AppValidations.validatePassword(password) == null &&
-        AppValidations.validateConfirmPassword(rePassword, password) == null &&
-        AppValidations.validatePhoneNumber(phone) == null;
-
-    emit(state.copyWith(isButtonEnabled: isValid));
-  }
 
   Future<void> _register(Register event) async {
     try {
