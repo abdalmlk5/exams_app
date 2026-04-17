@@ -1,5 +1,6 @@
 import 'package:exams_app/config/di/di.dart';
 import 'package:exams_app/core/utils/app_routes.dart';
+import 'package:exams_app/core/utils/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Exams App',
+          theme: AppTheme.lightTheme,
           onGenerateRoute: AppRouter.onGenerateRoute,
           initialRoute: AppRoutes.forgetPassword,
         );
