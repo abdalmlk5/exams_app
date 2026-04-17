@@ -1,5 +1,4 @@
 import 'package:exams_app/config/base_response/base_response.dart';
-import 'package:exams_app/config/error_handler/error_handler.dart';
 import 'package:exams_app/features/forget_password/data/data_sources/auth_remote_data_source.dart';
 import 'package:exams_app/features/forget_password/data/models/forget_password_response.dart';
 import 'package:exams_app/features/forget_password/data/models/reset_password_response.dart';
@@ -16,38 +15,20 @@ class ForgetPasswordRepoImpl implements ForgetPasswordRepo {
   @override
   Future<BaseResponse<ForgetPasswordResponse>> forgetPassword(
     String email,
-  ) async {
-    try {
-      final response = await _remoteDataSource.forgetPassword(email);
-      return SuccessBaseResponse(response);
-    } catch (e) {
-      return ErrorBaseResponse(ErrorHandler.handle(e));
-    }
+  ) {
+    return _remoteDataSource.forgetPassword(email);
   }
 
   @override
-  Future<BaseResponse<VerifyCodeResponse>> verifyCode(String code) async {
-    try {
-      final response = await _remoteDataSource.verifyResetCode(code);
-      return SuccessBaseResponse(response);
-    } catch (e) {
-      return ErrorBaseResponse(ErrorHandler.handle(e));
-    }
+  Future<BaseResponse<VerifyCodeResponse>> verifyCode(String code) {
+    return _remoteDataSource.verifyResetCode(code);
   }
 
   @override
   Future<BaseResponse<ResetPasswordResponse>> resetPassword(
     String email,
     String newPassword,
-  ) async {
-    try {
-      final response = await _remoteDataSource.resetPassword(
-        email,
-        newPassword,
-      );
-      return SuccessBaseResponse(response);
-    } catch (e) {
-      return ErrorBaseResponse(ErrorHandler.handle(e));
-    }
+  ) {
+    return _remoteDataSource.resetPassword(email, newPassword);
   }
 }

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:exams_app/config/api/end_points.dart';
+import 'package:exams_app/config/api/api_keys.dart';
 import 'package:exams_app/features/forget_password/data/models/forget_password_response.dart';
 import 'package:exams_app/features/forget_password/data/models/reset_password_response.dart';
 import 'package:exams_app/features/forget_password/data/models/verify_code_response.dart';
@@ -8,7 +9,7 @@ import 'package:retrofit/retrofit.dart';
 
 part 'auth_api_client.g.dart';
 
-@injectable
+@lazySingleton
 @RestApi()
 abstract class AuthApiClient {
   @factoryMethod
@@ -16,18 +17,18 @@ abstract class AuthApiClient {
 
   @POST(EndPoints.forgetPassword)
   @FormUrlEncoded()
-  Future<ForgetPasswordResponse> forgetPassword(@Field("email") String email);
+  Future<ForgetPasswordResponse> forgetPassword(@Field(ApiKeys.email) String email);
 
   @POST(EndPoints.verifyResetCode)
   @FormUrlEncoded()
   Future<VerifyCodeResponse> verifyResetCode(
-    @Field("resetCode") String resetCode,
+    @Field(ApiKeys.resetCode) String resetCode,
   );
 
-  @PUT(EndPoints.resetPassword)
+  @POST(EndPoints.resetPassword)
   @FormUrlEncoded()
   Future<ResetPasswordResponse> resetPassword(
-    @Field("email") String email,
-    @Field("newPassword") String newPassword,
+    @Field(ApiKeys.email) String email,
+    @Field(ApiKeys.newPassword) String newPassword,
   );
 }
