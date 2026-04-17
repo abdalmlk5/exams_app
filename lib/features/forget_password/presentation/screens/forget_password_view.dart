@@ -10,14 +10,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ForgetPasswordView extends StatelessWidget {
+class ForgetPasswordView extends StatefulWidget {
   const ForgetPasswordView({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final emailController = TextEditingController();
-    final formKey = GlobalKey<FormState>();
+  State<ForgetPasswordView> createState() => _ForgetPasswordViewState();
+}
 
+class _ForgetPasswordViewState extends State<ForgetPasswordView> {
+  final _emailController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return BlocListener<ForgetPasswordCubit, BaseState<String?>>(
       listenWhen: (previous, current) =>
           previous.data != current.data ||
@@ -51,7 +62,7 @@ class ForgetPasswordView extends StatelessWidget {
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: Form(
-            key: formKey,
+            key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -65,7 +76,7 @@ class ForgetPasswordView extends StatelessWidget {
                 ),
                 SizedBox(height: 32.h),
                 AppTextField(
-                  controller: emailController,
+                  controller: _emailController,
                   fieldType: FieldType.email,
                 ),
                 const Spacer(),
@@ -74,12 +85,12 @@ class ForgetPasswordView extends StatelessWidget {
                     if (state.isLoading) {
                       return const Center(child: CircularProgressIndicator());
                     }
-                    return CustomElevatedButton(
-                      child: AppStrings.continueText,
-                      onTap: () {
-                        if (formKey.currentState!.validate()) {
+                    return CustomButton(
+                      text: AppStrings.continueText,
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
                           context.read<ForgetPasswordCubit>().handleIntent(
-                            ForgetPasswordSendEmailIntent(emailController.text),
+                            ForgetPasswordSendEmailIntent(_emailController.text),
                           );
                         }
                       },

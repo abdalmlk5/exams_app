@@ -9,15 +9,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ResetPasswordView extends StatelessWidget {
+class ResetPasswordView extends StatefulWidget {
   const ResetPasswordView({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final passwordController = TextEditingController();
-    final confirmPasswordController = TextEditingController();
-    final formKey = GlobalKey<FormState>();
+  State<ResetPasswordView> createState() => _ResetPasswordViewState();
+}
 
+class _ResetPasswordViewState extends State<ResetPasswordView> {
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return BlocListener<ForgetPasswordCubit, BaseState<String?>>(
       listenWhen: (previous, current) => previous.data != current.data,
       listener: (context, state) {
@@ -41,7 +53,7 @@ class ResetPasswordView extends StatelessWidget {
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: Form(
-            key: formKey,
+            key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -55,14 +67,14 @@ class ResetPasswordView extends StatelessWidget {
                 ),
                 SizedBox(height: 32.h),
                 AppTextField(
-                  controller: passwordController,
+                  controller: _passwordController,
                   fieldType: FieldType.newPassword,
                 ),
                 SizedBox(height: 24.h),
                 AppTextField(
-                  controller: confirmPasswordController,
+                  controller: _confirmPasswordController,
                   fieldType: FieldType.confirmPassword,
-                  compareController: passwordController,
+                  compareController: _passwordController,
                 ),
                 const Spacer(),
                 BlocBuilder<ForgetPasswordCubit, BaseState<String?>>(
@@ -70,15 +82,15 @@ class ResetPasswordView extends StatelessWidget {
                     if (state.isLoading) {
                       return const Center(child: CircularProgressIndicator());
                     }
-                    return CustomElevatedButton(
-                      child: AppStrings.continueText,
-                      onTap: () {
-                        if (formKey.currentState!.validate()) {
+                    return CustomButton(
+                      text: AppStrings.continueText,
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
                           context.read<ForgetPasswordCubit>().handleIntent(
-                            ForgetPasswordResetPasswordIntent(
-                              passwordController.text,
-                            ),
-                          );
+                                ForgetPasswordResetPasswordIntent(
+                                  _passwordController.text,
+                                ),
+                              );
                         }
                       },
                     );
