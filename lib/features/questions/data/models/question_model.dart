@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:exams_app/features/explore/data/models/subject_model.dart';
 import '../../domain/entities/question_entity.dart';
 import 'exam_model.dart';
 import 'answer_model.dart';
@@ -13,7 +14,7 @@ class QuestionModel {
   final List<AnswerModel> answers;
   final String type;
   final String correct;
-  final String? subject;
+  final SubjectModel? subject;
   final ExamModel? exam;
   final String? createdAt;
 
@@ -40,7 +41,7 @@ class QuestionModel {
       answers: answers.map((e) => e.toEntity()).toList(),
       type: type,
       correct: correct,
-      subject: subject,
+      subject: subject?.name,
       exam: exam?.toEntity(),
       createdAt: createdAt,
     );
