@@ -1,6 +1,5 @@
 import 'package:exams_app/core/utils/app_routes.dart';
 import 'package:exams_app/core/utils/app_strings.dart';
-import 'package:exams_app/core/utils/app_text_styles.dart';
 import 'package:exams_app/core/widgets/custom_text_field.dart';
 import 'package:exams_app/features/authentication/presentation/auth/widgets/widgets/auth_app_bar.dart';
 import 'package:exams_app/core/widgets/custom_snack_bar.dart';
@@ -8,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../../core/widgets/custom_elevated_button.dart';
+import '../../../../../core/widgets/custom_button.dart';
 import '../cubit/forget_password_event.dart';
 import '../cubit/forget_password_state.dart';
 import '../cubit/forget_password_cubit.dart';
@@ -18,6 +17,7 @@ class ForgetPasswordPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final emailController = TextEditingController();
     final formKey = GlobalKey<FormState>();
 
@@ -48,11 +48,13 @@ class ForgetPasswordPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(height: 40.h),
-                Text(AppStrings.forgetPassword, style: AppTextStyles.black18500),
+                Text(AppStrings.forgetPassword, style: theme.textTheme.titleLarge),
                 SizedBox(height: 16.h),
                 Text(
                   AppStrings.forgetPasswordSubtitle,
-                  style: AppTextStyles.gray14400,
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: theme.hintColor,
+                  ),
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 32.h),

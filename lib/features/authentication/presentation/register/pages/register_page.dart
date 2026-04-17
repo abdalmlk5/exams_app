@@ -1,4 +1,3 @@
-import 'package:exams_app/core/utils/app_colors.dart';
 import 'package:exams_app/core/utils/app_strings.dart';
 import 'package:exams_app/features/authentication/presentation/register/widgets/register_view_body.dart';
 import 'package:exams_app/features/authentication/presentation/auth/widgets/widgets/auth_app_bar.dart';
@@ -11,8 +10,9 @@ class RegisterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: AppColors.white,
+      backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AuthAppBar(title: AppStrings.signup),
       body: SafeArea(child: RegisterViewBody(togglePages: togglePages)),
     );

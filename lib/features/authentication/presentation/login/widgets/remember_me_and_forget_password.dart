@@ -29,14 +29,10 @@ class RememberMeAndForgetPassword extends StatelessWidget {
               child: Checkbox(
                 value: value,
                 onChanged: onChanged,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(4.r),
-                ),
-                activeColor: AppColors.primary,
               ),
             ),
             SizedBox(width: 8.w),
-            Text(AppStrings.rememberMe, style: AppTextStyles.black13400),
+            Text(AppStrings.rememberMe, style: Theme.of(context).textTheme.bodyMedium),
           ],
         ),
         TextButton(
@@ -50,9 +46,9 @@ class RememberMeAndForgetPassword extends StatelessWidget {
           ),
           child: Text(
             AppStrings.forgetPasswordQuestion,
-            style: AppTextStyles.black13400.copyWith(
-              decoration: TextDecoration.underline,
-            ),
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  decoration: TextDecoration.underline,
+                ),
           ),
         ),
       ],

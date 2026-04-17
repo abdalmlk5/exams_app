@@ -1,7 +1,5 @@
-import 'package:exams_app/core/utils/app_colors.dart';
 import 'package:exams_app/core/utils/app_routes.dart';
 import 'package:exams_app/core/utils/app_strings.dart';
-import 'package:exams_app/core/utils/app_text_styles.dart';
 import 'package:exams_app/features/authentication/presentation/auth/widgets/widgets/auth_app_bar.dart';
 import 'package:exams_app/core/widgets/custom_snack_bar.dart';
 import 'package:flutter/material.dart';
@@ -41,6 +39,7 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return BlocListener<ForgetPasswordCubit, ForgetPasswordState>(
       listenWhen: (prev, curr) =>
           prev.forgetPasswordState.data != curr.forgetPasswordState.data ||
@@ -66,11 +65,13 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: 40.h),
-              Text(AppStrings.emailVerification, style: AppTextStyles.black18500),
+              Text(AppStrings.emailVerification, style: theme.textTheme.titleLarge),
               SizedBox(height: 16.h),
               Text(
                 AppStrings.emailVerificationSubtitle,
-                style: AppTextStyles.gray14400,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: theme.hintColor,
+                ),
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 32.h),
@@ -87,19 +88,19 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
                       textAlign: TextAlign.center,
                       keyboardType: TextInputType.number,
                       maxLength: 1,
-                      style: AppTextStyles.black18500,
+                      style: theme.textTheme.titleLarge,
                       decoration: InputDecoration(
                         counterText: "",
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.r),
-                          borderSide: const BorderSide(color: AppColors.blue10),
+                          borderSide: BorderSide(color: theme.dividerColor),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.r),
-                          borderSide: const BorderSide(color: AppColors.primary),
+                          borderSide: BorderSide(color: theme.colorScheme.primary),
                         ),
                         filled: true,
-                        fillColor: AppColors.lightBlue,
+                        fillColor: theme.cardColor,
                       ),
                       onChanged: (value) {
                         if (value.isNotEmpty && index < 5) {
@@ -122,7 +123,9 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
               BlocBuilder<ForgetPasswordCubit, ForgetPasswordState>(
                 builder: (context, state) {
                   if (state.forgetPasswordState.isLoading) {
-                    return const CircularProgressIndicator();
+                    return CircularProgressIndicator(
+                      color: theme.colorScheme.primary,
+                    );
                   }
                   return const SizedBox.shrink();
                 },
@@ -131,16 +134,22 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(AppStrings.didntReceiveCode, style: AppTextStyles.gray14400),
+                  Text(
+                    AppStrings.didntReceiveCode,
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: theme.hintColor,
+                    ),
+                  ),
                   TextButton(
                     onPressed: () {
                       // Resend logic
                     },
                     child: Text(
                       AppStrings.resend,
-                      style: AppTextStyles.gray14400.copyWith(
-                        color: AppColors.primary,
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: theme.colorScheme.primary,
                         decoration: TextDecoration.underline,
+                        decorationColor: theme.colorScheme.primary,
                       ),
                     ),
                   ),
