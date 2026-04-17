@@ -31,14 +31,18 @@ abstract class DioModule {
         InterceptorsWrapper(
           onRequest: (options, handler) {
             logger.i("REQUEST[${options.method}] => PATH: ${options.path}");
-            logger.d("Data: ${options.data}");
+            if (kDebugMode) {
+              logger.d("Data: ${options.data}");
+            }
             return handler.next(options);
           },
           onResponse: (response, handler) {
             logger.i(
               "RESPONSE[${response.statusCode}] => PATH: ${response.requestOptions.path}",
             );
-            logger.d("Data: ${response.data}");
+            if (kDebugMode) {
+              logger.d("Data: ${response.data}");
+            }
             return handler.next(response);
           },
           onError: (DioException e, handler) {
@@ -46,7 +50,9 @@ abstract class DioModule {
               "ERROR[${e.response?.statusCode}] => PATH: ${e.requestOptions.path}",
             );
             logger.e("Message: ${e.message}");
-            logger.e("Response Data: ${e.response?.data}");
+            if (kDebugMode) {
+              logger.e("Response Data: ${e.response?.data}");
+            }
             return handler.next(e);
           },
         ),
