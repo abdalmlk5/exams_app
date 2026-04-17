@@ -33,7 +33,7 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
     return BlocListener<ForgetPasswordCubit, BaseState<String?>>(
       listenWhen: (previous, current) => previous.data != current.data,
       listener: (context, state) {
-        if (state.data == "PASSWORD_RESET") {
+        if (state.data == AppStrings.passwordReset) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text("Password reset successfully")),
           );

@@ -43,7 +43,7 @@ class _EmailVerificationViewState extends State<EmailVerificationView> {
           previous.data != current.data ||
           previous.errorMessage != current.errorMessage,
       listener: (context, state) {
-        if (state.data == "CODE_VERIFIED") {
+        if (state.data == AppStrings.codeVerified) {
           Navigator.pushNamed(
             context,
             AppRoutes.resetPassword,

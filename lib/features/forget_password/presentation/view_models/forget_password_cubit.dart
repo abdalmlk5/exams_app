@@ -4,6 +4,7 @@ import 'package:exams_app/features/forget_password/domain/use_cases/forget_passw
 import 'package:exams_app/features/forget_password/domain/use_cases/reset_password_use_case.dart';
 import 'package:exams_app/features/forget_password/domain/use_cases/verify_code_use_case.dart';
 import 'package:exams_app/features/forget_password/presentation/view_models/forget_password_intent.dart';
+import 'package:exams_app/core/utils/app_strings.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
@@ -37,7 +38,7 @@ class ForgetPasswordCubit extends Cubit<BaseState<String?>> {
     final result = await _forgetPasswordUseCase.call(email);
     switch (result) {
       case SuccessBaseResponse():
-        emit(state.copyWith(isLoading: false, data: "OTP_SENT"));
+        emit(state.copyWith(isLoading: false, data: AppStrings.otpSent));
       case ErrorBaseResponse():
         emit(state.copyWith(isLoading: false, errorMessage: result.error));
     }
@@ -48,7 +49,7 @@ class ForgetPasswordCubit extends Cubit<BaseState<String?>> {
     final result = await _verifyCodeUseCase.call(code);
     switch (result) {
       case SuccessBaseResponse():
-        emit(state.copyWith(isLoading: false, data: "CODE_VERIFIED"));
+        emit(state.copyWith(isLoading: false, data: AppStrings.codeVerified));
       case ErrorBaseResponse():
         emit(state.copyWith(isLoading: false, errorMessage: result.error));
     }
@@ -56,14 +57,14 @@ class ForgetPasswordCubit extends Cubit<BaseState<String?>> {
 
   void _resetPassword(String password) async {
     if (_userEmail == null) {
-      emit(state.copyWith(errorMessage: "Email is missing"));
+      emit(state.copyWith(errorMessage: AppStrings.emailMissing));
       return;
     }
     emit(state.copyWith(isLoading: true, errorMessage: null));
     final result = await _resetPasswordUseCase.call(_userEmail!, password);
     switch (result) {
       case SuccessBaseResponse():
-        emit(state.copyWith(isLoading: false, data: "PASSWORD_RESET"));
+        emit(state.copyWith(isLoading: false, data: AppStrings.passwordReset));
       case ErrorBaseResponse():
         emit(state.copyWith(isLoading: false, errorMessage: result.error));
     }

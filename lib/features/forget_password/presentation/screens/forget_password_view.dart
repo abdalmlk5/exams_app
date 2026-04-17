@@ -34,7 +34,7 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
           previous.data != current.data ||
           previous.errorMessage != current.errorMessage,
       listener: (context, state) {
-        if (state.data == "OTP_SENT") {
+        if (state.data == AppStrings.otpSent) {
           Navigator.pushNamed(
             context,
             AppRoutes.emailVerification,
