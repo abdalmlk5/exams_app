@@ -23,16 +23,22 @@ abstract class AppRouter {
           ),
         );
       case emailVerification:
+        final cubit = settings.arguments is ForgetPasswordCubit
+            ? settings.arguments as ForgetPasswordCubit
+            : getIt<ForgetPasswordCubit>();
         return MaterialPageRoute(
           builder: (_) => BlocProvider.value(
-            value: settings.arguments as ForgetPasswordCubit,
+            value: cubit,
             child: const EmailVerificationView(),
           ),
         );
       case resetPassword:
+        final cubit = settings.arguments is ForgetPasswordCubit
+            ? settings.arguments as ForgetPasswordCubit
+            : getIt<ForgetPasswordCubit>();
         return MaterialPageRoute(
           builder: (_) => BlocProvider.value(
-            value: settings.arguments as ForgetPasswordCubit,
+            value: cubit,
             child: const ResetPasswordView(),
           ),
         );
