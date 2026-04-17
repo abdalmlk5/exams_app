@@ -50,33 +50,40 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> _logout() async {
     try {
+      print('AuthCubit: Logout initiated');
       emit(
         state.copyWith(authState: state.authState.copyWith(isLoading: true)),
       );
 
       final result = await _logoutUsecase.call();
+      print('AuthCubit: Logout usecase result: $result');
 
       switch (result) {
-        case SuccessBaseResponse<void>():
+        case SuccessBaseResponse():
+          print('AuthCubit: Logout success');
           emit(
             state.copyWith(
-              authState: const BaseState<UserEntity>(
+              authState: BaseState<UserEntity>(
                 isLoading: false,
                 data: null,
               ),
             ),
           );
-        case ErrorBaseResponse<void>():
+        case ErrorBaseResponse():
+          print('AuthCubit: Logout error: ${result.errorMessage}');
+          // Force logout locally even on error
           emit(
             state.copyWith(
-              authState: state.authState.copyWith(
-                errorMessage: result.errorMessage,
+              authState: BaseState<UserEntity>(
                 isLoading: false,
+                data: null,
+                errorMessage: result.errorMessage,
               ),
             ),
           );
       }
     } catch (e) {
+      print('AuthCubit: Logout exception: $e');
       emit(
         state.copyWith(
           authState: BaseState(
