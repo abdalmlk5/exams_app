@@ -5,7 +5,6 @@ import 'package:exams_app/features/questions/domain/entities/check_questions_res
 import 'package:exams_app/features/questions/presentation/widgets/exam_score_widgets/score_donut_chart.dart';
 import 'package:exams_app/features/questions/presentation/widgets/exam_score_widgets/score_metric_row.dart';
 import 'package:flutter/material.dart';
-import 'package:exams_app/core/utils/app_styles.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ExamScorePage extends StatelessWidget {
@@ -15,17 +14,18 @@ class ExamScorePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     // Parse percentage
     final totalPercentString = score.total.replaceAll('%', '').trim();
     final totalPercent = double.tryParse(totalPercentString) ?? 0.0;
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: theme.scaffoldBackgroundColor,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: AppColors.black),
+          icon: Icon(Icons.arrow_back_ios, color: theme.iconTheme.color),
           onPressed: () => Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => const HomeScreen()),
@@ -34,7 +34,7 @@ class ExamScorePage extends StatelessWidget {
         ),
         title: Text(
           "Exam score",
-          style: AppStyles.black20500.copyWith(fontWeight: FontWeight.w500),
+          style: theme.textTheme.displayLarge,
         ),
       ),
       body: Padding(
@@ -45,7 +45,9 @@ class ExamScorePage extends StatelessWidget {
             SizedBox(height: 24.h),
             Text(
               "Your score",
-              style: AppStyles.black18500.copyWith(fontWeight: FontWeight.w400),
+              style: theme.textTheme.titleLarge?.copyWith(
+                fontWeight: FontWeight.w400,
+              ),
             ),
             SizedBox(height: 32.h),
             Row(
@@ -57,7 +59,7 @@ class ExamScorePage extends StatelessWidget {
                     ScoreDonutChart(percentage: totalPercent),
                     Text(
                       "${totalPercent.toInt()}%",
-                      style: AppStyles.black18500.copyWith(
+                      style: theme.textTheme.titleLarge?.copyWith(
                         fontSize: 22.sp,
                         fontWeight: FontWeight.w400,
                         color: const Color(0xFF32353A),
@@ -73,13 +75,13 @@ class ExamScorePage extends StatelessWidget {
                     ScoreMetricRow(
                       label: "Correct",
                       count: score.correct,
-                      color: AppColors.primary,
+                      color: theme.colorScheme.primary,
                     ),
                     SizedBox(height: 12.h),
                     ScoreMetricRow(
                       label: "Incorrect",
                       count: score.wrong,
-                      color: AppColors.error,
+                      color: theme.colorScheme.error,
                     ),
                   ],
                 ),
@@ -95,13 +97,7 @@ class ExamScorePage extends StatelessWidget {
                 onPressed: () {
                   CustomSnackBar.error(context, "Under Developing");
                 },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                ),
-                child: Text("Show results", style: AppStyles.white16500),
+                child: const Text("Show results"),
               ),
             ),
             SizedBox(height: 16.h),
@@ -117,15 +113,15 @@ class ExamScorePage extends StatelessWidget {
                   );
                 },
                 style: OutlinedButton.styleFrom(
-                  side: const BorderSide(color: AppColors.primary),
+                  side: BorderSide(color: theme.colorScheme.primary),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(100),
+                    borderRadius: BorderRadius.circular(50.r),
                   ),
                 ),
                 child: Text(
                   "Start again",
-                  style: AppStyles.black16400.copyWith(
-                    color: AppColors.primary,
+                  style: theme.textTheme.bodyLarge?.copyWith(
+                    color: theme.colorScheme.primary,
                   ),
                 ),
               ),

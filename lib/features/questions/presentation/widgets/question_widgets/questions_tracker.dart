@@ -1,5 +1,4 @@
 import 'package:exams_app/core/utils/app_colors.dart';
-import 'package:exams_app/core/utils/app_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -14,6 +13,7 @@ class QuestionsTracker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return SizedBox(
       height: 40.h,
       child: Column(
@@ -21,14 +21,14 @@ class QuestionsTracker extends StatelessWidget {
         children: [
           Text(
             "Question $currentQuestion of $totalQuestions",
-            style: AppStyles.black18500,
+            style: theme.textTheme.bodyLarge,
           ),
           LinearProgressIndicator(
             value: currentQuestion / totalQuestions,
             minHeight: 6,
-            color: AppColors.primary,
+            color: theme.colorScheme.primary,
             backgroundColor: AppColors.black10,
-            valueColor: const AlwaysStoppedAnimation(AppColors.primary),
+            valueColor: AlwaysStoppedAnimation(theme.colorScheme.primary),
             borderRadius: BorderRadius.circular(10),
           ),
         ],
