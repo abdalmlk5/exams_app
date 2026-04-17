@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../widgets/home_bottom_nav_bar.dart';
+import '../widgets/profile_tab.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -13,16 +14,16 @@ class HomeScreen extends StatelessWidget {
     return BlocBuilder<HomeCubit, HomeState>(
       builder: (BuildContext context, HomeState state) {
         return Scaffold(
-          appBar: AppBar(),
-          body: IndexedStack(
-            index: state.selectedTab,
-            children: [
-              HomeTab(),
-              Scaffold(body: Center(child: Text("Result"))),
-              Scaffold(body: Center(child: Text("Profile"))),
-            ],
+          body: SafeArea(
+            child: IndexedStack(
+              index: state.selectedTab,
+              children: [
+                HomeTab(),
+                const Scaffold(body: Center(child: Text("Result"))),
+                const ProfileTab(),
+              ],
+            ),
           ),
-
           bottomNavigationBar: HomeBottomNavBar(selectedTab: state.selectedTab),
         );
       },

@@ -1,5 +1,5 @@
 import 'package:exams_app/core/utils/app_colors.dart';
-import 'package:exams_app/core/utils/app_styles.dart';
+import 'package:exams_app/core/utils/app_text_styles.dart';
 import 'package:exams_app/core/utils/app_strings.dart';
 import 'package:exams_app/features/explore/presentation/cubit/explore_cubit.dart';
 import 'package:exams_app/features/explore/presentation/cubit/explore_event.dart';
@@ -13,21 +13,22 @@ class SearchTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return TextField(
       controller: controller,
-      style: AppStyles.black16400,
+      style: theme.textTheme.bodyLarge,
       onChanged: (value) => context.read<ExploreCubit>().doEvent(
         GetFilteredSubjectsListEvent(value),
       ),
       decoration: InputDecoration(
         hintText: AppStrings.search,
-        hintStyle: AppStyles.placeholder14400,
+        hintStyle: AppTextStyles.placeholder13400,
         prefixIcon: Padding(
           padding: const EdgeInsets.only(left: 12, right: 8),
           child: SvgPicture.asset(
             'assets/icons/search.svg',
-            colorFilter: const ColorFilter.mode(
-              AppColors.black30,
+            colorFilter: ColorFilter.mode(
+              theme.hintColor,
               BlendMode.srcIn,
             ),
             width: 16,
@@ -39,23 +40,23 @@ class SearchTextField extends StatelessWidget {
           minHeight: 40,
         ),
         filled: true,
-        fillColor: AppColors.white,
+        fillColor: theme.cardColor,
         contentPadding: const EdgeInsets.symmetric(
           vertical: 12,
           horizontal: 16,
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
-          borderSide: const BorderSide(color: AppColors.gray, width: 1),
+          borderSide: BorderSide(color: theme.dividerColor, width: 1),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
-          borderSide: const BorderSide(color: AppColors.gray, width: 1),
+          borderSide: BorderSide(color: theme.dividerColor, width: 1),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
           borderSide: BorderSide(
-            color: AppColors.gray,
+            color: theme.colorScheme.primary,
             width: 2,
           ),
         ),

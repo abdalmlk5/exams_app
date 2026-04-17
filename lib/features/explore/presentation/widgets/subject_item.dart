@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/utils/app_colors.dart';
-import '../../../../core/utils/app_styles.dart';
 import '../../data/models/subject_model.dart';
 
 class SubjectItem extends StatelessWidget {
@@ -14,6 +13,7 @@ class SubjectItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return InkWell(
       onTap: () {
         Navigator.pushNamed(
@@ -27,7 +27,7 @@ class SubjectItem extends StatelessWidget {
         margin: EdgeInsets.symmetric(horizontal: 16.w),
         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
         decoration: BoxDecoration(
-          color: AppColors.white,
+          color: theme.cardColor,
           borderRadius: BorderRadius.circular(10.r),
           boxShadow: [
             BoxShadow(
@@ -44,11 +44,11 @@ class SubjectItem extends StatelessWidget {
               width: 48.w,
               height: 48.h,
               placeholder: (context, url) =>
-                  Center(child: const CircularProgressIndicator()),
+                  const Center(child: CircularProgressIndicator()),
               errorWidget: (context, url, error) => const Icon(Icons.error),
             ),
             SizedBox(width: 16.w),
-            Text(subject.name ?? "", style: AppStyles.black16400),
+            Text(subject.name ?? "", style: theme.textTheme.bodyLarge),
           ],
         ),
       ),
