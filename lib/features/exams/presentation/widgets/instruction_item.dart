@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/utils/app_colors.dart';
-import '../../../../core/utils/app_styles.dart';
 
 class InstructionItem extends StatelessWidget {
   final String text;
@@ -10,6 +9,7 @@ class InstructionItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Padding(
       padding: EdgeInsets.only(bottom: 12.h),
       child: Row(
@@ -19,13 +19,20 @@ class InstructionItem extends StatelessWidget {
             margin: EdgeInsets.only(top: 6.h),
             width: 6.w,
             height: 6.h,
-            decoration: const BoxDecoration(
-              color: AppColors.black,
+            decoration: BoxDecoration(
+              color: theme.iconTheme.color,
               shape: BoxShape.circle,
             ),
           ),
           SizedBox(width: 12.w),
-          Expanded(child: Text(text, style: AppStyles.gray14400)),
+          Expanded(
+            child: Text(
+              text,
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: AppColors.gray,
+              ),
+            ),
+          ),
         ],
       ),
     );

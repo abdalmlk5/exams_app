@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/utils/app_assets.dart';
-import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_routes.dart';
-import '../../../../core/utils/app_styles.dart';
 import '../../data/models/exam_model.dart';
 
 class ExamItem extends StatelessWidget {
@@ -14,6 +12,7 @@ class ExamItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return InkWell(
       onTap: () {
         Navigator.pushNamed(
@@ -26,7 +25,7 @@ class ExamItem extends StatelessWidget {
         margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
         padding: EdgeInsets.all(16.r),
         decoration: BoxDecoration(
-          color: AppColors.white,
+          color: theme.cardColor,
           borderRadius: BorderRadius.circular(10.r),
           boxShadow: [
             BoxShadow(
@@ -47,20 +46,33 @@ class ExamItem extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(exam.title ?? "", style: AppStyles.black16500),
+                      Text(
+                        exam.title ?? "",
+                        style: theme.textTheme.bodyLarge?.copyWith(
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
                       Text(
                         "${exam.duration} Minutes",
-                        style: AppStyles.primary12500,
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: theme.colorScheme.primary,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ],
                   ),
                   SizedBox(height: 4.h),
                   Text(
                     "${exam.numberOfQuestions} Question",
-                    style: AppStyles.gray12400,
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: theme.hintColor,
+                    ),
                   ),
                   SizedBox(height: 8.h),
-                  Text("From: 1.00  To: 6.00", style: AppStyles.black12400),
+                  Text(
+                    "From: 1.00  To: 6.00",
+                    style: theme.textTheme.bodySmall,
+                  ),
                 ],
               ),
             ),

@@ -9,8 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/utils/app_assets.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_strings.dart';
-import '../../../../core/utils/app_styles.dart';
-import '../../../../core/widgets/custom_elevated_button.dart';
+import '../../../../core/widgets/custom_button.dart';
 import '../../data/models/exam_model.dart';
 import '../widgets/instruction_item.dart';
 
@@ -21,11 +20,15 @@ class ExamDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
-          icon: const Icon(Icons.arrow_back_ios, color: AppColors.black),
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: theme.iconTheme.color,
+          ),
         ),
       ),
       body: Padding(
@@ -44,10 +47,16 @@ class ExamDetailsPage extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(exam.title ?? "", style: AppStyles.black18500),
+                          Text(
+                            exam.title ?? "",
+                            style: theme.textTheme.titleLarge,
+                          ),
                           Text(
                             "${exam.duration} ${AppStrings.minutes}",
-                            style: AppStyles.primary12500,
+                            style: theme.textTheme.bodySmall?.copyWith(
+                              color: theme.colorScheme.primary,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ],
                       ),
@@ -56,7 +65,7 @@ class ExamDetailsPage extends StatelessWidget {
                         children: [
                           Text(
                             AppStrings.highLevel,
-                            style: AppStyles.black16400,
+                            style: theme.textTheme.bodyLarge,
                           ),
                           Container(
                             height: 15.h,
@@ -66,7 +75,9 @@ class ExamDetailsPage extends StatelessWidget {
                           ),
                           Text(
                             "${exam.numberOfQuestions} ${AppStrings.question}",
-                            style: AppStyles.gray14400,
+                            style: theme.textTheme.bodyMedium?.copyWith(
+                              color: AppColors.gray,
+                            ),
                           ),
                         ],
                       ),
@@ -78,21 +89,24 @@ class ExamDetailsPage extends StatelessWidget {
             SizedBox(height: 24.h),
             const Divider(color: AppColors.blue10),
             SizedBox(height: 16.h),
-            Text(AppStrings.instructions, style: AppStyles.black18500),
+            Text(
+              AppStrings.instructions,
+              style: theme.textTheme.titleLarge,
+            ),
             SizedBox(height: 16.h),
             Expanded(
               child: ListView(
-                children: [
-                  const InstructionItem(
+                children: const [
+                  InstructionItem(
                     text: "Lorem ipsum dolor sit amet consectetur.",
                   ),
-                  const InstructionItem(
+                  InstructionItem(
                     text: "Lorem ipsum dolor sit amet consectetur.",
                   ),
-                  const InstructionItem(
+                  InstructionItem(
                     text: "Lorem ipsum dolor sit amet consectetur.",
                   ),
-                  const InstructionItem(
+                  InstructionItem(
                     text: "Lorem ipsum dolor sit amet consectetur.",
                   ),
                 ],
@@ -105,7 +119,8 @@ class ExamDetailsPage extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => BlocProvider(
-                      create: (context) => getIt<QuestionsCubit>()..doEvent(GetQuestionsEvent(examId: exam.id!)),
+                      create: (context) => getIt<QuestionsCubit>()
+                        ..doEvent(GetQuestionsEvent(examId: exam.id!)),
                       child: QuestionPage(examId: exam.id!),
                     ),
                   ),

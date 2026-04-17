@@ -17,6 +17,7 @@ class ExamsPage extends StatelessWidget {
   const ExamsPage({super.key, this.subject});
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return BlocProvider(
       create: (context) => getIt<ExamsCubit>()
         ..doEvent(
@@ -29,7 +30,10 @@ class ExamsPage extends StatelessWidget {
         appBar: AppBar(
           leading: IconButton(
             onPressed: () => Navigator.pop(context),
-            icon: const Icon(Icons.arrow_back_ios, color: AppColors.black),
+            icon: Icon(
+              Icons.arrow_back_ios,
+              color: theme.iconTheme.color,
+            ),
           ),
         ),
         body: BlocBuilder<ExamsCubit, ExamsState>(
@@ -42,10 +46,15 @@ class ExamsPage extends StatelessWidget {
                 context,
                 state.examsState.errorMessage ?? AppStrings.someThingWentWrong,
               );
-              return SizedBox();
+              return const SizedBox();
             }
             if (state.examsState.data == null) {
-              return const Center(child: Text('No exams found'));
+              return Center(
+                child: Text(
+                  'No exams found',
+                  style: theme.textTheme.bodyLarge,
+                ),
+              );
             } else {
               List<ExamModel> exams = state.examsState.data ?? [];
               return ListView.separated(
