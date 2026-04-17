@@ -6,11 +6,13 @@ import 'package:exams_app/features/forget_password/presentation/view_models/forg
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AppRoutes {
+abstract class AppRoutes {
   static const String forgetPassword = '/forgetPassword';
   static const String emailVerification = '/emailVerification';
   static const String resetPassword = '/resetPassword';
+}
 
+abstract class AppRouter {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case forgetPassword:

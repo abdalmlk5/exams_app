@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Exams App',
-          onGenerateRoute: AppRoutes.onGenerateRoute,
+          onGenerateRoute: AppRouter.onGenerateRoute,
           initialRoute: AppRoutes.forgetPassword,
         );
       },
