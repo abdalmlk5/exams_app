@@ -1,12 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:exams_app/config/api/end_points.dart';
-import 'package:exams_app/features/authentication/data/response/auth_response_model.dart';
+import 'package:exams_app/features/authentication/data/response/login_register_responses/auth_response_model.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 
-import '../models/forget_password_models/forget_password_response.dart';
-import '../models/forget_password_models/reset_password_response.dart';
-import '../models/forget_password_models/verify_code_response.dart';
+import '../../data/response/forget_password_models/forget_password_response.dart';
+import '../../data/response/forget_password_models/reset_password_response.dart';
+import '../../data/response/forget_password_models/verify_code_response.dart';
 
 part 'auth_api_client.g.dart';
 

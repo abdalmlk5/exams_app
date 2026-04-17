@@ -6,9 +6,9 @@ import 'package:exams_app/features/authentication/data/datasources/auth_remote_d
 import 'package:exams_app/features/authentication/data/models/user_model.dart';
 import 'package:injectable/injectable.dart';
 
-import '../models/forget_password_models/forget_password_response.dart';
-import '../models/forget_password_models/reset_password_response.dart';
-import '../models/forget_password_models/verify_code_response.dart';
+import '../../data/response/forget_password_models/forget_password_response.dart';
+import '../../data/response/forget_password_models/reset_password_response.dart';
+import '../../data/response/forget_password_models/verify_code_response.dart';
 
 @Injectable(as: AuthRemoteDataSourceContract)
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSourceContract {
