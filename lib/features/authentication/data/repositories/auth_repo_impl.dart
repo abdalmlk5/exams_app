@@ -75,8 +75,13 @@ class AuthRepoImpl implements AuthRepo {
   Future<BaseResponse<void>> logout() async {
     try {
       await authRemoteDataSourceContract.logout();
+      await authLocalDataSourceContract.deleteToken();
+      await authLocalDataSourceContract.deleteRememberMe();
       return SuccessBaseResponse<void>(null);
     } catch (e) {
+      // Even if remote logout fails, we should clear local data to force logout locally
+      await authLocalDataSourceContract.deleteToken();
+      await authLocalDataSourceContract.deleteRememberMe();
       return ErrorBaseResponse<void>(ErrorHandler.handle(e));
     }
   }
