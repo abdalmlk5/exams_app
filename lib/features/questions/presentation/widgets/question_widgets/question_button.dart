@@ -16,18 +16,21 @@ class QuestionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return SizedBox(
       height: 48.h,
       width: 163.w,
       child: ElevatedButton(
         onPressed: isLoading ? null : onPressed,
         style: ElevatedButton.styleFrom(
-          side: BorderSide(color: isLoading ? Colors.grey : AppColors.primary),
+          side: BorderSide(
+            color: isLoading ? Colors.grey : theme.colorScheme.primary,
+          ),
           backgroundColor: questionButtonType == QuestionButtonType.back
               ? AppColors.white
-              : (isLoading ? Colors.grey[300] : AppColors.primary),
+              : (isLoading ? Colors.grey[300] : theme.colorScheme.primary),
           foregroundColor: questionButtonType == QuestionButtonType.back
-              ? AppColors.primary
+              ? theme.colorScheme.primary
               : AppColors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(100),
@@ -46,11 +49,11 @@ class QuestionButton extends StatelessWidget {
                 questionButtonType == QuestionButtonType.back
                     ? "Back"
                     : questionButtonType == QuestionButtonType.next
-                    ? "Next"
-                    : questionButtonType == QuestionButtonType.finish
-                    ? "Finish"
-                    : '',
-                style: TextStyle(fontSize: 15),
+                        ? "Next"
+                        : questionButtonType == QuestionButtonType.finish
+                            ? "Finish"
+                            : '',
+                style: const TextStyle(fontSize: 15),
               ),
       ),
     );

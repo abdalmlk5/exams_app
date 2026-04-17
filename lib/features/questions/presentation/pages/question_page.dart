@@ -1,5 +1,4 @@
 import 'package:exams_app/config/base_state/base_state.dart';
-import 'package:exams_app/core/utils/app_styles.dart';
 import 'package:exams_app/core/widgets/custom_snack_bar.dart';
 import 'package:exams_app/features/questions/presentation/cubit/question_event.dart';
 import 'package:exams_app/features/questions/presentation/cubit/questions_cubit.dart';
@@ -11,6 +10,7 @@ import 'package:exams_app/features/questions/presentation/widgets/question_widge
 import 'package:exams_app/features/questions/presentation/widgets/question_widgets/show_time_out_alert_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class QuestionPage extends StatelessWidget {
   final String examId;
@@ -18,6 +18,7 @@ class QuestionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return BlocConsumer<QuestionsCubit, BaseState<ExamData>>(
       listenWhen: (previous, current) =>
           previous.errorMessage != current.errorMessage ||
@@ -27,8 +28,6 @@ class QuestionPage extends StatelessWidget {
         // If result is present, navigate to ScorePage and replace current page
         if (state.data?.result != null && state.isLoading == false) {
           CustomSnackBar.success(context, "Finish");
-          // If the timeout dialog is open when results arrive, we need to ensure the dialog context is dismissed or the new page is pushed on top appropriately
-          // Navigator.pop(context) might be dangerous if no dialog is open, so we use pushReplacement for the scaffold
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -55,10 +54,24 @@ class QuestionPage extends StatelessWidget {
           );
         }
         if (state.errorMessage != null && state.data == null) {
-          return Scaffold(body: Center(child: Text(state.errorMessage!)));
+          return Scaffold(
+            body: Center(
+              child: Text(
+                state.errorMessage!,
+                style: theme.textTheme.bodyMedium,
+              ),
+            ),
+          );
         }
         if (state.data == null) {
-          return const Scaffold(body: Center(child: Text("No data available")));
+          return Scaffold(
+            body: Center(
+              child: Text(
+                "No data available",
+                style: theme.textTheme.bodyLarge,
+              ),
+            ),
+          );
         }
         final question = state.data!.currentQuestion;
         return Scaffold(
@@ -66,10 +79,12 @@ class QuestionPage extends StatelessWidget {
           appBar: QuestionsAppBar(
             title: question!.exam!.title,
             time: state.data!.formattedRemainingTime,
+            remainingSeconds: state.data!.remainingTimeInSeconds,
+            totalSeconds: state.data!.totalTimeInMinutes * 60,
           ),
           body: SafeArea(
             child: Padding(
-              padding: EdgeInsets.all(15),
+              padding: const EdgeInsets.all(15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -82,9 +97,14 @@ class QuestionPage extends StatelessWidget {
                   const SizedBox(height: 24),
 
                   // Question
-                  Text(question.question, style: AppStyles.black16400),
-
-                  const SizedBox(height: 32),
+                  SizedBox(
+                    height: 80.h,
+                    width: double.infinity,
+                    child: Text(
+                      question.question,
+                      style: theme.textTheme.bodyLarge,
+                    ),
+                  ),
 
                   // answers
                   Column(
@@ -103,8 +123,6 @@ class QuestionPage extends StatelessWidget {
                         },
                       );
                     }).toList(),
-
-                    // buttons
                   ),
 
                   const Spacer(),
@@ -148,7 +166,7 @@ class QuestionPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 150),
+                  const SizedBox(height: 120),
                 ],
               ),
             ),

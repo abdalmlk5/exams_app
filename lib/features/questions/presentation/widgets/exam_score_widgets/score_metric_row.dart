@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:exams_app/core/utils/app_styles.dart';
 
 class ScoreMetricRow extends StatelessWidget {
   final String label;
@@ -16,6 +15,7 @@ class ScoreMetricRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -23,7 +23,7 @@ class ScoreMetricRow extends StatelessWidget {
           width: 80.w,
           child: Text(
             label,
-            style: AppStyles.black16400.copyWith(
+            style: theme.textTheme.bodyLarge?.copyWith(
               color: color,
               fontWeight: FontWeight.w500,
             ),
@@ -40,7 +40,7 @@ class ScoreMetricRow extends StatelessWidget {
           ),
           child: Text(
             count.toString(),
-            style: AppStyles.black12400.copyWith(
+            style: theme.textTheme.bodySmall?.copyWith(
               color: color,
               fontWeight: FontWeight.bold,
             ),

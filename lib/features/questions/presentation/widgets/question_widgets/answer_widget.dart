@@ -1,5 +1,4 @@
 import 'package:exams_app/core/utils/app_colors.dart';
-import 'package:exams_app/core/utils/app_styles.dart';
 import 'package:flutter/material.dart';
 
 class AnswerWidget extends StatelessWidget {
@@ -18,6 +17,7 @@ class AnswerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final isSelected = value == groupValue;
 
     return GestureDetector(
@@ -27,8 +27,7 @@ class AnswerWidget extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
         decoration: BoxDecoration(
           color: isSelected
-              ? AppColors
-                    .blue10 // light blue
+              ? AppColors.blue10 // light blue
               : AppColors.black5, // gray
           borderRadius: BorderRadius.circular(12),
         ),
@@ -38,10 +37,15 @@ class AnswerWidget extends StatelessWidget {
               value: value,
               groupValue: groupValue,
               onChanged: (val) => onSelect(val!),
-              activeColor: AppColors.primary,
+              activeColor: theme.colorScheme.primary,
             ),
             const SizedBox(width: 8),
-            Expanded(child: Text(text, style: AppStyles.black13400)),
+            Expanded(
+              child: Text(
+                text,
+                style: theme.textTheme.bodyMedium,
+              ),
+            ),
           ],
         ),
       ),

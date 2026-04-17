@@ -2,7 +2,6 @@ import 'package:exams_app/config/base_state/base_state.dart';
 import 'package:exams_app/core/utils/app_colors.dart';
 import 'package:exams_app/features/questions/presentation/cubit/question_event.dart';
 import 'package:flutter/material.dart';
-import 'package:exams_app/core/utils/app_styles.dart';
 import 'package:exams_app/features/questions/presentation/cubit/questions_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -14,9 +13,9 @@ class ShowTimeOutAlert {
       barrierDismissible: false,
       barrierColor: AppColors.black20,
       builder: (context) {
+        final theme = Theme.of(context);
         return PopScope(
-          canPop:
-              false, // Prevents Android hardware back button from closing the dialog
+          canPop: false, // Prevents Android hardware back button from closing the dialog
           child: AlertDialog(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
@@ -39,8 +38,8 @@ class ShowTimeOutAlert {
                           const SizedBox(width: 12),
                           Text(
                             "Time out !!",
-                            style: AppStyles.black18500.copyWith(
-                              color: Colors.red,
+                            style: theme.textTheme.titleLarge?.copyWith(
+                              color: theme.colorScheme.error,
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
                             ),
@@ -60,7 +59,7 @@ class ShowTimeOutAlert {
                                   );
                                 },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.primary,
+                            backgroundColor: theme.colorScheme.primary,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(100),
                             ),
@@ -74,14 +73,7 @@ class ShowTimeOutAlert {
                                     strokeWidth: 2,
                                   ),
                                 )
-                              : const Text(
-                                  "View score",
-                                  style: TextStyle(
-                                    color: AppColors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
+                              : const Text("View score"),
                         ),
                       ),
                     ],
