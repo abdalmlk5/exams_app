@@ -1,6 +1,6 @@
 import 'package:exams_app/config/di/di.dart';
-import 'package:exams_app/features/authentication/presentation/auth/cubit/auth_cubit.dart';
-import 'package:exams_app/features/authentication/presentation/auth/pages/auth_page.dart';
+import 'package:exams_app/features/authentication/presentation/auth_manager/cubit/auth_manager_cubit.dart';
+import 'package:exams_app/features/authentication/presentation/auth_manager/pages/auth_manager_page.dart';
 import 'package:exams_app/features/authentication/presentation/login/cubit/login_cubit.dart';
 import 'package:exams_app/features/authentication/presentation/register/cubit/register_cubit.dart';
 import 'package:exams_app/main_page_test.dart';
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
             providers: [
               BlocProvider(create: (_) => getIt<LoginCubit>()),
               BlocProvider(create: (_) => getIt<RegisterCubit>()),
-              BlocProvider(create: (_) => getIt<AuthCubit>()..checkAuth()),
+              BlocProvider(create: (_) => getIt<AuthManagerCubit>()..checkAuth()),
             ],
             child: const AuthWrapper(),
           ),
@@ -46,7 +46,7 @@ class AuthWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthCubit, AuthState>(
+    return BlocListener<AuthManagerCubit, AuthManagerState>(
       listener: (context, state) {
         final error = state.authState.errorMessage;
         if (error != null && error.isNotEmpty) {
@@ -55,7 +55,7 @@ class AuthWrapper extends StatelessWidget {
           ).showSnackBar(SnackBar(content: Text(error)));
         }
       },
-      child: BlocBuilder<AuthCubit, AuthState>(
+      child: BlocBuilder<AuthManagerCubit, AuthManagerState>(
         builder: (context, state) {
           if (state.authState.isLoading) {
             return const Scaffold(
@@ -65,7 +65,7 @@ class AuthWrapper extends StatelessWidget {
           if (state.authState.data != null) {
             return const MainPageTest();
           }
-          return const AuthPage();
+          return const AuthenticationManagerPage();
         },
       ),
     );

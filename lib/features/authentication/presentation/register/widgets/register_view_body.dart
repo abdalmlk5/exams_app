@@ -1,9 +1,11 @@
 import 'package:exams_app/core/utils/app_strings.dart';
 import 'package:exams_app/core/widgets/custom_elevated_button.dart';
+import 'package:exams_app/core/widgets/custom_snack_bar.dart';
 import 'package:exams_app/core/widgets/custom_text_field.dart';
 import 'package:exams_app/features/authentication/presentation/register/cubit/register_cubit.dart';
-import 'package:exams_app/features/authentication/presentation/register/cubit/register_even.dart';
-import 'package:exams_app/features/authentication/presentation/auth/widgets/widgets/auth_footer.dart';
+import 'package:exams_app/features/authentication/presentation/register/cubit/register_event.dart';
+import 'package:exams_app/features/authentication/presentation/auth_manager/widgets/widgets/auth_footer.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -68,95 +70,110 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<RegisterCubit, RegisterState>(
-      builder: (context, state) {
-        return SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 12.h),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                AppTextField(
-                  controller: _usernameController,
-                  fieldType: FieldType.username,
-                  onChanged: (_) => _validate(),
-                ),
-                SizedBox(height: 16.h),
-                Row(
-                  children: [
-                    Expanded(
-                      child: AppTextField(
-                        controller: _firstNameController,
-                        fieldType: FieldType.firstName,
-                        onChanged: (_) => _validate(),
-                      ),
-                    ),
-                    SizedBox(width: 16.w),
-                    Expanded(
-                      child: AppTextField(
-                        controller: _lastNameController,
-                        fieldType: FieldType.lastName,
-                        onChanged: (_) => _validate(),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 16.h),
-                AppTextField(
-                  controller: _emailController,
-                  fieldType: FieldType.email,
-                  onChanged: (_) => _validate(),
-                ),
-                SizedBox(height: 16.h),
-                Row(
-                  children: [
-                    Expanded(
-                      child: AppTextField(
-                        controller: _passwordController,
-                        fieldType: FieldType.password,
-                        onChanged: (_) => _validate(),
-                      ),
-                    ),
-                    SizedBox(width: 16.w),
-                    Expanded(
-                      child: AppTextField(
-                        controller: _rePasswordController,
-                        fieldType: FieldType.confirmPassword,
-                        compareController: _passwordController,
-                        onChanged: (_) => _validate(),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 16.h),
-                AppTextField(
-                  controller: _phoneController,
-                  fieldType: FieldType.phoneNumber,
-                  onChanged: (_) => _validate(),
-                ),
-                SizedBox(height: 48.h),
-                CustomButton(
-                  text: AppStrings.signup,
-                  isEnabled: state.isButtonEnabled,
-                  isLoading: state.registerState.isLoading,
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      _register();
-                    }
-                  },
-                ),
-                SizedBox(height: 24.h),
-                AuthFooter(
-                  text: AppStrings.alreadyHaveAccount,
-                  linkText: AppStrings.login,
-                  onTap: widget.togglePages ?? () {},
-                ),
-              ],
-            ),
-          ),
-        );
+    return BlocListener<RegisterCubit, RegisterState>(
+      listenWhen: (previous, current) =>
+          previous.registerState != current.registerState,
+      listener: (context, state) {
+        if (state.registerState.errorMessage != null) {
+          CustomSnackBar.error(context, state.registerState.errorMessage!);
+        }
+        if (state.registerState.data != null) {
+          CustomSnackBar.success(context, 'Register Success');
+        }
       },
+      child: SingleChildScrollView(
+        padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 12.h),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              AppTextField(
+                controller: _usernameController,
+                fieldType: FieldType.username,
+                onChanged: (_) => _validate(),
+              ),
+              SizedBox(height: 16.h),
+              Row(
+                children: [
+                  Expanded(
+                    child: AppTextField(
+                      controller: _firstNameController,
+                      fieldType: FieldType.firstName,
+                      onChanged: (_) => _validate(),
+                    ),
+                  ),
+                  SizedBox(width: 16.w),
+                  Expanded(
+                    child: AppTextField(
+                      controller: _lastNameController,
+                      fieldType: FieldType.lastName,
+                      onChanged: (_) => _validate(),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 16.h),
+              AppTextField(
+                controller: _emailController,
+                fieldType: FieldType.email,
+                onChanged: (_) => _validate(),
+              ),
+              SizedBox(height: 16.h),
+              Row(
+                children: [
+                  Expanded(
+                    child: AppTextField(
+                      controller: _passwordController,
+                      fieldType: FieldType.password,
+                      onChanged: (_) => _validate(),
+                    ),
+                  ),
+                  SizedBox(width: 16.w),
+                  Expanded(
+                    child: AppTextField(
+                      controller: _rePasswordController,
+                      fieldType: FieldType.confirmPassword,
+                      compareController: _passwordController,
+                      onChanged: (_) => _validate(),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 16.h),
+              AppTextField(
+                controller: _phoneController,
+                fieldType: FieldType.phoneNumber,
+                onChanged: (_) => _validate(),
+              ),
+              SizedBox(height: 48.h),
+              BlocBuilder<RegisterCubit, RegisterState>(
+                buildWhen: (previous, current) =>
+                    previous.isButtonEnabled != current.isButtonEnabled ||
+                    previous.registerState != current.registerState,
+                builder: (context, state) {
+                  return CustomButton(
+                    text: AppStrings.signup,
+                    isEnabled: state.isButtonEnabled,
+                    isLoading: state.registerState.isLoading,
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        _register();
+                      }
+                    },
+                  );
+                },
+              ),
+              SizedBox(height: 24.h),
+              AuthFooter(
+                text: AppStrings.alreadyHaveAccount,
+                linkText: AppStrings.login,
+                onTap: widget.togglePages ?? () {},
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

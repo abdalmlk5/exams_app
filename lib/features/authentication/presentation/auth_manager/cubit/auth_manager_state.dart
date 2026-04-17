@@ -1,16 +1,18 @@
-part of 'auth_cubit.dart';
+part of 'auth_manager_cubit.dart';
 
-class AuthState extends Equatable {
+
+
+class AuthManagerState extends Equatable {
   final BaseState<UserEntity> authState;
 
-  const AuthState({
+  const AuthManagerState({
     this.authState = const BaseState<UserEntity>(
       isLoading: false,
     ),
   });
 
-  AuthState copyWith({BaseState<UserEntity>? authState}) {
-    return AuthState(
+  AuthManagerState copyWith({BaseState<UserEntity>? authState}) {
+    return AuthManagerState(
       authState: authState ?? this.authState,
     );
   }

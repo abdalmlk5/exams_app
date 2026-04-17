@@ -1,11 +1,17 @@
-import 'package:exams_app/core/utils/app_colors.dart';
 import 'package:exams_app/core/utils/app_strings.dart';
-import 'package:exams_app/core/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+
 class RememberMeAndForgetPassword extends StatelessWidget {
-  const RememberMeAndForgetPassword({super.key});
+  final bool value;
+  final ValueChanged<bool?> onChanged;
+
+  const RememberMeAndForgetPassword({
+    super.key,
+    required this.value,
+    required this.onChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,23 +24,17 @@ class RememberMeAndForgetPassword extends StatelessWidget {
               width: 24.w,
               height: 24.h,
               child: Checkbox(
-                value: false,
-                onChanged: (value) {},
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(4.r),
-                ),
-                activeColor: AppColors.primary,
+                value: value,
+                onChanged: onChanged,
               ),
             ),
             SizedBox(width: 8.w),
-            Text(
-              AppStrings.rememberMe,
-              style: AppTextStyles.black13400,
-            ),
+            Text(AppStrings.rememberMe, style: Theme.of(context).textTheme.bodyMedium),
           ],
         ),
         TextButton(
-          onPressed: () {},
+          onPressed: () {
+          },
           style: TextButton.styleFrom(
             padding: EdgeInsets.zero,
             minimumSize: Size.zero,
@@ -42,9 +42,9 @@ class RememberMeAndForgetPassword extends StatelessWidget {
           ),
           child: Text(
             AppStrings.forgetPasswordQuestion,
-            style: AppTextStyles.black13400.copyWith(
-              decoration: TextDecoration.underline,
-            ),
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  decoration: TextDecoration.underline,
+                ),
           ),
         ),
       ],

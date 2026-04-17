@@ -1,10 +1,13 @@
 import 'package:exams_app/config/base_response/base_response.dart';
 import 'package:exams_app/config/error_handler/error_handler.dart';
 import 'package:exams_app/features/authentication/api/api_client/auth_api_client.dart';
+import 'package:exams_app/features/authentication/api/models/login_request_body.dart';
+import 'package:exams_app/features/authentication/api/models/register_request_body.dart';
 import 'package:exams_app/features/authentication/data/datasources/auth_local_data_source_contract.dart';
 import 'package:exams_app/features/authentication/data/datasources/auth_remote_data_source_contract.dart';
 import 'package:exams_app/features/authentication/data/models/user_model.dart';
 import 'package:injectable/injectable.dart';
+
 
 @Injectable(as: AuthRemoteDataSourceContract)
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSourceContract {
@@ -20,15 +23,14 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSourceContract {
   Future<BaseResponse<UserModel>> login({
     required String email,
     required String password,
+    bool rememberMe = false,
   }) async {
     try {
-      final response = await authApiClient.login({
-        'email': email,
-        'password': password,
-      });
+      final response = await authApiClient.login(LoginRequestBody(email: email, password: password));
 
       if (response.token != null) {
         await localDataSource.saveToken(response.token!);
+        await localDataSource.saveRememberMe(rememberMe);
       }
 
       return SuccessBaseResponse<UserModel>(response.user);
@@ -46,20 +48,14 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSourceContract {
     required String password,
     required String rePassword,
     required String phone,
+    bool rememberMe = false,
   }) async {
     try {
-      final response = await authApiClient.register({
-        'username': username,
-        'firstName': firstName,
-        'lastName': lastName,
-        'email': email,
-        'password': password,
-        'rePassword': rePassword,
-        'phone': phone,
-      });
+      final response = await authApiClient.register(RegisterRequestBody(username: username, firstName: firstName, lastName: lastName, email: email, password: password, rePassword: rePassword, phone: phone));
 
       if (response.token != null) {
         await localDataSource.saveToken(response.token!);
+        await localDataSource.saveRememberMe(rememberMe);
       }
 
       return SuccessBaseResponse<UserModel>(response.user);
@@ -72,17 +68,18 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSourceContract {
   Future<void> logout() async {
     try {
       final token = await localDataSource.getToken();
-      if (token == null) {
-        return;
+      if (token != null) {
+        try {
+          await authApiClient.logout();
+        } catch (_) {
+          // Ignore API error during logout
+        }
       }
-
+    } finally {
       await Future.wait([
-        authApiClient.logout(),
         localDataSource.deleteToken(),
+        localDataSource.deleteRememberMe(),
       ]);
-
-    } catch (e) {
-      return;
     }
   }
 

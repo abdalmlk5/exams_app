@@ -17,6 +17,7 @@ class RegisterUsecase {
     required String password,
     required String rePassword,
     required String phone,
+    bool rememberMe = false,
   }) async {
     return await authRepoContract.register(
       username: username,
@@ -26,6 +27,7 @@ class RegisterUsecase {
       password: password,
       rePassword: rePassword,
       phone: phone,
+      rememberMe: rememberMe,
     );
   }
 }
