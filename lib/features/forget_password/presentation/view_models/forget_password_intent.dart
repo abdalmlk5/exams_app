@@ -14,6 +14,5 @@ class ForgetPasswordVerifyCodeIntent extends ForgetPasswordIntent {
 
 class ForgetPasswordResetPasswordIntent extends ForgetPasswordIntent {
   final String password;
-  final String confirmPassword;
-  const ForgetPasswordResetPasswordIntent(this.password, this.confirmPassword);
+  const ForgetPasswordResetPasswordIntent(this.password);
 }

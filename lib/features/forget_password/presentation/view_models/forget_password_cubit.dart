@@ -28,7 +28,7 @@ class ForgetPasswordCubit extends Cubit<BaseState<String?>> {
     } else if (intent is ForgetPasswordVerifyCodeIntent) {
       _verifyCode(intent.code);
     } else if (intent is ForgetPasswordResetPasswordIntent) {
-      _resetPassword(intent.password, intent.confirmPassword);
+      _resetPassword(intent.password);
     }
   }
 
@@ -54,7 +54,7 @@ class ForgetPasswordCubit extends Cubit<BaseState<String?>> {
     }
   }
 
-  void _resetPassword(String password, String confirmPassword) async {
+  void _resetPassword(String password) async {
     if (_userEmail == null) {
       emit(state.copyWith(errorMessage: "Email is missing"));
       return;

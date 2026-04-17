@@ -77,7 +77,6 @@ class ResetPasswordView extends StatelessWidget {
                           context.read<ForgetPasswordCubit>().handleIntent(
                             ForgetPasswordResetPasswordIntent(
                               passwordController.text,
-                              confirmPasswordController.text,
                             ),
                           );
                         }
