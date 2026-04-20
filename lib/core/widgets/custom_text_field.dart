@@ -6,7 +6,7 @@ class AppTextField extends StatefulWidget {
   final TextEditingController controller;
   final FieldType fieldType;
   final void Function(String)? onChanged;
-  final String? suffixText;
+  final Widget? suffix;
   final VoidCallback? onSuffixPressed;
   final TextEditingController? compareController;
 
@@ -15,7 +15,7 @@ class AppTextField extends StatefulWidget {
     required this.controller,
     required this.fieldType,
     this.onChanged,
-    this.suffixText,
+    this.suffix,
     this.onSuffixPressed,
     this.compareController,
   });
@@ -57,20 +57,11 @@ class _AppTextFieldState extends State<AppTextField> {
                   });
                 },
               )
-            : widget.suffixText != null
-                ? TextButton(
-                    onPressed: widget.onSuffixPressed,
-                    child: Text(
-                      widget.suffixText!,
-                      style: theme.textTheme.bodyMedium?.copyWith(
-                        color: theme.colorScheme.primary,
-                      ),
-                    ),
-                  )
-                : null,
+            : widget.suffix ?? null,
       ),
     );
   }
+
   String? _validate(String? value) {
     switch (widget.fieldType) {
       case FieldType.email:
@@ -79,6 +70,8 @@ class _AppTextFieldState extends State<AppTextField> {
         return AppValidations.validatePassword(value);
       case FieldType.newPassword:
         return AppValidations.validatePassword(value);
+      case FieldType.profilePassword:
+        return null;
       case FieldType.confirmPassword:
         return AppValidations.validateConfirmPassword(
           value,
@@ -99,13 +92,46 @@ class _AppTextFieldState extends State<AppTextField> {
 }
 
 enum FieldType {
-  email(AppStrings.email, AppStrings.enterYourEmail, TextInputType.emailAddress),
-  password(AppStrings.password, AppStrings.enterYourPassword, TextInputType.text),
-  newPassword(AppStrings.newPassword, AppStrings.newPassword, TextInputType.text),
-  confirmPassword(AppStrings.confirmPassword, AppStrings.confirmPassword, TextInputType.text),
-  username(AppStrings.userName, AppStrings.enterYourUserName, TextInputType.name),
-  phoneNumber(AppStrings.phoneNumber, AppStrings.enterPhoneNumber, TextInputType.phone),
-  firstName(AppStrings.firstName, AppStrings.enterFirstName, TextInputType.name),
+  email(
+    AppStrings.email,
+    AppStrings.enterYourEmail,
+    TextInputType.emailAddress,
+  ),
+  password(
+    AppStrings.password,
+    AppStrings.enterYourPassword,
+    TextInputType.text,
+  ),
+  newPassword(
+    AppStrings.newPassword,
+    AppStrings.newPassword,
+    TextInputType.text,
+  ),
+  profilePassword(
+    AppStrings.profilePassword,
+    AppStrings.enterYourPassword,
+    TextInputType.text,
+  ),
+  confirmPassword(
+    AppStrings.confirmPassword,
+    AppStrings.confirmPassword,
+    TextInputType.text,
+  ),
+  username(
+    AppStrings.userName,
+    AppStrings.enterYourUserName,
+    TextInputType.name,
+  ),
+  phoneNumber(
+    AppStrings.phoneNumber,
+    AppStrings.enterPhoneNumber,
+    TextInputType.phone,
+  ),
+  firstName(
+    AppStrings.firstName,
+    AppStrings.enterFirstName,
+    TextInputType.name,
+  ),
   lastName(AppStrings.lastName, AppStrings.enterLastName, TextInputType.name),
   none('', '', TextInputType.text);
 

@@ -90,4 +90,8 @@ class AppStrings {
   static const String nameNoNumbers = 'Name must not contain numbers';
   static const String phoneRequired = 'Phone number is required';
   static const String invalidPhone = 'Enter a valid phone number';
+
+
+  // profile string
+  static const String profilePassword = '★★★★★★★';
 }

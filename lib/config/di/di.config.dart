@@ -30,7 +30,7 @@ import '../../features/authentication/domain/repositories/auth_repo.dart'
     as _i802;
 import '../../features/authentication/domain/usecases/forget_password_use_case.dart'
     as _i601;
-import '../../features/authentication/domain/usecases/get_user_data_usecase.dart'
+import '../usecases/get_user_data_usecase.dart'
     as _i932;
 import '../../features/authentication/domain/usecases/is_remembered_usecase.dart'
     as _i330;
