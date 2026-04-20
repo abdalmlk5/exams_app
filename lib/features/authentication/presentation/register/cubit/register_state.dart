@@ -1,7 +1,7 @@
 part of 'register_cubit.dart';
 
 class RegisterState extends Equatable {
-  final BaseState<UserEntity> registerState;
+  final BaseState<AuthUserEntity> registerState;
   final bool isButtonEnabled;
 
   const RegisterState({
@@ -10,7 +10,7 @@ class RegisterState extends Equatable {
   });
 
   RegisterState copyWith({
-    BaseState<UserEntity>? registerState,
+    BaseState<AuthUserEntity>? registerState,
     bool? isButtonEnabled,
   }) {
     return RegisterState(
