@@ -25,6 +25,14 @@ class AppTextField extends StatefulWidget {
 }
 
 class _AppTextFieldState extends State<AppTextField> {
+  late ThemeData theme;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    theme = Theme.of(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -47,12 +55,13 @@ class _AppTextFieldState extends State<AppTextField> {
 
         border: _border(AppColors.black30),
         enabledBorder: _border(AppColors.black30),
-        focusedBorder: _border(Theme.of(context).colorScheme.primary, 2),
+        focusedBorder: _border(theme.colorScheme.primary, 2),
         errorBorder: _border(AppColors.error),
         focusedErrorBorder: _border(AppColors.error, 2),
       ),
     );
   }
+
 
   OutlineInputBorder _border(Color color, [double width = 1]) =>
       OutlineInputBorder(

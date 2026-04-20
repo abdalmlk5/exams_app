@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 
-class RememberMeAndForgetPassword extends StatelessWidget {
+class RememberMeAndForgetPassword extends StatefulWidget {
   final bool value;
   final ValueChanged<bool?> onChanged;
 
@@ -12,6 +12,19 @@ class RememberMeAndForgetPassword extends StatelessWidget {
     required this.value,
     required this.onChanged,
   });
+
+  @override
+  State<RememberMeAndForgetPassword> createState() => _RememberMeAndForgetPasswordState();
+}
+
+class _RememberMeAndForgetPasswordState extends State<RememberMeAndForgetPassword> {
+  late ThemeData theme;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    theme = Theme.of(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,12 +37,12 @@ class RememberMeAndForgetPassword extends StatelessWidget {
               width: 24.w,
               height: 24.h,
               child: Checkbox(
-                value: value,
-                onChanged: onChanged,
+                value: widget.value,
+                onChanged: widget.onChanged,
               ),
             ),
             SizedBox(width: 8.w),
-            Text(AppStrings.rememberMe, style: Theme.of(context).textTheme.bodyMedium),
+            Text(AppStrings.rememberMe, style: theme.textTheme.bodyMedium),
           ],
         ),
         TextButton(
@@ -42,7 +55,7 @@ class RememberMeAndForgetPassword extends StatelessWidget {
           ),
           child: Text(
             AppStrings.forgetPasswordQuestion,
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+            style: theme.textTheme.bodyMedium?.copyWith(
                   decoration: TextDecoration.underline,
                 ),
           ),

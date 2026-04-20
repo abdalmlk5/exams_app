@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class AuthAppBar extends StatelessWidget implements PreferredSizeWidget {
+class AuthAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String title;
   final VoidCallback? onBack;
 
@@ -12,29 +12,41 @@ class AuthAppBar extends StatelessWidget implements PreferredSizeWidget {
   });
 
   @override
+  State<AuthAppBar> createState() => _AuthAppBarState();
+
+  @override
+  Size get preferredSize => Size.fromHeight(56.h);
+}
+
+class _AuthAppBarState extends State<AuthAppBar> {
+  late ThemeData theme;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    theme = Theme.of(context);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return AppBar(
       backgroundColor: theme.scaffoldBackgroundColor,
       elevation: 0,
-      leading: onBack != null
+      leading: widget.onBack != null
           ? IconButton(
               icon: Icon(
                 Icons.arrow_back_ios,
                 color: theme.iconTheme.color,
                 size: 20.sp,
               ),
-              onPressed: onBack,
+              onPressed: widget.onBack,
             )
           : null,
       title: Text(
-        title,
+        widget.title,
         style: theme.textTheme.displayLarge,
       ),
       centerTitle: false,
     );
   }
-
-  @override
-  Size get preferredSize => Size.fromHeight(56.h);
 }

@@ -4,18 +4,30 @@ import 'package:exams_app/features/authentication/presentation/auth_manager/widg
 
 import 'package:flutter/material.dart';
 
-class RegisterPage extends StatelessWidget {
+class RegisterPage extends StatefulWidget {
   final void Function()? togglePages;
 
   const RegisterPage({super.key, this.togglePages});
 
   @override
+  State<RegisterPage> createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
+  late ThemeData theme;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    theme = Theme.of(context);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AuthAppBar(title: AppStrings.signup),
-      body: SafeArea(child: RegisterViewBody(togglePages: togglePages)),
+      body: SafeArea(child: RegisterViewBody(togglePages: widget.togglePages)),
     );
   }
 }

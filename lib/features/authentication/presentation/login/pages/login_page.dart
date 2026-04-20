@@ -3,18 +3,30 @@ import 'package:exams_app/features/authentication/presentation/auth_manager/widg
 import 'package:exams_app/features/authentication/presentation/login/widgets/login_view_body.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   final void Function()? togglePages;
 
   const LoginPage({super.key, this.togglePages});
 
   @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  late ThemeData theme;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    theme = Theme.of(context);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AuthAppBar(title: AppStrings.login),
-      body: SafeArea(child: LoginViewBody(togglePages: togglePages)),
+      body: SafeArea(child: LoginViewBody(togglePages: widget.togglePages)),
     );
   }
 }
