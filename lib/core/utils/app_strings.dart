@@ -46,4 +46,25 @@ class AppStrings {
   static const String resetPasswordSubtitle =
       'Password must not be empty and must contain 6 characters with upper case letter and one number at least';
   static const String newPassword = 'New password';
+  static const String passwordResetSuccessfully = "Password reset successfully";
+
+  // Validation messages
+  static const String emailRequired = 'Email is required';
+  static const String invalidEmail = 'Enter a valid email address';
+  static const String passwordRequired = 'Password is required';
+  static const String passwordTooShort = 'Password must be at least 8 characters';
+  static const String passwordLowercase = 'Password must contain at least one lowercase letter';
+  static const String passwordUppercase = 'Password must contain at least one uppercase letter';
+  static const String passwordNumber = 'Password must contain at least one number';
+  static const String passwordNotMatched = 'Password not matched';
+  static const String confirmPasswordRequired = 'Please confirm your password';
+  static const String usernameRequired = 'Username is required';
+  static const String usernameTooShort = 'Username must be at least 3 characters';
+  static const String usernameInvalid = 'Only letters, numbers and underscore allowed';
+  static const String firstNameRequired = 'First name is required';
+  static const String lastNameRequired = 'Last name is required';
+  static const String nameTooShort = 'Must be at least 3 characters';
+  static const String nameNoNumbers = 'Name must not contain numbers';
+  static const String phoneRequired = 'Phone number is required';
+  static const String invalidPhone = 'Enter a valid phone number';
 }
