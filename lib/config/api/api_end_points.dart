@@ -1,5 +1,4 @@
-class EndPoints {
-  EndPoints._();
+abstract class ApiEndPoints {
 
   // Base URL:
   static const String baseUrl = "https://y ts.mx/api/v2";
