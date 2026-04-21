@@ -1,38 +1,42 @@
 import 'package:exams_app/core/utils/app_colors.dart';
+import 'package:exams_app/core/utils/app_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class CustomElevatedButton extends StatelessWidget {
-  final String child;
-  final void Function()? onTap;
-  final bool isError;
+class CustomButton extends StatelessWidget {
+  final String text;
+  final VoidCallback? onPressed;
+  final bool isLoading;
+  final bool isEnabled;
 
-  const CustomElevatedButton({
+  const CustomButton({
     super.key,
-    required this.child,
-    required this.onTap,
-    this.isError = false,
+    required this.text,
+    required this.onPressed,
+    this.isLoading = false,
+    this.isEnabled = true,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: GestureDetector(
-        onTap: isError ? null : onTap,
-        child: Container(
-          decoration: BoxDecoration(
-            color: isError ? AppColors.black30 : AppColors.primary,
-            borderRadius: BorderRadius.circular(100),
-          ),
-          width: double.infinity,
-          height: 48,
-          child: Center(
-            child: Text(
-              child,
-              style: const TextStyle(color: AppColors.white, fontSize: 20),
-            ),
-          ),
-        ),
+    return SizedBox(
+      height: 48.h,
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: (isEnabled && !isLoading) ? onPressed : null,
+        child: isLoading
+            ? SizedBox(
+                height: 24.h,
+                width: 24.w,
+                child: const CircularProgressIndicator(
+                  color: AppColors.white,
+                  strokeWidth: 2,
+                ),
+              )
+            : Text(
+                text,
+                style: AppStyles.white20400,
+              ),
       ),
     );
   }
