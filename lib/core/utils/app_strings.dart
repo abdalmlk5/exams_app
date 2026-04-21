@@ -46,4 +46,10 @@ class AppStrings {
   static const String resetPasswordSubtitle =
       'Password must not be empty and must contain 6 characters with upper case letter and one number at least';
   static const String newPassword = 'New password';
+  static const String emailMissing = 'Email is missing';
+
+  // Internal State Constants
+  static const String otpSent = 'OTP_SENT';
+  static const String codeVerified = 'CODE_VERIFIED';
+  static const String passwordReset = 'PASSWORD_RESET';
 }

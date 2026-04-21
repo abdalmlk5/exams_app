@@ -1,12 +1,9 @@
 abstract class ApiEndPoints {
 
-  // Base URL:
-  static const String baseUrl = "https://y ts.mx/api/v2";
+  static const String baseUrl =
+      "https://exam.elevateegy.com/api/v1"; // Corrected base URL
 
-  // API EndPoints:
-  static const String listMovies = "$baseUrl/list_movies";
-
-  static const String movieDetails = "$baseUrl/movie_details";
-
-  static const String movieSuggestions = "$baseUrl/movie_suggestions";
+  static const String forgetPassword = "$baseUrl/auth/forgotPassword";
+  static const String verifyResetCode = "$baseUrl/auth/verifyResetCode";
+  static const String resetPassword = "$baseUrl/auth/resetPassword";
 }
