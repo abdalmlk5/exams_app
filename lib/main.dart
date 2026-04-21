@@ -1,12 +1,14 @@
-import 'package:exams_app/config/di/di.dart';
-import 'package:exams_app/features/authentication/presentation/auth_manager/cubit/auth_manager_cubit.dart';
-import 'package:exams_app/features/authentication/presentation/auth_manager/pages/auth_manager_page.dart';
-import 'package:exams_app/features/authentication/presentation/login/cubit/login_cubit.dart';
-import 'package:exams_app/features/authentication/presentation/register/cubit/register_cubit.dart';
-import 'package:exams_app/main_page_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'package:exams_app/config/di/di.dart';
+import 'package:exams_app/core/theme/app_theme.dart';
+import 'package:exams_app/features/authentication/presentation/auth_manager/cubit/auth_manager_cubit.dart';
+import 'package:exams_app/features/authentication/presentation/auth_manager/cubit/auth_manager_event.dart';
+import 'package:exams_app/features/authentication/presentation/auth_manager/pages/auth_manager_page.dart';
+import 'package:exams_app/features/authentication/presentation/login/cubit/login_cubit.dart';
+import 'package:exams_app/features/authentication/presentation/register/cubit/register_cubit.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,11 +28,12 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
+          theme: AppTheme.lightTheme,
           home: MultiBlocProvider(
             providers: [
               BlocProvider(create: (_) => getIt<LoginCubit>()),
               BlocProvider(create: (_) => getIt<RegisterCubit>()),
-              BlocProvider(create: (_) => getIt<AuthManagerCubit>()..checkAuth()),
+              BlocProvider(create: (_) => getIt<AuthManagerCubit>()..doEvent(CheckAuth())),
             ],
             child: const AuthWrapper(),
           ),
@@ -63,7 +66,8 @@ class AuthWrapper extends StatelessWidget {
             );
           }
           if (state.authState.data != null) {
-            return const MainPageTest();
+            // nav to home page
+
           }
           return const AuthenticationManagerPage();
         },

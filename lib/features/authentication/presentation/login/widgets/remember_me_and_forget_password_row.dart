@@ -2,22 +2,23 @@ import 'package:exams_app/core/utils/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-
-class RememberMeAndForgetPassword extends StatefulWidget {
+class RememberMeAndForgetPasswordRow extends StatefulWidget {
   final bool value;
   final ValueChanged<bool?> onChanged;
 
-  const RememberMeAndForgetPassword({
+  const RememberMeAndForgetPasswordRow({
     super.key,
     required this.value,
     required this.onChanged,
   });
 
   @override
-  State<RememberMeAndForgetPassword> createState() => _RememberMeAndForgetPasswordState();
+  State<RememberMeAndForgetPasswordRow> createState() =>
+      _RememberMeAndForgetPasswordRowState();
 }
 
-class _RememberMeAndForgetPasswordState extends State<RememberMeAndForgetPassword> {
+class _RememberMeAndForgetPasswordRowState
+    extends State<RememberMeAndForgetPasswordRow> {
   late ThemeData theme;
 
   @override
@@ -36,10 +37,7 @@ class _RememberMeAndForgetPasswordState extends State<RememberMeAndForgetPasswor
             SizedBox(
               width: 24.w,
               height: 24.h,
-              child: Checkbox(
-                value: widget.value,
-                onChanged: widget.onChanged,
-              ),
+              child: Checkbox(value: widget.value, onChanged: widget.onChanged),
             ),
             SizedBox(width: 8.w),
             Text(AppStrings.rememberMe, style: theme.textTheme.bodyMedium),
@@ -47,6 +45,7 @@ class _RememberMeAndForgetPasswordState extends State<RememberMeAndForgetPasswor
         ),
         TextButton(
           onPressed: () {
+            // i will navigate when i merge with the rest of the feature
           },
           style: TextButton.styleFrom(
             padding: EdgeInsets.zero,
@@ -56,8 +55,8 @@ class _RememberMeAndForgetPasswordState extends State<RememberMeAndForgetPasswor
           child: Text(
             AppStrings.forgetPasswordQuestion,
             style: theme.textTheme.bodyMedium?.copyWith(
-                  decoration: TextDecoration.underline,
-                ),
+              decoration: TextDecoration.underline,
+            ),
           ),
         ),
       ],

@@ -1,14 +1,15 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 
 import '../api/end_points.dart';
-import '../../features/authentication/data/datasources/auth_local_data_source_contract.dart';
+import 'auth_interceptor.dart';
 
 @module
 abstract class DioModule {
 
   @lazySingleton
-  Dio dio(AuthLocalDataSourceContract authLocalDataSource) {
+  Dio dio(AuthInterceptor authInterceptor) {
 
     final dio = Dio();
 
@@ -21,27 +22,16 @@ abstract class DioModule {
       "Accept": "application/json",
     };
 
-    dio.interceptors.add(
-      InterceptorsWrapper(
-        onRequest: (options, handler) async {
+    dio.interceptors.add(authInterceptor);
 
-          final token = await authLocalDataSource.getToken();
-
-          if (token != null) {
-            options.headers['token'] = token;
-          }
-
-          handler.next(options);
-        },
-      ),
-    );
-
-    dio.interceptors.add(
-      LogInterceptor(
-        requestBody: true,
-        responseBody: true,
-      ),
-    );
+    if (!kReleaseMode) {
+      dio.interceptors.add(
+        LogInterceptor(
+          requestBody: true,
+          responseBody: true,
+        ),
+      );
+    }
 
     return dio;
   }

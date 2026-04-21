@@ -1,10 +1,10 @@
-class AppValidations {
-  AppValidations._();
+import '../../core/utils/app_strings.dart';
 
+abstract class AppValidations {
   // ── Generic ──
   static String? required(String? value, [String field = 'This field']) {
     if (value == null || value.trim().isEmpty) {
-      return '$field is required';
+      return '$field ${AppStrings.fieldIsRequired}';
     }
     return null;
   }
@@ -12,39 +12,39 @@ class AppValidations {
   // ── Name ──
   static String? validateUserName(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'Username is required';
+      return AppStrings.userNameIsRequired;
     }
     if (value.length < 3) {
-      return 'Username must be at least 3 characters';
+      return AppStrings.userNameTooShort;
     }
     if (!RegExp(r'^[a-zA-Z0-9_]+$').hasMatch(value)) {
-      return 'Only letters, numbers and underscore allowed';
+      return AppStrings.userNameInvalid;
     }
     return null;
   }
 
   static String? validateFirstName(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'First name is required';
+      return AppStrings.firstNameIsRequired;
     }
     if (value.trim().length < 3) {
-      return 'Must be at least 3 characters';
+      return AppStrings.nameTooShort;
     }
     if (RegExp(r'[0-9]').hasMatch(value)) {
-      return 'Name must not contain numbers';
+      return AppStrings.nameNoNumbers;
     }
     return null;
   }
 
   static String? validateLastName(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'Last name is required';
+      return AppStrings.lastNameIsRequired;
     }
     if (value.trim().length < 3) {
-      return 'Must be at least 3 characters';
+      return AppStrings.nameTooShort;
     }
     if (RegExp(r'[0-9]').hasMatch(value)) {
-      return 'Name must not contain numbers';
+      return AppStrings.nameNoNumbers;
     }
     return null;
   }
@@ -52,11 +52,11 @@ class AppValidations {
   // ── Email ──
   static String? validateEmail(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'Email is required';
+      return AppStrings.emailIsRequired;
     }
     final regex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
     if (!regex.hasMatch(value.trim())) {
-      return 'Enter a valid email address';
+      return AppStrings.enterValidEmail;
     }
     return null;
   }
@@ -64,23 +64,23 @@ class AppValidations {
   // ── Password ──
   static String? validatePassword(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Password is required';
+      return AppStrings.passwordIsRequired;
     }
 
     if (value.length < 8) {
-      return 'Password must be at least 8 characters';
+      return AppStrings.passwordTooShort;
     }
 
     if (!value.contains(RegExp(r'[a-z]'))) {
-      return 'Password must contain at least one lowercase letter';
+      return AppStrings.passwordNoLowercase;
     }
 
     if (!value.contains(RegExp(r'[A-Z]'))) {
-      return 'Password must contain at least one uppercase letter';
+      return AppStrings.passwordNoUppercase;
     }
 
     if (!value.contains(RegExp(r'[0-9]'))) {
-      return 'Password must contain at least one number';
+      return AppStrings.passwordNoNumber;
     }
 
     return null;
@@ -88,10 +88,10 @@ class AppValidations {
 
   static String? validateConfirmPassword(String? value, String? password) {
     if (value == null || value.isEmpty) {
-      return 'Please confirm your password';
+      return AppStrings.confirmPasswordIsRequired;
     }
     if (value != password) {
-      return 'Password not matched';
+      return AppStrings.passwordsNotMatched;
     }
     return null;
   }
@@ -99,11 +99,11 @@ class AppValidations {
   // ── Phone ──
   static String? validatePhoneNumber(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'Phone number is required';
+      return AppStrings.phoneNumberIsRequired;
     }
     final cleaned = value.replaceAll(RegExp(r'[\s\-\(\)]'), '');
     if (!RegExp(r'^\+?[0-9]{10,15}$').hasMatch(cleaned)) {
-      return 'Enter a valid phone number';
+      return AppStrings.enterValidPhoneNumber;
     }
     return null;
   }

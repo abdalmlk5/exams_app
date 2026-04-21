@@ -7,7 +7,6 @@ import 'package:exams_app/features/authentication/domain/entities/user_entity.da
 import 'package:exams_app/features/authentication/domain/repositories/auth_repo.dart';
 import 'package:injectable/injectable.dart';
 
-
 @Injectable(as: AuthRepo)
 class AuthRepoImpl implements AuthRepo {
   final AuthRemoteDataSourceContract authRemoteDataSourceContract;

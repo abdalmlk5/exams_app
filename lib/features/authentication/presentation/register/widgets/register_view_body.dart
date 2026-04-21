@@ -42,17 +42,6 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
     super.dispose();
   }
 
-  void _validate() {
-    context.read<RegisterCubit>().validateForm(
-      username: _usernameController.text,
-      firstName: _firstNameController.text,
-      lastName: _lastNameController.text,
-      email: _emailController.text,
-      password: _passwordController.text,
-      rePassword: _rePasswordController.text,
-      phone: _phoneController.text,
-    );
-  }
 
   void _register() {
     context.read<RegisterCubit>().doEvent(
@@ -91,7 +80,6 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
               AppTextField(
                 controller: _usernameController,
                 fieldType: FieldType.username,
-                onChanged: (_) => _validate(),
               ),
               SizedBox(height: 16.h),
               Row(
@@ -100,7 +88,6 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                     child: AppTextField(
                       controller: _firstNameController,
                       fieldType: FieldType.firstName,
-                      onChanged: (_) => _validate(),
                     ),
                   ),
                   SizedBox(width: 16.w),
@@ -108,7 +95,6 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                     child: AppTextField(
                       controller: _lastNameController,
                       fieldType: FieldType.lastName,
-                      onChanged: (_) => _validate(),
                     ),
                   ),
                 ],
@@ -117,7 +103,6 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
               AppTextField(
                 controller: _emailController,
                 fieldType: FieldType.email,
-                onChanged: (_) => _validate(),
               ),
               SizedBox(height: 16.h),
               Row(
@@ -126,7 +111,6 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                     child: AppTextField(
                       controller: _passwordController,
                       fieldType: FieldType.password,
-                      onChanged: (_) => _validate(),
                     ),
                   ),
                   SizedBox(width: 16.w),
@@ -135,7 +119,6 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                       controller: _rePasswordController,
                       fieldType: FieldType.confirmPassword,
                       compareController: _passwordController,
-                      onChanged: (_) => _validate(),
                     ),
                   ),
                 ],
@@ -144,7 +127,6 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
               AppTextField(
                 controller: _phoneController,
                 fieldType: FieldType.phoneNumber,
-                onChanged: (_) => _validate(),
               ),
               SizedBox(height: 48.h),
               BlocBuilder<RegisterCubit, RegisterState>(

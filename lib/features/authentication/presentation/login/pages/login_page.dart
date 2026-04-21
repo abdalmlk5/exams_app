@@ -24,7 +24,6 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AuthAppBar(title: AppStrings.login),
       body: SafeArea(child: LoginViewBody(togglePages: widget.togglePages)),
     );

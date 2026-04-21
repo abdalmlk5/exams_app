@@ -12,7 +12,7 @@ import 'package:injectable/injectable.dart';
 
 part 'auth_manager_state.dart';
 
-@injectable
+@lazySingleton
 class AuthManagerCubit extends Cubit<AuthManagerState> {
   final LogoutUsecase _logoutUsecase;
   final GetUserDataUsecase _getUserDataUsecase;
@@ -24,18 +24,7 @@ class AuthManagerCubit extends Cubit<AuthManagerState> {
     this._isRememberedUsecase,
   ) : super(const AuthManagerState());
 
-  void checkAuth() async {
-    final isRemembered = await _isRememberedUsecase.call();
-    if (isRemembered) {
-      _getUserData();
-    } else {
-      emit(
-        state.copyWith(
-          authState: const BaseState<UserEntity>(isLoading: false, data: null),
-        ),
-      );
-    }
-  }
+
 
   void doEvent(AuthManagerEvent event) {
     switch (event) {
@@ -45,6 +34,8 @@ class AuthManagerCubit extends Cubit<AuthManagerState> {
       case GetUserData():
         _getUserData();
         break;
+      case CheckAuth():
+        _checkAuth();
     }
   }
 
@@ -60,10 +51,7 @@ class AuthManagerCubit extends Cubit<AuthManagerState> {
         case SuccessBaseResponse():
           emit(
             state.copyWith(
-              authState: BaseState<UserEntity>(
-                isLoading: false,
-                data: null,
-              ),
+              authState: BaseState<UserEntity>(isLoading: false, data: null),
             ),
           );
         case ErrorBaseResponse():
@@ -124,5 +112,16 @@ class AuthManagerCubit extends Cubit<AuthManagerState> {
       );
     }
   }
+    void _checkAuth() async {
+    final isRemembered = await _isRememberedUsecase.call();
+    if (isRemembered) {
+      _getUserData();
+    } else {
+      emit(
+        state.copyWith(
+          authState: const BaseState<UserEntity>(isLoading: false, data: null),
+        ),
+      );
+    }
+  }
 }
-

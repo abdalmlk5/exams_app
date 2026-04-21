@@ -8,7 +8,6 @@ import 'package:exams_app/features/authentication/data/datasources/auth_remote_d
 import 'package:exams_app/features/authentication/data/models/user_model.dart';
 import 'package:injectable/injectable.dart';
 
-
 @Injectable(as: AuthRemoteDataSourceContract)
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSourceContract {
   final AuthApiClient authApiClient;
@@ -26,7 +25,9 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSourceContract {
     bool rememberMe = false,
   }) async {
     try {
-      final response = await authApiClient.login(LoginRequestBody(email: email, password: password));
+      final response = await authApiClient.login(
+        LoginRequestBody(email: email, password: password),
+      );
 
       if (response.token != null) {
         await localDataSource.saveToken(response.token!);
@@ -51,7 +52,17 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSourceContract {
     bool rememberMe = false,
   }) async {
     try {
-      final response = await authApiClient.register(RegisterRequestBody(username: username, firstName: firstName, lastName: lastName, email: email, password: password, rePassword: rePassword, phone: phone));
+      final response = await authApiClient.register(
+        RegisterRequestBody(
+          username: username,
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          password: password,
+          rePassword: rePassword,
+          phone: phone,
+        ),
+      );
 
       if (response.token != null) {
         await localDataSource.saveToken(response.token!);

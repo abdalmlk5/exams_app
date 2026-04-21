@@ -20,5 +20,4 @@ abstract class AuthRemoteDataSourceContract {
 
   Future<void> logout();
   Future<BaseResponse<UserModel>> getUserData();
-
 }

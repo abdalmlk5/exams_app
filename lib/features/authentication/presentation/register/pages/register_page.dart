@@ -25,7 +25,6 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AuthAppBar(title: AppStrings.signup),
       body: SafeArea(child: RegisterViewBody(togglePages: widget.togglePages)),
     );

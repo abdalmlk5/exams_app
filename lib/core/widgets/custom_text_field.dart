@@ -1,5 +1,4 @@
 import 'package:exams_app/config/validations/app_validations.dart';
-import 'package:exams_app/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class AppTextField extends StatefulWidget {
@@ -25,14 +24,6 @@ class AppTextField extends StatefulWidget {
 }
 
 class _AppTextFieldState extends State<AppTextField> {
-  late ThemeData theme;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    theme = Theme.of(context);
-  }
-
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -42,32 +33,11 @@ class _AppTextFieldState extends State<AppTextField> {
       validator: _validate,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
-        floatingLabelBehavior: FloatingLabelBehavior.always,
         labelText: widget.fieldType.label,
         hintText: widget.fieldType.hint,
-        labelStyle: WidgetStateTextStyle.resolveWith((states) {
-          if (states.contains(WidgetState.error)) {
-            return const TextStyle(color: AppColors.error);
-          }
-          return const TextStyle(color: AppColors.black30);
-        }),
-        errorStyle: const TextStyle(color: AppColors.error),
-
-        border: _border(AppColors.black30),
-        enabledBorder: _border(AppColors.black30),
-        focusedBorder: _border(theme.colorScheme.primary, 2),
-        errorBorder: _border(AppColors.error),
-        focusedErrorBorder: _border(AppColors.error, 2),
       ),
     );
   }
-
-
-  OutlineInputBorder _border(Color color, [double width = 1]) =>
-      OutlineInputBorder(
-        borderRadius: BorderRadius.circular(4),
-        borderSide: BorderSide(color: color, width: width),
-      );
 
   String? _validate(String? value) {
     switch (widget.fieldType) {
