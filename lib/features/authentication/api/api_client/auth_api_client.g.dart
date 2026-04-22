@@ -20,12 +20,12 @@ class _AuthApiClient implements AuthApiClient {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<AuthResponseModel> login(LoginRequestBody body) async {
+  Future<AuthResponseModel> login(Map<String, dynamic> body) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    _data.addAll(body.toJson());
+    _data.addAll(body);
     final _options = _setStreamType<AuthResponseModel>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
@@ -48,12 +48,12 @@ class _AuthApiClient implements AuthApiClient {
   }
 
   @override
-  Future<AuthResponseModel> register(RegisterRequestBody body) async {
+  Future<AuthResponseModel> register(Map<String, dynamic> body) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    _data.addAll(body.toJson());
+    _data.addAll(body);
     final _options = _setStreamType<AuthResponseModel>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
@@ -122,18 +122,16 @@ class _AuthApiClient implements AuthApiClient {
   }
 
   @override
-  Future<ForgetPasswordResponse> forgetPassword(String email) async {
+  Future<ForgetPasswordResponse> forgetPassword(
+    Map<String, dynamic> body,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = {'email': email};
+    final _data = <String, dynamic>{};
+    _data.addAll(body);
     final _options = _setStreamType<ForgetPasswordResponse>(
-      Options(
-            method: 'POST',
-            headers: _headers,
-            extra: _extra,
-            contentType: 'application/x-www-form-urlencoded',
-          )
+      Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
             'https://exam.elevateegy.com/api/v1/auth/forgotPassword',
@@ -154,18 +152,14 @@ class _AuthApiClient implements AuthApiClient {
   }
 
   @override
-  Future<VerifyCodeResponse> verifyResetCode(String resetCode) async {
+  Future<VerifyCodeResponse> verifyResetCode(Map<String, dynamic> body) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = {'resetCode': resetCode};
+    final _data = <String, dynamic>{};
+    _data.addAll(body);
     final _options = _setStreamType<VerifyCodeResponse>(
-      Options(
-            method: 'POST',
-            headers: _headers,
-            extra: _extra,
-            contentType: 'application/x-www-form-urlencoded',
-          )
+      Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
             'https://exam.elevateegy.com/api/v1/auth/verifyResetCode',
@@ -186,21 +180,14 @@ class _AuthApiClient implements AuthApiClient {
   }
 
   @override
-  Future<ResetPasswordResponse> resetPassword(
-    String email,
-    String newPassword,
-  ) async {
+  Future<ResetPasswordResponse> resetPassword(Map<String, dynamic> body) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = {'email': email, 'newPassword': newPassword};
+    final _data = <String, dynamic>{};
+    _data.addAll(body);
     final _options = _setStreamType<ResetPasswordResponse>(
-      Options(
-            method: 'POST',
-            headers: _headers,
-            extra: _extra,
-            contentType: 'application/x-www-form-urlencoded',
-          )
+      Options(method: 'PUT', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
             'https://exam.elevateegy.com/api/v1/auth/resetPassword',
