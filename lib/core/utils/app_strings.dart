@@ -40,6 +40,10 @@ class AppStrings {
   static const String invalidCode = 'Invalid code';
   static const String didntReceiveCode = "Didn't receive code? ";
   static const String resend = 'Resend';
+  static const String otpSent = 'OTP sent to your email';
+  static const String codeVerified = 'Code verified successfully';
+  static const String passwordReset = 'Password reset successfully';
+  static const String emailMissing = 'Email is missing, please try again';
 
   // Reset Password Screen
   static const String resetPassword = 'Reset password';
@@ -47,25 +51,69 @@ class AppStrings {
       'Password must not be empty and must contain 6 characters with upper case letter and one number at least';
   static const String newPassword = 'New password';
 
-  static const String fieldIsRequired = 'is required';
-  static const String emailIsRequired = 'Email is required';
-  static const String enterValidEmail = 'Enter a valid email address';
-  static const String passwordIsRequired = 'Password is required';
-  static const String passwordTooShort = 'Password must be at least 8 characters';
-  static const String passwordNoLowercase =
+  // Home Screen
+  static const String search = 'Search';
+  static const String survey = 'Survey';
+  static const String browseBySubject = 'Browse by subject';
+
+  // Exams & Details
+  static const String exams = 'Exams';
+  static const String minutes = 'Minutes';
+  static const String highLevel = 'High level';
+  static const String question = 'Question';
+  static const String instructions = 'Instructions';
+  static const String start = 'Start';
+  static const String from = 'From';
+  static const String to = 'To';
+
+  // Error messages
+  static const String someThingWentWrong = 'Something went wrong';
+
+  // Validation messages
+  static const String emailRequired = 'Email is required';
+  static const String invalidEmail = 'Enter a valid email address';
+  static const String passwordRequired = 'Password is required';
+  static const String passwordTooShort =
+      'Password must be at least 8 characters';
+  static const String passwordLowercase =
       'Password must contain at least one lowercase letter';
-  static const String passwordNoUppercase =
+  static const String passwordUppercase =
       'Password must contain at least one uppercase letter';
-  static const String passwordNoNumber = 'Password must contain at least one number';
-  static const String confirmPasswordIsRequired = 'Please confirm your password';
-  static const String passwordsNotMatched = 'Password not matched';
-  static const String userNameIsRequired = 'Username is required';
-  static const String userNameTooShort = 'Username must be at least 3 characters';
-  static const String userNameInvalid = 'Only letters, numbers and underscore allowed';
-  static const String firstNameIsRequired = 'First name is required';
-  static const String lastNameIsRequired = 'Last name is required';
+  static const String passwordNumber =
+      'Password must contain at least one number';
+  static const String passwordNotMatched = 'Password not matched';
+  static const String confirmPasswordRequired = 'Please confirm your password';
+  static const String usernameRequired = 'Username is required';
+  static const String usernameTooShort =
+      'Username must be at least 3 characters';
+  static const String usernameInvalid =
+      'Only letters, numbers and underscore allowed';
+  static const String firstNameRequired = 'First name is required';
+  static const String lastNameRequired = 'Last name is required';
   static const String nameTooShort = 'Must be at least 3 characters';
   static const String nameNoNumbers = 'Name must not contain numbers';
-  static const String phoneNumberIsRequired = 'Phone number is required';
-  static const String enterValidPhoneNumber = 'Enter a valid phone number';
+  static const String phoneRequired = 'Phone number is required';
+  static const String invalidPhone = 'Enter a valid phone number';
+
+
+  // profile string
+  static const String profilePassword = '★★★★★★★';
+
+  // Exam Results
+  static const String results = 'Results';
+  static const String searchForExams = 'Search for exams...';
+  static const String noResultsYet = 'No results yet. Start an exam!';
+  static const String noMatchesFound = 'No matches found.';
+  static const String scoreLabel = 'Score';
+  static const String questionsLabel = 'Questions';
+  static const String correctedAnswersIn = 'corrected answers in';
+  static const String minLabel = 'min';
+  static const String retryLabel = 'Retry';
+  static const String examScore = 'Exam score';
+  static const String yourScore = 'Your score';
+  static const String correct = 'Correct';
+  static const String incorrect = 'Incorrect';
+  static const String showResults = 'Show results';
+  static const String startAgain = 'Start again';
+  static const String answers = 'Answers';
 }

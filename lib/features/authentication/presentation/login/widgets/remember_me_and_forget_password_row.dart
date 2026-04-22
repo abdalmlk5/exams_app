@@ -1,3 +1,4 @@
+import 'package:exams_app/core/utils/app_routes.dart';
 import 'package:exams_app/core/utils/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -45,7 +46,7 @@ class _RememberMeAndForgetPasswordRowState
         ),
         TextButton(
           onPressed: () {
-            // i will navigate when i merge with the rest of the feature
+            Navigator.pushNamed(context, AppRoutes.forgetPassword);
           },
           style: TextButton.styleFrom(
             padding: EdgeInsets.zero,

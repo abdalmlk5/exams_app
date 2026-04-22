@@ -1,24 +1,28 @@
 import 'package:exams_app/core/utils/app_colors.dart';
+import 'package:exams_app/core/utils/app_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
   final VoidCallback? onPressed;
-  final bool isEnabled;
   final bool isLoading;
+  final bool isEnabled;
 
   const CustomButton({
     super.key,
     required this.text,
-    this.onPressed,
-    this.isEnabled = true,
+    required this.onPressed,
     this.isLoading = false,
+    this.isEnabled = true,
   });
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
+    return SizedBox(
+      height: 48.h,
+      width: double.infinity,
+      child: ElevatedButton(
         onPressed: (isEnabled && !isLoading) ? onPressed : null,
         child: isLoading
             ? SizedBox(
@@ -29,7 +33,11 @@ class CustomButton extends StatelessWidget {
                   strokeWidth: 2,
                 ),
               )
-            : Text(text),
-      );
+            : Text(
+                text,
+                style: AppStyles.white16500,
+              ),
+      ),
+    );
   }
 }

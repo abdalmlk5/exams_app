@@ -5,7 +5,10 @@ import 'package:exams_app/features/authentication/api/models/login_request_body.
 import 'package:exams_app/features/authentication/api/models/register_request_body.dart';
 import 'package:exams_app/features/authentication/data/datasources/auth_local_data_source_contract.dart';
 import 'package:exams_app/features/authentication/data/datasources/auth_remote_data_source_contract.dart';
+import 'package:exams_app/features/authentication/data/models/forget_password_response.dart';
+import 'package:exams_app/features/authentication/data/models/reset_password_response.dart';
 import 'package:exams_app/features/authentication/data/models/user_model.dart';
+import 'package:exams_app/features/authentication/data/models/verify_code_response.dart';
 import 'package:injectable/injectable.dart';
 
 @Injectable(as: AuthRemoteDataSourceContract)
@@ -100,6 +103,39 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSourceContract {
       final response = await authApiClient.getUserData();
 
       return SuccessBaseResponse<UserModel>(response.user);
+    } catch (e) {
+      return ErrorBaseResponse(ErrorHandler.handle(e));
+    }
+  }
+
+  @override
+  Future<BaseResponse<ForgetPasswordResponse>> forgetPassword(String email) async {
+    try {
+      final response = await authApiClient.forgetPassword(email);
+      return SuccessBaseResponse(response);
+    } catch (e) {
+      return ErrorBaseResponse(ErrorHandler.handle(e));
+    }
+  }
+
+  @override
+  Future<BaseResponse<VerifyCodeResponse>> verifyResetCode(String code) async {
+    try {
+      final response = await authApiClient.verifyResetCode(code);
+      return SuccessBaseResponse(response);
+    } catch (e) {
+      return ErrorBaseResponse(ErrorHandler.handle(e));
+    }
+  }
+
+  @override
+  Future<BaseResponse<ResetPasswordResponse>> resetPassword(
+    String email,
+    String newPassword,
+  ) async {
+    try {
+      final response = await authApiClient.resetPassword(email, newPassword);
+      return SuccessBaseResponse(response);
     } catch (e) {
       return ErrorBaseResponse(ErrorHandler.handle(e));
     }

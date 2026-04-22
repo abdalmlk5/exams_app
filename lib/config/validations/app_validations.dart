@@ -4,7 +4,7 @@ abstract class AppValidations {
   // ── Generic ──
   static String? required(String? value, [String field = 'This field']) {
     if (value == null || value.trim().isEmpty) {
-      return '$field ${AppStrings.fieldIsRequired}';
+      return '$field is required';
     }
     return null;
   }
@@ -12,20 +12,20 @@ abstract class AppValidations {
   // ── Name ──
   static String? validateUserName(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return AppStrings.userNameIsRequired;
+      return AppStrings.usernameRequired;
     }
     if (value.length < 3) {
-      return AppStrings.userNameTooShort;
+      return AppStrings.usernameTooShort;
     }
     if (!RegExp(r'^[a-zA-Z0-9_]+$').hasMatch(value)) {
-      return AppStrings.userNameInvalid;
+      return AppStrings.usernameInvalid;
     }
     return null;
   }
 
   static String? validateFirstName(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return AppStrings.firstNameIsRequired;
+      return AppStrings.firstNameRequired;
     }
     if (value.trim().length < 3) {
       return AppStrings.nameTooShort;
@@ -38,7 +38,7 @@ abstract class AppValidations {
 
   static String? validateLastName(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return AppStrings.lastNameIsRequired;
+      return AppStrings.lastNameRequired;
     }
     if (value.trim().length < 3) {
       return AppStrings.nameTooShort;
@@ -52,11 +52,11 @@ abstract class AppValidations {
   // ── Email ──
   static String? validateEmail(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return AppStrings.emailIsRequired;
+      return AppStrings.emailRequired;
     }
     final regex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
     if (!regex.hasMatch(value.trim())) {
-      return AppStrings.enterValidEmail;
+      return AppStrings.invalidEmail;
     }
     return null;
   }
@@ -64,7 +64,7 @@ abstract class AppValidations {
   // ── Password ──
   static String? validatePassword(String? value) {
     if (value == null || value.isEmpty) {
-      return AppStrings.passwordIsRequired;
+      return AppStrings.passwordRequired;
     }
 
     if (value.length < 8) {
@@ -72,15 +72,15 @@ abstract class AppValidations {
     }
 
     if (!value.contains(RegExp(r'[a-z]'))) {
-      return AppStrings.passwordNoLowercase;
+      return AppStrings.passwordLowercase;
     }
 
     if (!value.contains(RegExp(r'[A-Z]'))) {
-      return AppStrings.passwordNoUppercase;
+      return AppStrings.passwordUppercase;
     }
 
     if (!value.contains(RegExp(r'[0-9]'))) {
-      return AppStrings.passwordNoNumber;
+      return AppStrings.passwordNumber;
     }
 
     return null;
@@ -88,10 +88,10 @@ abstract class AppValidations {
 
   static String? validateConfirmPassword(String? value, String? password) {
     if (value == null || value.isEmpty) {
-      return AppStrings.confirmPasswordIsRequired;
+      return AppStrings.confirmPasswordRequired;
     }
     if (value != password) {
-      return AppStrings.passwordsNotMatched;
+      return AppStrings.passwordNotMatched;
     }
     return null;
   }
@@ -99,11 +99,11 @@ abstract class AppValidations {
   // ── Phone ──
   static String? validatePhoneNumber(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return AppStrings.phoneNumberIsRequired;
+      return AppStrings.phoneRequired;
     }
     final cleaned = value.replaceAll(RegExp(r'[\s\-\(\)]'), '');
     if (!RegExp(r'^\+?[0-9]{10,15}$').hasMatch(cleaned)) {
-      return AppStrings.enterValidPhoneNumber;
+      return AppStrings.invalidPhone;
     }
     return null;
   }

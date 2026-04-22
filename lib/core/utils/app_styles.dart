@@ -5,6 +5,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'app_colors.dart';
 
 abstract class AppStyles {
+  //primary styles
+  static TextStyle primary16400 = GoogleFonts.inter(
+    fontSize: 16.sp,
+    fontWeight: FontWeight.w400,
+    color: AppColors.primary,
+  );
+
   // Black Styles
   static TextStyle black20500 = GoogleFonts.inter(
     fontSize: 20.sp,

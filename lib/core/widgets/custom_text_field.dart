@@ -1,4 +1,5 @@
 import 'package:exams_app/config/validations/app_validations.dart';
+import 'package:exams_app/core/utils/app_strings.dart';
 import 'package:flutter/material.dart';
 
 class AppTextField extends StatefulWidget {
@@ -62,19 +63,54 @@ class _AppTextFieldState extends State<AppTextField> {
         return AppValidations.validatePhoneNumber(value);
       case FieldType.none:
         return null;
+      case FieldType.currentPassword:
+        return AppValidations.validatePassword(value);
     }
   }
 }
 
 enum FieldType {
-  email('Email', 'Enter your email', TextInputType.emailAddress),
-  password('Password', 'Enter your password', TextInputType.text),
-  newPassword('New password', 'New password', TextInputType.text),
-  confirmPassword('Confirm password', 'Confirm password', TextInputType.text),
-  username('User name', 'Enter your user name', TextInputType.name),
-  phoneNumber('Phone Number', 'Enter phone number', TextInputType.phone),
-  firstName('First name', 'Enter first name', TextInputType.name),
-  lastName('Last name', 'Enter last name', TextInputType.name),
+  email(
+    AppStrings.email,
+    AppStrings.enterYourEmail,
+    TextInputType.emailAddress,
+  ),
+  password(
+    AppStrings.password,
+    AppStrings.enterYourPassword,
+    TextInputType.text,
+  ),
+  currentPassword(
+    AppStrings.password,
+    AppStrings.enterYourPassword,
+    TextInputType.text,
+  ),
+  newPassword(
+    AppStrings.newPassword,
+    AppStrings.newPassword,
+    TextInputType.text,
+  ),
+  confirmPassword(
+    AppStrings.confirmPassword,
+    AppStrings.confirmPassword,
+    TextInputType.text,
+  ),
+  username(
+    AppStrings.userName,
+    AppStrings.enterYourUserName,
+    TextInputType.name,
+  ),
+  phoneNumber(
+    AppStrings.phoneNumber,
+    AppStrings.enterPhoneNumber,
+    TextInputType.phone,
+  ),
+  firstName(
+    AppStrings.firstName,
+    AppStrings.enterFirstName,
+    TextInputType.name,
+  ),
+  lastName(AppStrings.lastName, AppStrings.enterLastName, TextInputType.name),
   none('', '', TextInputType.text);
 
   final String label;

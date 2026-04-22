@@ -14,6 +14,7 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   configureDependencies();
   runApp(const MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
