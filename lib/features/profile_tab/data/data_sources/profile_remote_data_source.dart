@@ -1,7 +1,6 @@
-import 'package:exams_app/core/models/user_model.dart';
+import 'package:exams_app/features/profile_tab/data/models/profile_response.dart';
 
-import '../../../../config/base_response/base_response.dart';
-
-abstract class ProfileRemoteDataSourceContract {
-  Future<BaseResponse<UserModel>> getProfileData({String? token});
+abstract class ProfileRemoteDataSource {
+  Future<ProfileResponse> getProfileData();
+  Future<ProfileResponse> updateProfile(Map<String, dynamic> body);
 }

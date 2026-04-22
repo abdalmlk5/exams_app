@@ -5,13 +5,15 @@ sealed class ProfileEvents {
 }
 
 class GetProfileDataEvent extends ProfileEvents {
-  final String? token;
-
-  const GetProfileDataEvent({this.token});
+  const GetProfileDataEvent();
 }
 
 class ProfileDataChangedEvent extends ProfileEvents {
   final ProfileUserEntity user;
 
   const ProfileDataChangedEvent(this.user);
+}
+
+class UpdateProfileEvent extends ProfileEvents {
+  const UpdateProfileEvent();
 }

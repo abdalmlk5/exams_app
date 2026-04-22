@@ -34,9 +34,6 @@ class _ProfilePageState extends State<ProfilePage> {
   void initState() {
     super.initState();
     _cubit = getIt<ProfileCubit>();
-    if (_cubit.state.profileState.data == null) {
-      _cubit.doEvent(const GetProfileDataEvent());
-    }
 
     _usernameController = TextEditingController();
     _firstNameController = TextEditingController();
@@ -47,8 +44,9 @@ class _ProfilePageState extends State<ProfilePage> {
     );
     _phoneController = TextEditingController();
 
-    // If data is already there (lazy loading case), populate controllers immediately
-    if (_cubit.state.profileState.data != null) {
+    if (_cubit.state.profileState.data == null) {
+      _cubit.doEvent(const GetProfileDataEvent());
+    } else {
       _populateControllers(_cubit.state.profileState.data!);
     }
   }
@@ -91,11 +89,25 @@ class _ProfilePageState extends State<ProfilePage> {
     return BlocProvider.value(
       value: _cubit,
       child: BlocConsumer<ProfileCubit, ProfileState>(
+        listenWhen: (prev, curr) => prev.profileState != curr.profileState,
         listener: (context, state) {
+          // Handle Initial Data Loading
           if (state.profileState.data != null &&
-              _usernameController.text.isEmpty) {
+              _usernameController.text.isEmpty &&
+              !state.isDataChanged) {
             _populateControllers(state.profileState.data!);
           }
+
+          // Handle Update Success
+          if (!state.profileState.isLoading &&
+              state.profileState.errorMessage == null) {
+            CustomSnackBar.success(
+              context,
+              AppStrings.profileUpdatedSuccessfully,
+            );
+          }
+
+          // Handle Errors
           if (state.profileState.errorMessage != null) {
             CustomSnackBar.error(context, state.profileState.errorMessage!);
           }
@@ -193,7 +205,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     isEnabled: state.isDataChanged,
                     isLoading: state.profileState.isLoading,
                     onPressed: () {
-                      // TODO: Update profile event logic
+                      _cubit.doEvent(const UpdateProfileEvent());
                     },
                   ),
                   SizedBox(height: 24.h),

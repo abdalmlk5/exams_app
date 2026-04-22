@@ -13,7 +13,8 @@ abstract class ProfileApiClient {
   factory ProfileApiClient(Dio dio) = _ProfileApiClient;
 
   @GET(EndPoints.profileData)
-  Future<ProfileResponse> getProfileData(
-    @Queries() Map<String, dynamic> queries,
-  );
+  Future<ProfileResponse> getProfileData();
+
+  @PUT(EndPoints.editProfile)
+  Future<ProfileResponse> updateProfile(@Body() Map<String, dynamic> body);
 }

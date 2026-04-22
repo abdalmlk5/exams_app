@@ -96,4 +96,6 @@ class AppStrings {
   static const String update = 'Update';
   static const String change = 'Change';
   static const String profilePassword = '★★★★★★★';
+  static const String profileUpdatedSuccessfully =
+      'Profile updated successfully';
 }

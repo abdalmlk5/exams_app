@@ -10,7 +10,7 @@ class GetProfileUseCase {
 
   GetProfileUseCase(this.repo);
 
-  Future<BaseResponse<ProfileUserEntity>> call({String? token}) async {
-    return await repo.getProfileData(token: token);
+  Future<BaseResponse<ProfileUserEntity>> call() async {
+    return await repo.getProfileData();
   }
 }
