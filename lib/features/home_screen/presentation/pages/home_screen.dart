@@ -1,10 +1,10 @@
 import 'package:exams_app/features/explore/presentation/pages/home_tab.dart';
 import 'package:exams_app/features/home_screen/presentation/cubit/home_cubit.dart';
+import 'package:exams_app/features/profile_tab/presentation/pages/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../widgets/home_bottom_nav_bar.dart';
-import '../widgets/profile_tab.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -20,7 +20,7 @@ class HomeScreen extends StatelessWidget {
               children: [
                 HomeTab(),
                 const Scaffold(body: Center(child: Text("Result"))),
-                const ProfileTab(),
+                const ProfilePage(),
               ],
             ),
           ),
