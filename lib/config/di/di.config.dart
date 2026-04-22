@@ -10,28 +10,51 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:dio/dio.dart' as _i361;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
-import '../../features/forget_password/api/api_client/auth_api_client.dart'
-    as _i940;
-import '../../features/forget_password/api/data_sources/auth_remote_data_source_impl.dart'
-    as _i847;
-import '../../features/forget_password/data/data_sources/auth_remote_data_source.dart'
-    as _i984;
-import '../../features/forget_password/data/repo/forget_password_repo_impl.dart'
-    as _i576;
-import '../../features/forget_password/domain/repo/forget_password_repo.dart'
-    as _i699;
-import '../../features/forget_password/domain/use_cases/forget_password_use_case.dart'
-    as _i437;
-import '../../features/forget_password/domain/use_cases/reset_password_use_case.dart'
-    as _i56;
-import '../../features/forget_password/domain/use_cases/verify_code_use_case.dart'
-    as _i925;
-import '../../features/forget_password/presentation/view_models/forget_password_cubit.dart'
-    as _i559;
+import '../../features/authentication/api/api_client/auth_api_client.dart'
+    as _i326;
+import '../../features/authentication/api/datasources/auth_local_data_source_impl.dart'
+    as _i798;
+import '../../features/authentication/api/datasources/auth_remote_data_source_impl.dart'
+    as _i356;
+import '../../features/authentication/data/datasources/auth_local_data_source_contract.dart'
+    as _i741;
+import '../../features/authentication/data/datasources/auth_remote_data_source_contract.dart'
+    as _i793;
+import '../../features/authentication/data/repositories/auth_repo_impl.dart'
+    as _i836;
+import '../../features/authentication/domain/repositories/auth_repo.dart'
+    as _i802;
+import '../../features/authentication/domain/usecases/forget_password_use_case.dart'
+    as _i601;
+import '../../features/authentication/domain/usecases/get_user_data_usecase.dart'
+    as _i932;
+import '../../features/authentication/domain/usecases/is_remembered_usecase.dart'
+    as _i330;
+import '../../features/authentication/domain/usecases/login_usecase.dart'
+    as _i995;
+import '../../features/authentication/domain/usecases/logout_usecase.dart'
+    as _i1067;
+import '../../features/authentication/domain/usecases/register_usecase.dart'
+    as _i257;
+import '../../features/authentication/domain/usecases/reset_password_use_case.dart'
+    as _i800;
+import '../../features/authentication/domain/usecases/verify_code_use_case.dart'
+    as _i121;
+import '../../features/authentication/presentation/auth_maneger/cubit/auth_manager_cubit.dart'
+    as _i188;
+import '../../features/authentication/presentation/forget_password/cubit/forget_password_cubit.dart'
+    as _i34;
+import '../../features/authentication/presentation/login/cubit/login_cubit.dart'
+    as _i339;
+import '../../features/authentication/presentation/register/cubit/register_cubit.dart'
+    as _i633;
+import '../dio/auth_interceptor.dart' as _i839;
 import '../dio/dio_module.dart' as _i977;
+import '../local/local_module.dart' as _i722;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -40,33 +63,81 @@ extension GetItInjectableX on _i174.GetIt {
     _i526.EnvironmentFilter? environmentFilter,
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
+    final localModule = _$LocalModule();
     final dioModule = _$DioModule();
-    gh.lazySingleton<_i361.Dio>(() => dioModule.dio);
-    gh.factory<_i940.AuthApiClient>(() => _i940.AuthApiClient(gh<_i361.Dio>()));
-    gh.factory<_i984.AuthRemoteDataSource>(
-      () => _i847.AuthRemoteDataSourceImpl(gh<_i940.AuthApiClient>()),
+    gh.lazySingleton<_i558.FlutterSecureStorage>(
+      () => localModule.secureStorage,
     );
-    gh.factory<_i699.ForgetPasswordRepo>(
-      () => _i576.ForgetPasswordRepoImpl(gh<_i984.AuthRemoteDataSource>()),
+    gh.factory<_i741.AuthLocalDataSourceContract>(
+      () => _i798.AuthLocalDataSourceImpl(gh<_i558.FlutterSecureStorage>()),
     );
-    gh.factory<_i437.ForgetPasswordUseCase>(
-      () => _i437.ForgetPasswordUseCase(gh<_i699.ForgetPasswordRepo>()),
+    gh.factory<_i839.AuthInterceptor>(
+      () => _i839.AuthInterceptor(gh<_i741.AuthLocalDataSourceContract>()),
     );
-    gh.factory<_i56.ResetPasswordUseCase>(
-      () => _i56.ResetPasswordUseCase(gh<_i699.ForgetPasswordRepo>()),
+    gh.lazySingleton<_i361.Dio>(
+      () => dioModule.dio(gh<_i839.AuthInterceptor>()),
     );
-    gh.factory<_i925.VerifyCodeUseCase>(
-      () => _i925.VerifyCodeUseCase(gh<_i699.ForgetPasswordRepo>()),
+    gh.factory<_i326.AuthApiClient>(() => _i326.AuthApiClient(gh<_i361.Dio>()));
+    gh.factory<_i793.AuthRemoteDataSourceContract>(
+      () => _i356.AuthRemoteDataSourceImpl(
+        authApiClient: gh<_i326.AuthApiClient>(),
+        localDataSource: gh<_i741.AuthLocalDataSourceContract>(),
+      ),
     );
-    gh.factory<_i559.ForgetPasswordCubit>(
-      () => _i559.ForgetPasswordCubit(
-        gh<_i437.ForgetPasswordUseCase>(),
-        gh<_i925.VerifyCodeUseCase>(),
-        gh<_i56.ResetPasswordUseCase>(),
+    gh.factory<_i802.AuthRepo>(
+      () => _i836.AuthRepoImpl(
+        authRemoteDataSourceContract: gh<_i793.AuthRemoteDataSourceContract>(),
+        authLocalDataSourceContract: gh<_i741.AuthLocalDataSourceContract>(),
+      ),
+    );
+    gh.factory<_i932.GetUserDataUsecase>(
+      () => _i932.GetUserDataUsecase(authRepoContract: gh<_i802.AuthRepo>()),
+    );
+    gh.factory<_i330.IsRememberedUsecase>(
+      () => _i330.IsRememberedUsecase(authRepoContract: gh<_i802.AuthRepo>()),
+    );
+    gh.factory<_i995.LoginUsecase>(
+      () => _i995.LoginUsecase(authRepoContract: gh<_i802.AuthRepo>()),
+    );
+    gh.factory<_i1067.LogoutUsecase>(
+      () => _i1067.LogoutUsecase(authRepoContract: gh<_i802.AuthRepo>()),
+    );
+    gh.factory<_i257.RegisterUsecase>(
+      () => _i257.RegisterUsecase(authRepoContract: gh<_i802.AuthRepo>()),
+    );
+    gh.factory<_i633.RegisterCubit>(
+      () => _i633.RegisterCubit(gh<_i257.RegisterUsecase>()),
+    );
+    gh.factory<_i188.AuthManagerCubit>(
+      () => _i188.AuthManagerCubit(
+        gh<_i1067.LogoutUsecase>(),
+        gh<_i932.GetUserDataUsecase>(),
+        gh<_i330.IsRememberedUsecase>(),
+      ),
+    );
+    gh.factory<_i601.ForgetPasswordUseCase>(
+      () => _i601.ForgetPasswordUseCase(gh<_i802.AuthRepo>()),
+    );
+    gh.factory<_i800.ResetPasswordUseCase>(
+      () => _i800.ResetPasswordUseCase(gh<_i802.AuthRepo>()),
+    );
+    gh.factory<_i121.VerifyCodeUseCase>(
+      () => _i121.VerifyCodeUseCase(gh<_i802.AuthRepo>()),
+    );
+    gh.factory<_i339.LoginCubit>(
+      () => _i339.LoginCubit(gh<_i995.LoginUsecase>()),
+    );
+    gh.factory<_i34.ForgetPasswordCubit>(
+      () => _i34.ForgetPasswordCubit(
+        gh<_i601.ForgetPasswordUseCase>(),
+        gh<_i121.VerifyCodeUseCase>(),
+        gh<_i800.ResetPasswordUseCase>(),
       ),
     );
     return this;
   }
 }
+
+class _$LocalModule extends _i722.LocalModule {}
 
 class _$DioModule extends _i977.DioModule {}
