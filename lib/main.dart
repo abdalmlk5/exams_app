@@ -13,6 +13,7 @@ import 'features/authentication/presentation/login/cubit/login_cubit.dart';
 import 'features/authentication/presentation/register/cubit/register_cubit.dart';
 import 'features/explore/presentation/cubit/explore_cubit.dart';
 import 'features/home_screen/presentation/cubit/home_cubit.dart';
+import 'features/exam_results/presentation/cubit/exam_results_cubit.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
             BlocProvider(create: (_) => getIt<ForgetPasswordCubit>()),
             BlocProvider(create: (_) => getIt<HomeCubit>()),
             BlocProvider(create: (_) => getIt<ExploreCubit>()),
+            BlocProvider(create: (_) => getIt<ExamResultsCubit>()),
           ],
           child: MaterialApp(
             theme: AppTheme.mainTheme,

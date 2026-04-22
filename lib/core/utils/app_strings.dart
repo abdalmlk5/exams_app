@@ -94,4 +94,22 @@ class AppStrings {
 
   // profile string
   static const String profilePassword = '★★★★★★★';
+
+  // Exam Results
+  static const String results = 'Results';
+  static const String searchForExams = 'Search for exams...';
+  static const String noResultsYet = 'No results yet. Start an exam!';
+  static const String noMatchesFound = 'No matches found.';
+  static const String scoreLabel = 'Score';
+  static const String questionsLabel = 'Questions';
+  static const String correctedAnswersIn = 'corrected answers in';
+  static const String minLabel = 'min';
+  static const String retryLabel = 'Retry';
+  static const String examScore = 'Exam score';
+  static const String yourScore = 'Your score';
+  static const String correct = 'Correct';
+  static const String incorrect = 'Incorrect';
+  static const String showResults = 'Show results';
+  static const String startAgain = 'Start again';
+  static const String answers = 'Answers';
 }

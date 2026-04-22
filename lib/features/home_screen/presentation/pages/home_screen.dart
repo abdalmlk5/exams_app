@@ -1,3 +1,4 @@
+import 'package:exams_app/features/exam_results/presentation/pages/results_page.dart';
 import 'package:exams_app/features/explore/presentation/pages/home_tab.dart';
 import 'package:exams_app/features/home_screen/presentation/cubit/home_cubit.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class HomeScreen extends StatelessWidget {
               index: state.selectedTab,
               children: [
                 HomeTab(),
-                const Scaffold(body: Center(child: Text("Result"))),
+                const ResultsPage(),
                 const ProfileTab(),
               ],
             ),

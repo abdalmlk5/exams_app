@@ -1,10 +1,11 @@
-import 'package:exams_app/core/utils/app_colors.dart';
-import 'package:exams_app/core/widgets/custom_snack_bar.dart';
+import 'package:exams_app/core/utils/app_strings.dart';
 import 'package:exams_app/features/home_screen/presentation/pages/home_screen.dart';
+import 'package:exams_app/features/home_screen/presentation/cubit/home_cubit.dart';
 import 'package:exams_app/features/questions/domain/entities/check_questions_response_entity.dart';
 import 'package:exams_app/features/questions/presentation/widgets/exam_score_widgets/score_donut_chart.dart';
 import 'package:exams_app/features/questions/presentation/widgets/exam_score_widgets/score_metric_row.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ExamScorePage extends StatelessWidget {
@@ -33,7 +34,7 @@ class ExamScorePage extends StatelessWidget {
           ),
         ),
         title: Text(
-          "Exam score",
+          AppStrings.examScore,
           style: theme.textTheme.displayLarge,
         ),
       ),
@@ -44,7 +45,7 @@ class ExamScorePage extends StatelessWidget {
           children: [
             SizedBox(height: 24.h),
             Text(
-              "Your score",
+              AppStrings.yourScore,
               style: theme.textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.w400,
               ),
@@ -62,7 +63,7 @@ class ExamScorePage extends StatelessWidget {
                       style: theme.textTheme.titleLarge?.copyWith(
                         fontSize: 22.sp,
                         fontWeight: FontWeight.w400,
-                        color: const Color(0xFF32353A),
+                        color: theme.textTheme.titleLarge?.color,
                       ),
                     ),
                   ],
@@ -73,13 +74,13 @@ class ExamScorePage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ScoreMetricRow(
-                      label: "Correct",
+                      label: AppStrings.correct,
                       count: score.correct,
                       color: theme.colorScheme.primary,
                     ),
                     SizedBox(height: 12.h),
                     ScoreMetricRow(
-                      label: "Incorrect",
+                      label: AppStrings.incorrect,
                       count: score.wrong,
                       color: theme.colorScheme.error,
                     ),
@@ -95,9 +96,14 @@ class ExamScorePage extends StatelessWidget {
               height: 50.h,
               child: ElevatedButton(
                 onPressed: () {
-                  CustomSnackBar.error(context, "Under Developing");
+                  context.read<HomeCubit>().changeTab(1);
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => const HomeScreen()),
+                    (route) => false,
+                  );
                 },
-                child: const Text("Show results"),
+                child: const Text(AppStrings.showResults),
               ),
             ),
             SizedBox(height: 16.h),
@@ -106,6 +112,7 @@ class ExamScorePage extends StatelessWidget {
               height: 50.h,
               child: OutlinedButton(
                 onPressed: () {
+                  context.read<HomeCubit>().changeTab(0);
                   Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(builder: (context) => const HomeScreen()),
@@ -119,7 +126,7 @@ class ExamScorePage extends StatelessWidget {
                   ),
                 ),
                 child: Text(
-                  "Start again",
+                  AppStrings.startAgain,
                   style: theme.textTheme.bodyLarge?.copyWith(
                     color: theme.colorScheme.primary,
                   ),

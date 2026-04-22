@@ -27,6 +27,11 @@ class QuestionPage extends StatelessWidget {
       listener: (context, state) {
         // If result is present, navigate to ScorePage and replace current page
         if (state.data?.result != null && state.isLoading == false) {
+          // Dismiss timeout dialog if it's open
+          if (state.data?.isTimeOut == true) {
+            Navigator.of(context, rootNavigator: true).pop();
+          }
+          
           CustomSnackBar.success(context, "Finish");
           Navigator.pushReplacement(
             context,
@@ -147,12 +152,7 @@ class QuestionPage extends StatelessWidget {
                             : QuestionButtonType.next,
                         isLoading:
                             state.isLoading && state.data!.isLastQuestion,
-                        onPressed:
-                            (state.data!.isLastQuestion &&
-                                state.data!.selectedAnswers.length <
-                                    state.data!.questions.length)
-                            ? null
-                            : () {
+                        onPressed: () {
                                 if (state.data!.isLastQuestion) {
                                   context.read<QuestionsCubit>().doEvent(
                                     SubmitAnswersEvent(),

@@ -12,6 +12,8 @@ import 'package:exams_app/features/questions/domain/entities/question_entity.dar
 import 'package:exams_app/features/questions/domain/entities/submit_answers_request_entity.dart';
 import 'package:exams_app/features/questions/domain/entities/answer_check_item_entity.dart';
 import 'package:exams_app/config/base_response/base_response.dart';
+import 'package:exams_app/features/exam_results/domain/entities/exam_result_entity.dart';
+import 'package:exams_app/features/exam_results/domain/usecases/save_exam_result_usecase.dart';
 
 part 'questions_state.dart';
 
@@ -19,10 +21,14 @@ part 'questions_state.dart';
 class QuestionsCubit extends Cubit<BaseState<ExamData>> {
   final GetQuestionsUsecase getQuestionsUsecase;
   final SubmitAnswersUsecase submitAnswersUsecase;
+  final SaveExamResultUseCase saveExamResultUseCase;
   Timer? _timer;
 
-  QuestionsCubit(this.getQuestionsUsecase, this.submitAnswersUsecase)
-    : super(const BaseState<ExamData>());
+  QuestionsCubit(
+    this.getQuestionsUsecase,
+    this.submitAnswersUsecase,
+    this.saveExamResultUseCase,
+  ) : super(const BaseState<ExamData>());
 
   void doEvent(QuestionEvent event) {
     switch (event) {
@@ -219,6 +225,37 @@ class QuestionsCubit extends Cubit<BaseState<ExamData>> {
 
       switch (result) {
         case SuccessBaseResponse<CheckQuestionsResponseEntity>():
+          // Save to local storage
+          if (state.data!.questions.isNotEmpty) {
+            final firstQuestion = state.data!.questions.first;
+            final exam = firstQuestion.exam;
+            if (exam != null) {
+              final detailedAnswers = state.data!.questions.map((q) {
+                return DetailedAnswerEntity(
+                  questionText: q.question,
+                  options: q.answers.map((a) => OptionEntity(text: a.answer, key: a.key)).toList(),
+                  correctAnswerKey: q.correct,
+                  userSelectedKey: state.data!.selectedAnswers[q.id] ?? "",
+                  type: q.type,
+                );
+              }).toList();
+
+              await saveExamResultUseCase(
+                ExamResultEntity(
+                  examId: exam.id,
+                  title: exam.title,
+                  subject: firstQuestion.subject ?? "General",
+                  duration: exam.duration,
+                  numberOfQuestions: exam.numberOfQuestions,
+                  correctAnswers: result.data.correct,
+                  timeTakenMinutes: timeTaken,
+                  createdAt: DateTime.now().toIso8601String(),
+                  detailedAnswers: detailedAnswers,
+                ),
+              );
+            }
+          }
+
           emit(
             state.copyWith(
               isLoading: false,
