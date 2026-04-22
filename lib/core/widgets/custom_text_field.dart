@@ -90,6 +90,8 @@ class _AppTextFieldState extends State<AppTextField> {
         return AppValidations.validatePhoneNumber(value);
       case FieldType.none:
         return null;
+      case FieldType.currentPassword:
+        return AppValidations.validatePassword(value);
     }
   }
 }
@@ -108,6 +110,11 @@ enum FieldType {
   newPassword(
     AppStrings.newPassword,
     AppStrings.newPassword,
+    TextInputType.text,
+  ),
+  currentPassword(
+    AppStrings.currentPassword,
+    AppStrings.currentPassword,
     TextInputType.text,
   ),
   profilePassword(

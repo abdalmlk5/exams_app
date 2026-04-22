@@ -16,6 +16,7 @@ class EndPoints {
 
   static const String profileData = "$baseUrl/auth/profileData";
   static const String editProfile = "$baseUrl/auth/editProfile";
+  static const String changePassword = "$baseUrl/auth/changePassword";
   static const String subjects = "$baseUrl/subjects";
   static const String exams = "$baseUrl/exams";
 

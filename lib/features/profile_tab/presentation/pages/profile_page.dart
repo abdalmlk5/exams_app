@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../core/utils/app_routes.dart';
 import '../widgets/profile_image.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -181,7 +182,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     readOnly: true,
                     suffix: TextButton(
                       onPressed: () {
-                        // TODO: Navigate to reset password page
+                        Navigator.pushNamed(context, AppRoutes.changePassword);
                       },
                       child: Text(
                         AppStrings.change,
