@@ -1,6 +1,6 @@
 import 'package:exams_app/core/widgets/custom_snack_bar.dart';
-import 'package:exams_app/features/authentication/presentation/auth_manager/cubit/auth_manager_cubit.dart';
-import 'package:exams_app/features/authentication/presentation/auth_manager/cubit/auth_manager_event.dart';
+import 'package:exams_app/features/authentication/presentation/auth_maneger/cubit/auth_manager_cubit.dart';
+import 'package:exams_app/features/authentication/presentation/auth_maneger/cubit/auth_manager_event.dart';
 import 'package:exams_app/features/authentication/presentation/login/cubit/login_cubit.dart';
 import 'package:exams_app/features/authentication/presentation/login/pages/login_page.dart';
 import 'package:exams_app/features/authentication/presentation/register/cubit/register_cubit.dart';
@@ -28,7 +28,6 @@ class _AuthenticationManagerPageState extends State<AuthenticationManagerPage> {
   Widget build(BuildContext context) {
     if (showLoginPage) {
       return BlocConsumer<LoginCubit, LoginState>(
-        // Only fire when errorMessage or data actually changes value
         listenWhen: (prev, curr) =>
             prev.loginState.errorMessage != curr.loginState.errorMessage ||
             prev.loginState.data != curr.loginState.data,
@@ -60,4 +59,3 @@ class _AuthenticationManagerPageState extends State<AuthenticationManagerPage> {
     }
   }
 }
-

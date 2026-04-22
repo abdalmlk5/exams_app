@@ -33,12 +33,7 @@ class AppIcons {
 
 class App3DIcons {
   static const String alarm = '${_threeDIconsPath}alarm.svg';
-  static const String profit = '${_threeDIconsPath}Profit.svg';
-  static const String microscope = '${_threeDIconsPath}Microscope.svg';
+  static const String profit = '${_threeDIconsPath}Profit.png';
   static const String sandClock = '${_threeDIconsPath}sand-clock.svg';
   static const String resultDraft = '${_threeDIconsPath}result-draft.svg';
-  static const String colorPalette = '${_threeDIconsPath}Color Palette.svg';
-  static const String draftingTools = '${_threeDIconsPath}drafting_tools.svg';
-  static const String languageTranslator =
-      '${_threeDIconsPath}Language Translator.svg';
 }

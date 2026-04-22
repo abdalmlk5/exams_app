@@ -1,11 +1,11 @@
 import 'package:exams_app/core/utils/app_strings.dart';
-import 'package:exams_app/core/widgets/custom_elevated_button.dart';
-import 'package:exams_app/core/widgets/custom_snack_bar.dart';
+import 'package:exams_app/core/widgets/custom_button.dart';
 import 'package:exams_app/core/widgets/custom_text_field.dart';
 import 'package:exams_app/features/authentication/presentation/login/cubit/login_cubit.dart';
-import 'package:exams_app/features/authentication/presentation/login/cubit/login_event.dart';
-import 'package:exams_app/features/authentication/presentation/login/widgets/remember_me_and_forget_password_row.dart';
-import 'package:exams_app/features/authentication/presentation/auth_manager/widgets/widgets/auth_footer.dart';
+import 'package:exams_app/features/authentication/presentation/login/cubit/login_even.dart';
+import 'package:exams_app/features/authentication/presentation/login/widgets/remember_me_and_forget_password.dart';
+import 'package:exams_app/features/authentication/presentation/auth_maneger/widgets/widgets/auth_footer.dart';
+import 'package:exams_app/core/widgets/custom_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -76,12 +76,12 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                 buildWhen: (previous, current) =>
                     previous.rememberMe != current.rememberMe,
                 builder: (context, state) {
-                  return RememberMeAndForgetPasswordRow(
+                  return RememberMeAndForgetPassword(
                     value: state.rememberMe,
                     onChanged: (value) {
-                      context.read<LoginCubit>().toggleRememberMe(
-                        value ?? false,
-                      );
+                      context
+                          .read<LoginCubit>()
+                          .toggleRememberMe(value ?? false);
                     },
                   );
                 },

@@ -1,32 +1,21 @@
-import 'package:exams_app/core/utils/app_routes.dart';
-import 'package:exams_app/core/utils/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class RememberMeAndForgetPasswordRow extends StatefulWidget {
+import 'package:exams_app/core/utils/app_colors.dart';
+import 'package:exams_app/core/utils/app_strings.dart';
+import 'package:exams_app/core/utils/app_text_styles.dart';
+
+import '../../../../../core/utils/app_routes.dart';
+
+class RememberMeAndForgetPassword extends StatelessWidget {
   final bool value;
   final ValueChanged<bool?> onChanged;
 
-  const RememberMeAndForgetPasswordRow({
+  const RememberMeAndForgetPassword({
     super.key,
     required this.value,
     required this.onChanged,
   });
-
-  @override
-  State<RememberMeAndForgetPasswordRow> createState() =>
-      _RememberMeAndForgetPasswordRowState();
-}
-
-class _RememberMeAndForgetPasswordRowState
-    extends State<RememberMeAndForgetPasswordRow> {
-  late ThemeData theme;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    theme = Theme.of(context);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,10 +27,13 @@ class _RememberMeAndForgetPasswordRowState
             SizedBox(
               width: 24.w,
               height: 24.h,
-              child: Checkbox(value: widget.value, onChanged: widget.onChanged),
+              child: Checkbox(
+                value: value,
+                onChanged: onChanged,
+              ),
             ),
             SizedBox(width: 8.w),
-            Text(AppStrings.rememberMe, style: theme.textTheme.bodyMedium),
+            Text(AppStrings.rememberMe, style: Theme.of(context).textTheme.bodyMedium),
           ],
         ),
         TextButton(
@@ -50,14 +42,15 @@ class _RememberMeAndForgetPasswordRowState
           },
           style: TextButton.styleFrom(
             padding: EdgeInsets.zero,
+            foregroundColor: AppColors.primary,
             minimumSize: Size.zero,
             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
           ),
           child: Text(
             AppStrings.forgetPasswordQuestion,
-            style: theme.textTheme.bodyMedium?.copyWith(
-              decoration: TextDecoration.underline,
-            ),
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  decoration: TextDecoration.underline,
+                ),
           ),
         ),
       ],

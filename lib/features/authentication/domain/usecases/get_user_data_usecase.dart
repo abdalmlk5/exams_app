@@ -10,6 +10,6 @@ class GetUserDataUsecase {
   GetUserDataUsecase({required this.authRepoContract});
 
   Future<BaseResponse<UserEntity>> call() async {
-    return  authRepoContract.getUserData();
+    return await authRepoContract.getUserData();
   }
 }

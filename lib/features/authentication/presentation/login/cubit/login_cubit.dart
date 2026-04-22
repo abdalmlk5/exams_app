@@ -1,22 +1,22 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:injectable/injectable.dart';
-
 import 'package:exams_app/config/base_response/base_response.dart';
 import 'package:exams_app/config/base_state/base_state.dart';
 import 'package:exams_app/config/error_handler/error_handler.dart';
+import 'package:exams_app/config/validations/app_validations.dart';
 import 'package:exams_app/features/authentication/domain/entities/user_entity.dart';
 import 'package:exams_app/features/authentication/domain/usecases/login_usecase.dart';
-import 'package:exams_app/features/authentication/presentation/login/cubit/login_event.dart';
+import 'package:exams_app/features/authentication/presentation/login/cubit/login_even.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 
 part 'login_state.dart';
 
-@lazySingleton
+@injectable
 class LoginCubit extends Cubit<LoginState> {
   final LoginUsecase _loginUsecase;
   LoginCubit(this._loginUsecase) : super(const LoginState());
 
-  void doEvent(LoginEvent event) {
+  void doEvent(LoginEven event) {
     switch (event) {
       case Login():
         _login(
@@ -27,8 +27,6 @@ class LoginCubit extends Cubit<LoginState> {
         break;
     }
   }
-
-
 
   void toggleRememberMe(bool value) {
     emit(state.copyWith(rememberMe: value));

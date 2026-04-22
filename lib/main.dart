@@ -1,19 +1,20 @@
+import 'package:exams_app/core/utils/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:exams_app/config/di/di.dart';
-import 'package:exams_app/core/theme/app_theme.dart';
-import 'package:exams_app/features/authentication/presentation/auth_manager/cubit/auth_manager_cubit.dart';
-import 'package:exams_app/features/authentication/presentation/auth_manager/cubit/auth_manager_event.dart';
-import 'package:exams_app/features/authentication/presentation/auth_manager/pages/auth_manager_page.dart';
+import 'package:exams_app/core/utils/app_routes.dart';
+import 'package:exams_app/features/authentication/presentation/auth_maneger/cubit/auth_manager_cubit.dart';
+import 'package:exams_app/features/authentication/presentation/auth_maneger/cubit/auth_manager_event.dart';
+import 'package:exams_app/features/authentication/presentation/auth_maneger/pages/auth_manager_page.dart';
+import 'package:exams_app/features/authentication/presentation/forget_password/cubit/forget_password_cubit.dart';
 import 'package:exams_app/features/authentication/presentation/login/cubit/login_cubit.dart';
 import 'package:exams_app/features/authentication/presentation/register/cubit/register_cubit.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   configureDependencies();
-  runApp(const MyApp());
   runApp(const MyApp());
 }
 
@@ -27,16 +28,18 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: AppTheme.lightTheme,
-          home: MultiBlocProvider(
-            providers: [
-              BlocProvider(create: (_) => getIt<LoginCubit>()),
-              BlocProvider(create: (_) => getIt<RegisterCubit>()),
-              BlocProvider(create: (_) => getIt<AuthManagerCubit>()..doEvent(CheckAuth())),
-            ],
-            child: const AuthWrapper(),
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (_) => getIt<LoginCubit>()),
+            BlocProvider(create: (_) => getIt<RegisterCubit>()),
+            BlocProvider(create: (_) => getIt<AuthManagerCubit>()..doEvent(CheckAuth())),
+            BlocProvider(create: (_) => getIt<ForgetPasswordCubit>()),
+          ],
+          child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: AppTheme.mainTheme,
+            onGenerateRoute: AppRoutes.onGenerateRoute,
+            home: const AuthWrapper(),
           ),
         );
       },

@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 class AppTextField extends StatefulWidget {
   final TextEditingController controller;
   final FieldType fieldType;
-  final void Function(String)? onChanged;
-  final String? suffixText;
+  final Widget? suffix;
   final VoidCallback? onSuffixPressed;
   final TextEditingController? compareController;
 
@@ -14,8 +13,7 @@ class AppTextField extends StatefulWidget {
     super.key,
     required this.controller,
     required this.fieldType,
-    this.onChanged,
-    this.suffixText,
+    this.suffix,
     this.onSuffixPressed,
     this.compareController,
   });
@@ -25,17 +23,39 @@ class AppTextField extends StatefulWidget {
 }
 
 class _AppTextFieldState extends State<AppTextField> {
+  bool _isObscured = true;
+
+  bool get _isPasswordField =>
+      widget.fieldType == FieldType.password ||
+      widget.fieldType == FieldType.newPassword ||
+      widget.fieldType == FieldType.confirmPassword;
+
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return TextFormField(
       controller: widget.controller,
       keyboardType: widget.fieldType.textInputType,
-      onChanged: widget.onChanged,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+
       validator: _validate,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      decoration: InputDecoration(
+      obscureText: _isPasswordField && _isObscured,
+      decoration: InputDecoration(  
         labelText: widget.fieldType.label,
         hintText: widget.fieldType.hint,
+        suffixIcon: _isPasswordField
+            ? IconButton(
+                icon: Icon(
+                  _isObscured ? Icons.visibility_off : Icons.visibility,
+                  color: theme.hintColor,
+                ),
+                onPressed: () {
+                  setState(() {
+                    _isObscured = !_isObscured;
+                  });
+                },
+              )
+            : widget.suffix ?? null,
       ),
     );
   }
@@ -48,6 +68,8 @@ class _AppTextFieldState extends State<AppTextField> {
         return AppValidations.validatePassword(value);
       case FieldType.newPassword:
         return AppValidations.validatePassword(value);
+      case FieldType.profilePassword:
+        return null;
       case FieldType.confirmPassword:
         return AppValidations.validateConfirmPassword(
           value,
@@ -63,8 +85,6 @@ class _AppTextFieldState extends State<AppTextField> {
         return AppValidations.validatePhoneNumber(value);
       case FieldType.none:
         return null;
-      case FieldType.currentPassword:
-        return AppValidations.validatePassword(value);
     }
   }
 }
@@ -80,14 +100,14 @@ enum FieldType {
     AppStrings.enterYourPassword,
     TextInputType.text,
   ),
-  currentPassword(
-    AppStrings.password,
-    AppStrings.enterYourPassword,
-    TextInputType.text,
-  ),
   newPassword(
     AppStrings.newPassword,
     AppStrings.newPassword,
+    TextInputType.text,
+  ),
+  profilePassword(
+    AppStrings.profilePassword,
+    AppStrings.enterYourPassword,
     TextInputType.text,
   ),
   confirmPassword(

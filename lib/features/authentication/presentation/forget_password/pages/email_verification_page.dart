@@ -1,22 +1,23 @@
-import 'package:exams_app/config/base_state/base_state.dart';
-import 'package:exams_app/core/utils/app_colors.dart';
 import 'package:exams_app/core/utils/app_routes.dart';
 import 'package:exams_app/core/utils/app_strings.dart';
-import 'package:exams_app/core/utils/app_styles.dart';
-import 'package:exams_app/features/authentication/presentation/forget_password/view_models/forget_password_cubit.dart';
-import 'package:exams_app/features/authentication/presentation/forget_password/view_models/forget_password_intent.dart';
+import 'package:exams_app/features/authentication/presentation/auth_maneger/widgets/widgets/auth_app_bar.dart';
+import 'package:exams_app/core/widgets/custom_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class EmailVerificationView extends StatefulWidget {
-  const EmailVerificationView({super.key});
+import '../cubit/forget_password_event.dart';
+import '../cubit/forget_password_state.dart';
+import '../cubit/forget_password_cubit.dart';
+
+class EmailVerificationPage extends StatefulWidget {
+  const EmailVerificationPage({super.key});
 
   @override
-  State<EmailVerificationView> createState() => _EmailVerificationViewState();
+  State<EmailVerificationPage> createState() => _EmailVerificationPageState();
 }
 
-class _EmailVerificationViewState extends State<EmailVerificationView> {
+class _EmailVerificationPageState extends State<EmailVerificationPage> {
   final List<TextEditingController> _controllers = List.generate(
     6,
     (_) => TextEditingController(),
@@ -25,11 +26,11 @@ class _EmailVerificationViewState extends State<EmailVerificationView> {
 
   @override
   void dispose() {
-    for (var controller in _controllers) {
-      controller.dispose();
+    for (var c in _controllers) {
+      c.dispose();
     }
-    for (var node in _focusNodes) {
-      node.dispose();
+    for (var n in _focusNodes) {
+      n.dispose();
     }
     super.dispose();
   }
@@ -38,32 +39,25 @@ class _EmailVerificationViewState extends State<EmailVerificationView> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<ForgetPasswordCubit, BaseState<String?>>(
-      listenWhen: (previous, current) =>
-          previous.data != current.data ||
-          previous.errorMessage != current.errorMessage,
+    final theme = Theme.of(context);
+    return BlocListener<ForgetPasswordCubit, ForgetPasswordState>(
+      listenWhen: (prev, curr) =>
+          prev.forgetPasswordState.data != curr.forgetPasswordState.data ||
+          prev.forgetPasswordState.errorMessage !=
+              curr.forgetPasswordState.errorMessage,
       listener: (context, state) {
-        if (state.data == AppStrings.codeVerified) {
-          Navigator.pushNamed(
-            context,
-            AppRoutes.resetPassword,
-            arguments: context.read<ForgetPasswordCubit>(),
-          );
-        } else if (state.errorMessage != null) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(state.errorMessage!)));
+        if (state.forgetPasswordState.errorMessage != null) {
+          CustomSnackBar.error(context, state.forgetPasswordState.errorMessage!);
+          return;
+        }
+        if (state.forgetPasswordState.data != null) {
+          Navigator.pushNamed(context, AppRoutes.resetPassword);
         }
       },
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(AppStrings.password, style: AppStyles.black20500),
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
-            onPressed: () => Navigator.pop(context),
-          ),
-          backgroundColor: Colors.transparent,
-          elevation: 0,
+        appBar: AuthAppBar(
+          title: AppStrings.password,
+          onBack: () => Navigator.pop(context),
         ),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -71,11 +65,13 @@ class _EmailVerificationViewState extends State<EmailVerificationView> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: 40.h),
-              Text(AppStrings.emailVerification, style: AppStyles.black18500),
+              Text(AppStrings.emailVerification, style: theme.textTheme.titleLarge),
               SizedBox(height: 16.h),
               Text(
                 AppStrings.emailVerificationSubtitle,
-                style: AppStyles.gray14400,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: theme.hintColor,
+                ),
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 32.h),
@@ -92,21 +88,19 @@ class _EmailVerificationViewState extends State<EmailVerificationView> {
                       textAlign: TextAlign.center,
                       keyboardType: TextInputType.number,
                       maxLength: 1,
-                      style: AppStyles.black20500,
+                      style: theme.textTheme.titleLarge,
                       decoration: InputDecoration(
                         counterText: "",
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.r),
-                          borderSide: const BorderSide(color: AppColors.blue10),
+                          borderSide: BorderSide(color: theme.dividerColor),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.r),
-                          borderSide: const BorderSide(
-                            color: AppColors.primary,
-                          ),
+                          borderSide: BorderSide(color: theme.colorScheme.primary),
                         ),
                         filled: true,
-                        fillColor: AppColors.lightBlue,
+                        fillColor: theme.cardColor,
                       ),
                       onChanged: (value) {
                         if (value.isNotEmpty && index < 5) {
@@ -116,8 +110,8 @@ class _EmailVerificationViewState extends State<EmailVerificationView> {
                           _focusNodes[index - 1].requestFocus();
                         }
                         if (_otpCode.length == 6) {
-                          context.read<ForgetPasswordCubit>().handleIntent(
-                            ForgetPasswordVerifyCodeIntent(_otpCode),
+                          context.read<ForgetPasswordCubit>().doEvent(
+                            ForgetPasswordVerifyCodeEvent(_otpCode),
                           );
                         }
                       },
@@ -126,20 +120,25 @@ class _EmailVerificationViewState extends State<EmailVerificationView> {
                 ),
               ),
               SizedBox(height: 32.h),
-              BlocBuilder<ForgetPasswordCubit, BaseState<String?>>(
+              BlocBuilder<ForgetPasswordCubit, ForgetPasswordState>(
                 builder: (context, state) {
-                  if (state.isLoading) {
-                    return const CircularProgressIndicator();
+                  if (state.forgetPasswordState.isLoading) {
+                    return CircularProgressIndicator(
+                      color: theme.colorScheme.primary,
+                    );
                   }
                   return const SizedBox.shrink();
                 },
               ),
+              const Spacer(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     AppStrings.didntReceiveCode,
-                    style: AppStyles.black16400,
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: theme.hintColor,
+                    ),
                   ),
                   TextButton(
                     onPressed: () {
@@ -147,14 +146,16 @@ class _EmailVerificationViewState extends State<EmailVerificationView> {
                     },
                     child: Text(
                       AppStrings.resend,
-                      style: AppStyles.black16400.copyWith(
-                        color: AppColors.primary,
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: theme.colorScheme.primary,
                         decoration: TextDecoration.underline,
+                        decorationColor: theme.colorScheme.primary,
                       ),
                     ),
                   ),
                 ],
               ),
+              SizedBox(height: 40.h),
             ],
           ),
         ),

@@ -1,20 +1,27 @@
-import 'package:exams_app/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomSnackBar {
   static void success(BuildContext context, String message) {
+    final theme = Theme.of(context);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Row(
           children: [
-            const Icon(Icons.check_circle, color: AppColors.white),
+            const Icon(Icons.check_circle, color: Colors.white),
             const SizedBox(width: 10),
             Expanded(
-              child: Text(message),
+              child: Text(
+                message,
+                style: theme.textTheme.bodyMedium?.copyWith(color: Colors.white),
+              ),
             ),
           ],
         ),
-        backgroundColor: AppColors.success,
+        backgroundColor: Colors.green, // Fallback for success if not in theme
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
       ),
     );
   }
@@ -25,14 +32,21 @@ class CustomSnackBar {
       SnackBar(
         content: Row(
           children: [
-            const Icon(Icons.error, color: AppColors.white),
+            const Icon(Icons.error, color: Colors.white),
             const SizedBox(width: 10),
             Expanded(
-              child: Text(message),
+              child: Text(
+                message,
+                style: theme.textTheme.bodyMedium?.copyWith(color: Colors.white),
+              ),
             ),
           ],
         ),
         backgroundColor: theme.colorScheme.error,
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
       ),
     );
   }

@@ -9,6 +9,6 @@ class LogoutUsecase {
   LogoutUsecase({required this.authRepoContract});
 
   Future<BaseResponse<void>> call() async {
-    return  authRepoContract.logout();
+    return await authRepoContract.logout();
   }
 }

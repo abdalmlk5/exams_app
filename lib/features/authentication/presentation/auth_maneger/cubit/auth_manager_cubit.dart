@@ -6,13 +6,13 @@ import 'package:exams_app/features/authentication/domain/entities/user_entity.da
 import 'package:exams_app/features/authentication/domain/usecases/get_user_data_usecase.dart';
 import 'package:exams_app/features/authentication/domain/usecases/is_remembered_usecase.dart';
 import 'package:exams_app/features/authentication/domain/usecases/logout_usecase.dart';
-import 'package:exams_app/features/authentication/presentation/auth_manager/cubit/auth_manager_event.dart';
+import 'package:exams_app/features/authentication/presentation/auth_maneger/cubit/auth_manager_event.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 part 'auth_manager_state.dart';
 
-@lazySingleton
+@injectable
 class AuthManagerCubit extends Cubit<AuthManagerState> {
   final LogoutUsecase _logoutUsecase;
   final GetUserDataUsecase _getUserDataUsecase;
@@ -24,7 +24,18 @@ class AuthManagerCubit extends Cubit<AuthManagerState> {
     this._isRememberedUsecase,
   ) : super(const AuthManagerState());
 
-
+  void _checkAuth() async {
+    final isRemembered = await _isRememberedUsecase.call();
+    if (isRemembered) {
+      _getUserData();
+    } else {
+      emit(
+        state.copyWith(
+          authState: const BaseState<UserEntity>(isLoading: false, data: null),
+        ),
+      );
+    }
+  }
 
   void doEvent(AuthManagerEvent event) {
     switch (event) {
@@ -36,25 +47,33 @@ class AuthManagerCubit extends Cubit<AuthManagerState> {
         break;
       case CheckAuth():
         _checkAuth();
+        break;
     }
   }
 
   Future<void> _logout() async {
     try {
+      print('AuthManagerCubit: Logout initiated');
       emit(
         state.copyWith(authState: state.authState.copyWith(isLoading: true)),
       );
 
       final result = await _logoutUsecase.call();
+      print('AuthManagerCubit: Logout usecase result: $result');
 
       switch (result) {
         case SuccessBaseResponse():
+          print('AuthManagerCubit: Logout success');
           emit(
             state.copyWith(
-              authState: BaseState<UserEntity>(isLoading: false, data: null),
+              authState: BaseState<UserEntity>(
+                isLoading: false,
+                data: null,
+              ),
             ),
           );
         case ErrorBaseResponse():
+          print('AuthManagerCubit: Logout error: ${result.error}');
           // Force logout locally even on error
           emit(
             state.copyWith(
@@ -67,6 +86,7 @@ class AuthManagerCubit extends Cubit<AuthManagerState> {
           );
       }
     } catch (e) {
+      print('AuthManagerCubit: Logout exception: $e');
       emit(
         state.copyWith(
           authState: BaseState(
@@ -105,18 +125,6 @@ class AuthManagerCubit extends Cubit<AuthManagerState> {
       }
     } catch (e) {
       // Clear data on exception
-      emit(
-        state.copyWith(
-          authState: const BaseState<UserEntity>(isLoading: false, data: null),
-        ),
-      );
-    }
-  }
-    void _checkAuth() async {
-    final isRemembered = await _isRememberedUsecase.call();
-    if (isRemembered) {
-      _getUserData();
-    } else {
       emit(
         state.copyWith(
           authState: const BaseState<UserEntity>(isLoading: false, data: null),

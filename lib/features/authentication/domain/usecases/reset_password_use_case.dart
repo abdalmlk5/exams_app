@@ -1,11 +1,12 @@
 import 'package:exams_app/config/base_response/base_response.dart';
-import 'package:exams_app/features/authentication/data/models/reset_password_response.dart';
-import 'package:exams_app/features/authentication/domain/repositories/forget_password_repo.dart';
+import 'package:exams_app/features/authentication/data/response/forget_password_models/reset_password_response.dart';
 import 'package:injectable/injectable.dart';
+
+import '../repositories/auth_repo.dart';
 
 @injectable
 class ResetPasswordUseCase {
-  final ForgetPasswordRepo repository;
+  final AuthRepo repository;
 
   ResetPasswordUseCase(this.repository);
 

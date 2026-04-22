@@ -8,6 +8,6 @@ class IsRememberedUsecase {
   IsRememberedUsecase({required this.authRepoContract});
 
   Future<bool> call() async {
-    return  authRepoContract.isRemembered();
+    return await authRepoContract.isRemembered();
   }
 }

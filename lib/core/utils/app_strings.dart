@@ -12,7 +12,7 @@ class AppStrings {
 
   // Login Screen
   static const String enterYourEmail = 'Enter your email';
-  static const String enterYourPassword = 'Enter your password';
+  static const String enterYourPassword = 'Enter password';
   static const String rememberMe = 'Remember me';
   static const String forgetPasswordQuestion = 'Forget password?';
   static const String dontHaveAccount = "Don't have an account? ";
@@ -40,10 +40,6 @@ class AppStrings {
   static const String invalidCode = 'Invalid code';
   static const String didntReceiveCode = "Didn't receive code? ";
   static const String resend = 'Resend';
-  static const String otpSent = 'OTP sent to your email';
-  static const String codeVerified = 'Code verified successfully';
-  static const String passwordReset = 'Password reset successfully';
-  static const String emailMissing = 'Email is missing, please try again';
 
   // Reset Password Screen
   static const String resetPassword = 'Reset password';
@@ -94,7 +90,6 @@ class AppStrings {
   static const String nameNoNumbers = 'Name must not contain numbers';
   static const String phoneRequired = 'Phone number is required';
   static const String invalidPhone = 'Enter a valid phone number';
-
 
   // profile string
   static const String profilePassword = '★★★★★★★';

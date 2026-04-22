@@ -1,11 +1,10 @@
 import 'package:exams_app/core/utils/app_strings.dart';
-import 'package:exams_app/core/widgets/custom_elevated_button.dart';
-import 'package:exams_app/core/widgets/custom_snack_bar.dart';
+import 'package:exams_app/core/widgets/custom_button.dart';
 import 'package:exams_app/core/widgets/custom_text_field.dart';
 import 'package:exams_app/features/authentication/presentation/register/cubit/register_cubit.dart';
-import 'package:exams_app/features/authentication/presentation/register/cubit/register_event.dart';
-import 'package:exams_app/features/authentication/presentation/auth_manager/widgets/widgets/auth_footer.dart';
-
+import 'package:exams_app/features/authentication/presentation/register/cubit/register_even.dart';
+import 'package:exams_app/features/authentication/presentation/auth_maneger/widgets/widgets/auth_footer.dart';
+import 'package:exams_app/core/widgets/custom_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -41,7 +40,6 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
     _phoneController.dispose();
     super.dispose();
   }
-
 
   void _register() {
     context.read<RegisterCubit>().doEvent(

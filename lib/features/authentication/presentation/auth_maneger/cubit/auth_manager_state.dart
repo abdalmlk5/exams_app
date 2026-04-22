@@ -1,7 +1,5 @@
 part of 'auth_manager_cubit.dart';
 
-
-
 class AuthManagerState extends Equatable {
   final BaseState<UserEntity> authState;
 
