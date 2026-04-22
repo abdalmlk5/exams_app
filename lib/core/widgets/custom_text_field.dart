@@ -9,6 +9,7 @@ class AppTextField extends StatefulWidget {
   final Widget? suffix;
   final VoidCallback? onSuffixPressed;
   final TextEditingController? compareController;
+  final bool readOnly;
 
   const AppTextField({
     super.key,
@@ -18,6 +19,7 @@ class AppTextField extends StatefulWidget {
     this.suffix,
     this.onSuffixPressed,
     this.compareController,
+    this.readOnly = false,
   });
 
   @override
@@ -41,6 +43,7 @@ class _AppTextFieldState extends State<AppTextField> {
       onChanged: widget.onChanged,
       validator: _validate,
       obscureText: _isPasswordField && _isObscured,
+      readOnly: widget.readOnly,
       decoration: InputDecoration(
         floatingLabelBehavior: FloatingLabelBehavior.always,
         labelText: widget.fieldType.label,
@@ -57,7 +60,7 @@ class _AppTextFieldState extends State<AppTextField> {
                   });
                 },
               )
-            : widget.suffix ?? null,
+            : widget.suffix,
       ),
     );
   }
@@ -108,8 +111,8 @@ enum FieldType {
     TextInputType.text,
   ),
   profilePassword(
+    AppStrings.password,
     AppStrings.profilePassword,
-    AppStrings.enterYourPassword,
     TextInputType.text,
   ),
   confirmPassword(

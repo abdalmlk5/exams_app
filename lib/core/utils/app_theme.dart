@@ -84,10 +84,7 @@ abstract class AppTheme {
         floatingLabelBehavior: FloatingLabelBehavior.always,
         contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 18.h),
         hintStyle: AppTextStyles.gray14400,
-        labelStyle: AppTextStyles.black13400.copyWith(
-          color: AppColors.black,
-          fontSize: 12.sp,
-        ),
+        labelStyle: AppTextStyles.black12400,
         errorStyle: TextStyle(color: AppColors.error, fontSize: 12.sp),
         border: _border(AppColors.black30),
         enabledBorder: _border(AppColors.black30),
