@@ -51,12 +51,14 @@ class ExamsPage extends StatelessWidget {
             if (exams.isEmpty && state.examsState.errorMessage == null) {
               return const Center(child: Text("No exams found"));
             }
-            return ListView.separated(
-              padding: EdgeInsets.all(16.w),
-              separatorBuilder: (context, index) => SizedBox(height: 16.h),
-              itemCount: exams.length,
-              itemBuilder: (context, index) => ExamItem(exam: exams[index]),
-            );
+            else {
+              List<ExamModel> exams = state.examsState.data ?? [];
+              return ListView.separated(
+                separatorBuilder: (context, index) => SizedBox(height: 16.h),
+                itemCount: exams.length,
+                itemBuilder: (context, index) => ExamItem(exam: exams[index]),
+              );
+            }
           },
         ),
       ),

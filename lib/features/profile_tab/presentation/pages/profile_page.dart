@@ -8,6 +8,7 @@ import 'package:exams_app/features/profile_tab/domain/entities/profile_user_enti
 import 'package:exams_app/features/profile_tab/presentation/cubit/profile_cubit.dart';
 import 'package:exams_app/features/profile_tab/presentation/cubit/profile_events.dart';
 import 'package:exams_app/features/profile_tab/presentation/cubit/profile_state.dart';
+import 'package:exams_app/features/profile_tab/presentation/widgets/logout_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -136,7 +137,15 @@ class _ProfilePageState extends State<ProfilePage> {
 
           // 3. Success State (Show Form)
           return Scaffold(
-            appBar: AppBar(title: const Text(AppStrings.profile)),
+            appBar: AppBar(
+              title: const Text(AppStrings.profile),
+              actions: [
+                IconButton(
+                  onPressed: () => showLogoutDialog(context),
+                  icon: const Icon(Icons.logout, color: AppColors.error),
+                ),
+              ],
+            ),
             body: SingleChildScrollView(
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: Column(

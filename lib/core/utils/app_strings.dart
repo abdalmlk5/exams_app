@@ -46,6 +46,8 @@ class AppStrings {
   static const String resetPasswordSubtitle =
       'Password must not be empty and must contain 6 characters with upper case letter and one number at least';
   static const String newPassword = 'New password';
+  static const String passwordChangedSuccessfully =
+      'Password changed successfully';
 
   // Home Screen
   static const String search = 'Search';
@@ -118,5 +120,7 @@ class AppStrings {
   static const String answers = 'Answers';
   static const String profileUpdatedSuccessfully =
       'Profile updated successfully';
-  static const String passwordChangedSuccessfully = 'Password changed successfully';
+  static const String logout = 'Logout';
+  static const String logoutQuestion = 'Do you want to logout?';
+  static const String cancel = 'Cancel';
 }
