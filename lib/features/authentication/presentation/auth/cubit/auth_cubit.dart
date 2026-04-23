@@ -6,7 +6,7 @@ import 'package:exams_app/features/authentication/domain/entities/user_entity.da
 import 'package:exams_app/features/authentication/domain/usecases/get_user_data_usecase.dart';
 import 'package:exams_app/features/authentication/domain/usecases/is_remembered_usecase.dart';
 import 'package:exams_app/features/authentication/domain/usecases/logout_usecase.dart';
-import 'package:exams_app/features/authentication/presentation/auth/cubit/auth_even.dart';
+import 'package:exams_app/features/authentication/presentation/auth/cubit/auth_event.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
@@ -37,7 +37,7 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  void doEvent(AuthEven event) {
+  void doEvent(AuthEvent event) {
     switch (event) {
       case Logout():
         _logout();

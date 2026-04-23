@@ -1,6 +1,6 @@
-sealed class RegisterEven {}
+sealed class RegisterEvent {}
 
-class Register extends RegisterEven {
+class Register extends RegisterEvent {
   final String username;
   final String firstName;
   final String lastName;

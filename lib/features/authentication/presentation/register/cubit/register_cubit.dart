@@ -5,7 +5,7 @@ import 'package:exams_app/config/error_handler/error_handler.dart';
 import 'package:exams_app/config/validations/app_validations.dart';
 import 'package:exams_app/features/authentication/domain/entities/user_entity.dart';
 import 'package:exams_app/features/authentication/domain/usecases/register_usecase.dart';
-import 'package:exams_app/features/authentication/presentation/register/cubit/register_even.dart';
+import 'package:exams_app/features/authentication/presentation/register/cubit/register_event.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
@@ -17,7 +17,7 @@ class RegisterCubit extends Cubit<RegisterState> {
 
   RegisterCubit(this._registerUsecase) : super(const RegisterState());
 
-  void doEvent(RegisterEven event) {
+  void doEvent(RegisterEvent event) {
     switch (event) {
       case Register():
         _register(event);
