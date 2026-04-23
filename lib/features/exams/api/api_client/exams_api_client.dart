@@ -14,5 +14,5 @@ abstract class ExamsApiClient {
   factory ExamsApiClient(Dio dio) = _ExamsApiClient;
 
   @GET(EndPoints.exams)
-  Future<ExamsResponse> getExams(@Queries() Map<String, dynamic> queries);
+  Future<ExamsResponse> getExams(@Query("subject") String? subject);
 }

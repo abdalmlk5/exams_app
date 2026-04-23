@@ -1,6 +1,6 @@
 import 'package:exams_app/core/widgets/custom_snack_bar.dart';
 import 'package:exams_app/features/authentication/presentation/auth/cubit/auth_cubit.dart';
-import 'package:exams_app/features/authentication/presentation/auth/cubit/auth_even.dart';
+import 'package:exams_app/features/authentication/presentation/auth/cubit/auth_event.dart';
 import 'package:exams_app/features/authentication/presentation/login/cubit/login_cubit.dart';
 import 'package:exams_app/features/authentication/presentation/login/pages/login_page.dart';
 import 'package:exams_app/features/authentication/presentation/register/cubit/register_cubit.dart';
@@ -45,7 +45,8 @@ class _AuthPageState extends State<AuthPage> {
     } else {
       return BlocConsumer<RegisterCubit, RegisterState>(
         listenWhen: (prev, curr) =>
-            prev.registerState.errorMessage != curr.registerState.errorMessage ||
+            prev.registerState.errorMessage !=
+                curr.registerState.errorMessage ||
             prev.registerState.data != curr.registerState.data,
         listener: (context, state) {
           if (state.registerState.errorMessage != null) {

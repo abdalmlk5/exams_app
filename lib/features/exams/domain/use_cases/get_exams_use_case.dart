@@ -10,10 +10,7 @@ class GetExamsUseCase {
 
   GetExamsUseCase(this.repo);
 
-  Future<BaseResponse<List<ExamModel>>> call(
-    String token, {
-    String? subject,
-  }) async {
-    return await repo.getExams(token, subject: subject);
+  Future<BaseResponse<List<ExamModel>>> call({String? subject}) async {
+    return await repo.getExams(subject: subject);
   }
 }

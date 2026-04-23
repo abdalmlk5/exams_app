@@ -19,13 +19,8 @@ class ExamsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return BlocProvider(
-      create: (context) => getIt<ExamsCubit>()
-        ..doEvent(
-          GetAllExamsEvent(
-            //todo: send subject id here to get subjet exams
-            /*subject: subject*/
-          ),
-        ),
+      create: (context) =>
+          getIt<ExamsCubit>()..doEvent(GetAllExamsEvent(subject: subject)),
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -35,27 +30,28 @@ class ExamsPage extends StatelessWidget {
               color: theme.iconTheme.color,
             ),
           ),
+          title: const Text(AppStrings.exams),
         ),
-        body: BlocBuilder<ExamsCubit, ExamsState>(
-          builder: (context, state) {
-            if (state.examsState.isLoading) {
-              return const Center(child: CircularProgressIndicator());
-            }
+        body: BlocConsumer<ExamsCubit, ExamsState>(
+          listenWhen: (prev, curr) =>
+              prev.examsState.errorMessage != curr.examsState.errorMessage,
+          listener: (context, state) {
             if (state.examsState.errorMessage != null) {
               CustomSnackBar.error(
                 context,
                 state.examsState.errorMessage ?? AppStrings.someThingWentWrong,
               );
-              return const SizedBox();
             }
-            if (state.examsState.data == null) {
-              return Center(
-                child: Text(
-                  'No exams found',
-                  style: theme.textTheme.bodyLarge,
-                ),
-              );
-            } else {
+          },
+          builder: (context, state) {
+            if (state.examsState.isLoading) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            List<ExamModel> exams = state.examsState.data ?? [];
+            if (exams.isEmpty && state.examsState.errorMessage == null) {
+              return const Center(child: Text("No exams found"));
+            }
+            else {
               List<ExamModel> exams = state.examsState.data ?? [];
               return ListView.separated(
                 separatorBuilder: (context, index) => SizedBox(height: 16.h),

@@ -1,19 +1,41 @@
 import 'package:exams_app/core/utils/app_routes.dart';
 import 'package:exams_app/core/utils/app_strings.dart';
+import 'package:exams_app/core/utils/app_text_styles.dart';
+import 'package:exams_app/core/widgets/custom_snack_bar.dart';
 import 'package:exams_app/core/widgets/custom_text_field.dart';
 import 'package:exams_app/features/authentication/presentation/auth/widgets/widgets/auth_app_bar.dart';
-import 'package:exams_app/core/widgets/custom_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../core/widgets/custom_button.dart';
+import '../cubit/forget_password_cubit.dart';
 import '../cubit/forget_password_event.dart';
 import '../cubit/forget_password_state.dart';
-import '../cubit/forget_password_cubit.dart';
 
-class ForgetPasswordPage extends StatelessWidget {
+class ForgetPasswordPage extends StatefulWidget {
   const ForgetPasswordPage({super.key});
+
+  @override
+  State<ForgetPasswordPage> createState() => _ForgetPasswordPageState();
+}
+
+class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
+  late final TextEditingController emailController;
+  late final GlobalKey<FormState> formKey;
+
+  @override
+  void initState() {
+    super.initState();
+    emailController = TextEditingController();
+    formKey = GlobalKey<FormState>();
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +50,10 @@ class ForgetPasswordPage extends StatelessWidget {
               curr.forgetPasswordState.errorMessage,
       listener: (context, state) {
         if (state.forgetPasswordState.errorMessage != null) {
-          CustomSnackBar.error(context, state.forgetPasswordState.errorMessage!);
+          CustomSnackBar.error(
+            context,
+            state.forgetPasswordState.errorMessage!,
+          );
           return;
         }
         if (state.forgetPasswordState.data != null) {

@@ -1,17 +1,15 @@
-import 'package:exams_app/config/base_state/base_state.dart';
+import '../../../../config/base_state/base_state.dart';
 
 class ForgetPasswordState {
-  BaseState<String?> forgetPasswordState = BaseState<String?>(
-    isLoading: true,
-    data: null,
-  );
+  final BaseState<String?> forgetPasswordState;
 
-  ForgetPasswordState({BaseState<String?>? state}) {
-    forgetPasswordState =
-        state ?? BaseState<String?>(isLoading: false, data: null);
-  }
+  const ForgetPasswordState({
+    this.forgetPasswordState = const BaseState<String?>(isLoading: false),
+  });
 
   ForgetPasswordState copyWith({BaseState<String?>? stateParam}) {
-    return ForgetPasswordState(state: stateParam ?? forgetPasswordState);
+    return ForgetPasswordState(
+      forgetPasswordState: stateParam ?? forgetPasswordState,
+    );
   }
 }

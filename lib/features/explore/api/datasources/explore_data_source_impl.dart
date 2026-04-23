@@ -13,11 +13,9 @@ class ExploreDataSourceImpl extends ExploreDataSourceContract {
   ExploreDataSourceImpl(this.apiClient);
 
   @override
-  Future<BaseResponse<ExploreResponse>> getSubjects({
-    required String token,
-  }) async {
+  Future<BaseResponse<ExploreResponse>> getSubjects() async {
     try {
-      final response = await apiClient.getSubjects({"token": token});
+      final response = await apiClient.getSubjects();
 
       return SuccessBaseResponse<ExploreResponse>(response);
     } catch (e) {

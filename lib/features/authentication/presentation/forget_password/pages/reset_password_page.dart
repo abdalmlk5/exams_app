@@ -1,18 +1,43 @@
 import 'package:exams_app/core/utils/app_strings.dart';
+import 'package:exams_app/core/utils/app_text_styles.dart';
+import 'package:exams_app/core/widgets/custom_snack_bar.dart';
 import 'package:exams_app/core/widgets/custom_text_field.dart';
 import 'package:exams_app/features/authentication/presentation/auth/widgets/widgets/auth_app_bar.dart';
-import 'package:exams_app/core/widgets/custom_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../core/widgets/custom_button.dart';
+import '../cubit/forget_password_cubit.dart';
 import '../cubit/forget_password_event.dart';
 import '../cubit/forget_password_state.dart';
-import '../cubit/forget_password_cubit.dart';
 
-class ResetPasswordPage extends StatelessWidget {
+class ResetPasswordPage extends StatefulWidget {
   const ResetPasswordPage({super.key});
+
+  @override
+  State<ResetPasswordPage> createState() => _ResetPasswordPageState();
+}
+
+class _ResetPasswordPageState extends State<ResetPasswordPage> {
+  late final TextEditingController oldPasswordController;
+  late final TextEditingController newPasswordController;
+  late final GlobalKey<FormState> formKey;
+
+  @override
+  void initState() {
+    super.initState();
+    oldPasswordController = TextEditingController();
+    newPasswordController = TextEditingController();
+    formKey = GlobalKey<FormState>();
+  }
+
+  @override
+  void dispose() {
+    oldPasswordController.dispose();
+    newPasswordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +53,16 @@ class ResetPasswordPage extends StatelessWidget {
               curr.forgetPasswordState.errorMessage,
       listener: (context, state) {
         if (state.forgetPasswordState.errorMessage != null) {
-          CustomSnackBar.error(context, state.forgetPasswordState.errorMessage!);
+          CustomSnackBar.error(
+            context,
+            state.forgetPasswordState.errorMessage!,
+          );
           return;
         }
         if (state.forgetPasswordState.data != null) {
-          CustomSnackBar.success(context, "Password reset successfully");
+          CustomSnackBar.success(context, AppStrings.passwordChangedSuccessfully);
           Navigator.of(context).popUntil((route) => route.isFirst);
+
         }
       },
       child: Scaffold(
