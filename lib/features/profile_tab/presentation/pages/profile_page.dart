@@ -89,7 +89,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return BlocProvider.value(
       value: _cubit,
       child: BlocConsumer<ProfileCubit, ProfileState>(
-        listenWhen: (prev, curr) => prev.profileState != curr.profileState,
+        listenWhen: (prev, curr) => prev.status != curr.status,
         listener: (context, state) {
           // Handle Initial Data Loading
           if (state.profileState.data != null &&
@@ -99,8 +99,7 @@ class _ProfilePageState extends State<ProfilePage> {
           }
 
           // Handle Update Success
-          if (!state.profileState.isLoading &&
-              state.profileState.errorMessage == null) {
+          if (state.status == ProfileStatus.success) {
             CustomSnackBar.success(
               context,
               AppStrings.profileUpdatedSuccessfully,
@@ -108,7 +107,8 @@ class _ProfilePageState extends State<ProfilePage> {
           }
 
           // Handle Errors
-          if (state.profileState.errorMessage != null) {
+          if (state.status == ProfileStatus.error &&
+              state.profileState.errorMessage != null) {
             CustomSnackBar.error(context, state.profileState.errorMessage!);
           }
         },
