@@ -1,4 +1,4 @@
-import '../../../../config/base_state/base_state.dart';
+import '../../../../../config/base_state/base_state.dart';
 
 class ForgetPasswordState {
   final BaseState<String?> forgetPasswordState;

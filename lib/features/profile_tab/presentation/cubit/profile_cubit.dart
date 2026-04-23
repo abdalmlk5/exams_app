@@ -93,7 +93,10 @@ class ProfileCubit extends Cubit<ProfileState> {
     if (diff.isEmpty) return;
 
     emit(
-      state.copyWith(stateParam: state.profileState.copyWith(isLoading: true)),
+      state.copyWith(
+        status: ProfileStatus.loading,
+        stateParam: state.profileState.copyWith(isLoading: true),
+      ),
     );
 
     final result = await updateProfileUseCase.call(diff);
@@ -104,6 +107,7 @@ class ProfileCubit extends Cubit<ProfileState> {
         emit(
           state.copyWith(
             isDataChanged: false,
+            status: ProfileStatus.success,
             stateParam: BaseState<ProfileUserEntity>(
               isLoading: false,
               data: result.data,
@@ -114,6 +118,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       case ErrorBaseResponse<ProfileUserEntity>():
         emit(
           state.copyWith(
+            status: ProfileStatus.error,
             stateParam: state.profileState.copyWith(
               isLoading: false,
               errorMessage: result.errorMessage,

@@ -1,5 +1,4 @@
 import 'package:exams_app/core/utils/app_strings.dart';
-import 'package:exams_app/core/utils/app_text_styles.dart';
 import 'package:exams_app/core/widgets/custom_snack_bar.dart';
 import 'package:exams_app/core/widgets/custom_text_field.dart';
 import 'package:exams_app/features/authentication/presentation/auth/widgets/widgets/auth_app_bar.dart';
@@ -8,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../core/widgets/custom_button.dart';
-import '../../../../../core/widgets/custom_snack_bar.dart';
 import '../cubit/forget_password_cubit.dart';
 import '../cubit/forget_password_event.dart';
 import '../cubit/forget_password_state.dart';
@@ -61,7 +59,10 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
           return;
         }
         if (state.forgetPasswordState.data != null) {
-          CustomSnackBar.success(context, AppStrings.passwordChangedSuccessfully);
+          CustomSnackBar.success(
+            context,
+            AppStrings.passwordChangedSuccessfully,
+          );
           Navigator.of(context).popUntil((route) => route.isFirst);
         }
       },
@@ -79,7 +80,10 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(height: 40.h),
-                  Text(AppStrings.resetPassword, style: theme.textTheme.titleLarge),
+                  Text(
+                    AppStrings.resetPassword,
+                    style: theme.textTheme.titleLarge,
+                  ),
                   SizedBox(height: 16.h),
                   Text(
                     AppStrings.resetPasswordSubtitle,
@@ -109,11 +113,11 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
                             context.read<ForgetPasswordCubit>().doEvent(
-                                  ForgetPasswordResetPasswordEvent(
-                                    passwordController.text,
-                                    confirmPasswordController.text,
-                                  ),
-                                );
+                              ForgetPasswordResetPasswordEvent(
+                                passwordController.text,
+                                confirmPasswordController.text,
+                              ),
+                            );
                           }
                         },
                       );
@@ -126,6 +130,6 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
           ),
         ),
       ),
-    )
+    );
   }
 }

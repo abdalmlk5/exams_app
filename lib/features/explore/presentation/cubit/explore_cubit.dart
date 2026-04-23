@@ -49,7 +49,7 @@ class ExploreCubit extends Cubit<ExploreState> {
         stateParam: const BaseState<List<SubjectModel>>(isLoading: true),
       ),
     );
-    final result = await getSubjectsUseCase.call(effectiveToken);
+    final result = await getSubjectsUseCase.call();
     switch (result) {
       case SuccessBaseResponse():
         allSubjects.clear();
