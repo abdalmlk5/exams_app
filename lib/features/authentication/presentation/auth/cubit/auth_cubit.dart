@@ -14,18 +14,18 @@ part 'auth_state.dart';
 
 @injectable
 class AuthCubit extends Cubit<AuthState> {
-  final LogoutUsecase _logoutUsecase;
-  final GetUserDataUsecase _getUserDataUsecase;
-  final IsRememberedUsecase _isRememberedUsecase;
+  final LogoutUsecase _logoutUseCase;
+  final GetUserDataUsecase _getUserDataUseCase;
+  final IsRememberedUsecase _isRememberedUseCase;
 
   AuthCubit(
-    this._logoutUsecase,
-    this._getUserDataUsecase,
-    this._isRememberedUsecase,
+    this._logoutUseCase,
+    this._getUserDataUseCase,
+    this._isRememberedUseCase,
   ) : super(const AuthState());
 
   void checkAuth() async {
-    final isRemembered = await _isRememberedUsecase.call();
+    final isRemembered = await _isRememberedUseCase.call();
     if (isRemembered) {
       _getUserData();
     } else {
@@ -54,7 +54,7 @@ class AuthCubit extends Cubit<AuthState> {
         state.copyWith(authState: state.authState.copyWith(isLoading: true)),
       );
 
-      final result = await _logoutUsecase.call();
+      final result = await _logoutUseCase.call();
 
       switch (result) {
         case SuccessBaseResponse<void>():
@@ -94,7 +94,7 @@ class AuthCubit extends Cubit<AuthState> {
         state.copyWith(authState: state.authState.copyWith(isLoading: true)),
       );
 
-      final result = await _getUserDataUsecase.call();
+      final result = await _getUserDataUseCase.call();
 
       switch (result) {
         case SuccessBaseResponse<UserEntity>():
@@ -106,18 +106,23 @@ class AuthCubit extends Cubit<AuthState> {
         case ErrorBaseResponse<UserEntity>():
           emit(
             state.copyWith(
-              authState: const BaseState<UserEntity>(
+              authState: BaseState<UserEntity>(
                 isLoading: false,
                 data: null,
+                errorMessage: result.errorMessage,
               ),
             ),
           );
       }
     } catch (e) {
-      // Clear data on exception
+      // Clear data and show error on exception
       emit(
         state.copyWith(
-          authState: const BaseState<UserEntity>(isLoading: false, data: null),
+          authState: BaseState<UserEntity>(
+            isLoading: false,
+            data: null,
+            errorMessage: ErrorHandler.handle(e),
+          ),
         ),
       );
     }
