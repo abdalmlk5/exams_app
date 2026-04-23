@@ -13,8 +13,8 @@ class ExploreRepoImpl extends ExploreRepo {
   ExploreRepoImpl(this.dataSource);
 
   @override
-  Future<BaseResponse<List<SubjectModel>>> getSubjects(String token) async {
-    final response = await dataSource.getSubjects(token: token);
+  Future<BaseResponse<List<SubjectModel>>> getSubjects() async {
+    final response = await dataSource.getSubjects();
 
     switch (response) {
       case SuccessBaseResponse():
