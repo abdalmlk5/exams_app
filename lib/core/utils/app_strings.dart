@@ -96,6 +96,8 @@ class AppStrings {
   static const String update = 'Update';
   static const String change = 'Change';
   static const String profilePassword = '★★★★★★★';
+  static const String currentPassword = 'Current password';
+  static const String enterCurrentPassword = 'Enter current password';
 
   // Exam Results
   static const String results = 'Results';
@@ -116,4 +118,5 @@ class AppStrings {
   static const String answers = 'Answers';
   static const String profileUpdatedSuccessfully =
       'Profile updated successfully';
+  static const String passwordChangedSuccessfully = 'Password changed successfully';
 }
