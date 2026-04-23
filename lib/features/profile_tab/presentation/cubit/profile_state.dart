@@ -1,7 +1,7 @@
 import '../../../../config/base_state/base_state.dart';
 import '../../domain/entities/profile_user_entity.dart';
 
-enum ProfileStatus { idle, loading, success, error }
+enum ProfileStatus { idle, loading, success, updateSuccess, error }
 
 class ProfileState {
   final BaseState<ProfileUserEntity> profileState;

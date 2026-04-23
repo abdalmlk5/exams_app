@@ -50,6 +50,7 @@ class ProfileCubit extends Cubit<ProfileState> {
         _originalUser = result.data;
         emit(
           state.copyWith(
+            status: ProfileStatus.success,
             stateParam: BaseState<ProfileUserEntity>(
               isLoading: false,
               data: result.data,
@@ -107,7 +108,7 @@ class ProfileCubit extends Cubit<ProfileState> {
         emit(
           state.copyWith(
             isDataChanged: false,
-            status: ProfileStatus.success,
+            status: ProfileStatus.updateSuccess,
             stateParam: BaseState<ProfileUserEntity>(
               isLoading: false,
               data: result.data,

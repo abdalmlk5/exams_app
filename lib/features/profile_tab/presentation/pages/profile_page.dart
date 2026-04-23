@@ -90,17 +90,17 @@ class _ProfilePageState extends State<ProfilePage> {
     return BlocProvider.value(
       value: _cubit,
       child: BlocConsumer<ProfileCubit, ProfileState>(
-        listenWhen: (prev, curr) => prev.status != curr.status,
+        listenWhen: (prev, curr) =>
+            prev.profileState.data != curr.profileState.data ||
+            prev.status != curr.status,
         listener: (context, state) {
-          // Handle Initial Data Loading
-          if (state.profileState.data != null &&
-              _usernameController.text.isEmpty &&
-              !state.isDataChanged) {
+          // Handle Initial Data Loading or Refresh
+          if (state.profileState.data != null && !state.isDataChanged) {
             _populateControllers(state.profileState.data!);
           }
 
           // Handle Update Success
-          if (state.status == ProfileStatus.success) {
+          if (state.status == ProfileStatus.updateSuccess) {
             CustomSnackBar.success(
               context,
               AppStrings.profileUpdatedSuccessfully,
