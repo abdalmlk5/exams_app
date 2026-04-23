@@ -1,6 +1,5 @@
 import 'package:exams_app/core/utils/app_routes.dart';
 import 'package:exams_app/core/utils/app_strings.dart';
-import 'package:exams_app/core/utils/app_text_styles.dart';
 import 'package:exams_app/core/widgets/custom_snack_bar.dart';
 import 'package:exams_app/core/widgets/custom_text_field.dart';
 import 'package:exams_app/features/authentication/presentation/auth/widgets/widgets/auth_app_bar.dart';
@@ -73,10 +72,9 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(height: 40.h),
-                Text(AppStrings.forgetPassword, style: theme.textTheme.titleLarge),
                 Text(
                   AppStrings.forgetPassword,
-                  style: AppTextStyles.black18500,
+                  style: theme.textTheme.titleLarge,
                 ),
                 SizedBox(height: 16.h),
                 Text(
