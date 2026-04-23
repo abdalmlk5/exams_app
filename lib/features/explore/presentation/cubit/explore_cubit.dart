@@ -1,4 +1,5 @@
-import 'package:exams_app/config/cache_helper/cache_helper.dart';
+import 'package:exams_app/config/cache/cache_helper.dart';
+import 'package:exams_app/core/utils/app_keys.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
@@ -13,8 +14,10 @@ import 'explore_state.dart';
 class ExploreCubit extends Cubit<ExploreState> {
   List<SubjectModel> allSubjects = [];
   final GetSubjectsUseCase getSubjectsUseCase;
+  final CacheHelper _cacheHelper;
 
-  ExploreCubit(this.getSubjectsUseCase) : super(ExploreState()) {
+  ExploreCubit(this.getSubjectsUseCase, this._cacheHelper)
+    : super(ExploreState()) {
     _getSubjects();
   }
 
@@ -30,7 +33,8 @@ class ExploreCubit extends Cubit<ExploreState> {
   }
 
   void _getSubjects({String? token}) async {
-    String? effectiveToken = token ?? await CacheHelper.getToken();
+    String? effectiveToken =
+        token ?? await _cacheHelper.readData(key: AppKeys.tokenKey);
 
     if (effectiveToken == null) {
       emit(
