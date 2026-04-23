@@ -8,6 +8,7 @@ import 'package:exams_app/features/profile_tab/domain/entities/profile_user_enti
 import 'package:exams_app/features/profile_tab/presentation/cubit/profile_cubit.dart';
 import 'package:exams_app/features/profile_tab/presentation/cubit/profile_events.dart';
 import 'package:exams_app/features/profile_tab/presentation/cubit/profile_state.dart';
+import 'package:exams_app/features/profile_tab/presentation/widgets/logout_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -89,17 +90,17 @@ class _ProfilePageState extends State<ProfilePage> {
     return BlocProvider.value(
       value: _cubit,
       child: BlocConsumer<ProfileCubit, ProfileState>(
-        listenWhen: (prev, curr) => prev.status != curr.status,
+        listenWhen: (prev, curr) =>
+            prev.profileState.data != curr.profileState.data ||
+            prev.status != curr.status,
         listener: (context, state) {
           // Handle Initial Data Loading
-          if (state.profileState.data != null &&
-              _usernameController.text.isEmpty &&
-              !state.isDataChanged) {
+          if (state.profileState.data != null && !state.isDataChanged) {
             _populateControllers(state.profileState.data!);
           }
 
           // Handle Update Success
-          if (state.status == ProfileStatus.success) {
+          if (state.status == ProfileStatus.updateSuccess) {
             CustomSnackBar.success(
               context,
               AppStrings.profileUpdatedSuccessfully,
@@ -135,7 +136,15 @@ class _ProfilePageState extends State<ProfilePage> {
 
           // 3. Success State (Show Form)
           return Scaffold(
-            appBar: AppBar(title: const Text(AppStrings.profile)),
+            appBar: AppBar(
+              title: const Text(AppStrings.profile),
+              actions: [
+                IconButton(
+                  onPressed: () => showLogoutDialog(context),
+                  icon: const Icon(Icons.logout, color: AppColors.error),
+                ),
+              ],
+            ),
             body: SingleChildScrollView(
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: Column(
@@ -181,7 +190,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     readOnly: true,
                     suffix: TextButton(
                       onPressed: () {
-                        // TODO: Navigate to reset password page
+                        // TODO: Implement Change Password
                       },
                       child: Text(
                         AppStrings.change,
