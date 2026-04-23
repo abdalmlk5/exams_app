@@ -3,7 +3,7 @@ import 'package:exams_app/config/base_response/base_response.dart';
 import 'package:exams_app/config/base_state/base_state.dart';
 import 'package:exams_app/config/error_handler/error_handler.dart';
 import 'package:exams_app/config/validations/app_validations.dart';
-import 'package:exams_app/features/authentication/domain/entities/user_entity.dart';
+import 'package:exams_app/features/authentication/domain/entities/auth_user_entity.dart';
 import 'package:exams_app/features/authentication/domain/usecases/register_usecase.dart';
 import 'package:exams_app/features/authentication/presentation/register/cubit/register_even.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -61,13 +61,13 @@ class RegisterCubit extends Cubit<RegisterState> {
       );
 
       switch (result) {
-        case SuccessBaseResponse<UserEntity>():
+        case SuccessBaseResponse<AuthUserEntity>():
           emit(
             state.copyWith(
               registerState: BaseState(data: result.data, isLoading: false),
             ),
           );
-        case ErrorBaseResponse<UserEntity>():
+        case ErrorBaseResponse<AuthUserEntity>():
           emit(
             state.copyWith(
               registerState: BaseState(

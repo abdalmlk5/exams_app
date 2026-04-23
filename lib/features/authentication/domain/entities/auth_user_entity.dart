@@ -1,4 +1,4 @@
-class UserEntity {
+class AuthUserEntity {
   final String id;
   final String username;
   final String firstName;
@@ -7,9 +7,9 @@ class UserEntity {
   final String phone;
   final String role;
   final bool isVerified;
-  final DateTime createdAt;
+  final String createdAt;
 
-  const UserEntity({
+  const AuthUserEntity({
     required this.id,
     required this.username,
     required this.firstName,

@@ -1,18 +1,14 @@
 part of 'auth_cubit.dart';
 
 class AuthState extends Equatable {
-  final BaseState<UserEntity> authState;
+  final BaseState<AuthUserEntity> authState;
 
   const AuthState({
-    this.authState = const BaseState<UserEntity>(
-      isLoading: false,
-    ),
+    this.authState = const BaseState<AuthUserEntity>(isLoading: false),
   });
 
-  AuthState copyWith({BaseState<UserEntity>? authState}) {
-    return AuthState(
-      authState: authState ?? this.authState,
-    );
+  AuthState copyWith({BaseState<AuthUserEntity>? authState}) {
+    return AuthState(authState: authState ?? this.authState);
   }
 
   @override

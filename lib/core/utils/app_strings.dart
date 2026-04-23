@@ -91,8 +91,10 @@ class AppStrings {
   static const String phoneRequired = 'Phone number is required';
   static const String invalidPhone = 'Enter a valid phone number';
 
-
   // profile string
+  static const String profile = 'Profile';
+  static const String update = 'Update';
+  static const String change = 'Change';
   static const String profilePassword = '★★★★★★★';
 
   // Exam Results
@@ -112,4 +114,6 @@ class AppStrings {
   static const String showResults = 'Show results';
   static const String startAgain = 'Start again';
   static const String answers = 'Answers';
+  static const String profileUpdatedSuccessfully =
+      'Profile updated successfully';
 }

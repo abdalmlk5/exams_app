@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:exams_app/config/base_response/base_response.dart';
 import 'package:exams_app/config/base_state/base_state.dart';
 import 'package:exams_app/config/error_handler/error_handler.dart';
-import 'package:exams_app/features/authentication/domain/entities/user_entity.dart';
+import 'package:exams_app/features/authentication/domain/entities/auth_user_entity.dart';
 import 'package:exams_app/features/authentication/domain/usecases/get_user_data_usecase.dart';
 import 'package:exams_app/features/authentication/domain/usecases/is_remembered_usecase.dart';
 import 'package:exams_app/features/authentication/domain/usecases/logout_usecase.dart';
@@ -31,7 +31,10 @@ class AuthCubit extends Cubit<AuthState> {
     } else {
       emit(
         state.copyWith(
-          authState: const BaseState<UserEntity>(isLoading: false, data: null),
+          authState: const BaseState<AuthUserEntity>(
+            isLoading: false,
+            data: null,
+          ),
         ),
       );
     }
@@ -63,7 +66,7 @@ class AuthCubit extends Cubit<AuthState> {
           print('AuthCubit: Logout success');
           emit(
             state.copyWith(
-              authState: BaseState<UserEntity>(
+              authState: BaseState<AuthUserEntity>(
                 isLoading: false,
                 data: null,
               ),
@@ -74,7 +77,7 @@ class AuthCubit extends Cubit<AuthState> {
           // Force logout locally even on error
           emit(
             state.copyWith(
-              authState: BaseState<UserEntity>(
+              authState: BaseState<AuthUserEntity>(
                 isLoading: false,
                 data: null,
                 errorMessage: result.errorMessage,
@@ -104,16 +107,16 @@ class AuthCubit extends Cubit<AuthState> {
       final result = await _getUserDataUsecase.call();
 
       switch (result) {
-        case SuccessBaseResponse<UserEntity>():
+        case SuccessBaseResponse<AuthUserEntity>():
           emit(
             state.copyWith(
               authState: BaseState(data: result.data, isLoading: false),
             ),
           );
-        case ErrorBaseResponse<UserEntity>():
+        case ErrorBaseResponse<AuthUserEntity>():
           emit(
             state.copyWith(
-              authState: const BaseState<UserEntity>(
+              authState: const BaseState<AuthUserEntity>(
                 isLoading: false,
                 data: null,
               ),
@@ -124,7 +127,10 @@ class AuthCubit extends Cubit<AuthState> {
       // Clear data on exception
       emit(
         state.copyWith(
-          authState: const BaseState<UserEntity>(isLoading: false, data: null),
+          authState: const BaseState<AuthUserEntity>(
+            isLoading: false,
+            data: null,
+          ),
         ),
       );
     }

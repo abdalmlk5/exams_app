@@ -1,5 +1,5 @@
 import 'package:exams_app/config/base_response/base_response.dart';
-import 'package:exams_app/features/authentication/domain/entities/user_entity.dart';
+import 'package:exams_app/features/authentication/domain/entities/auth_user_entity.dart';
 import 'package:exams_app/features/authentication/domain/repositories/auth_repo.dart';
 import 'package:injectable/injectable.dart';
 
@@ -9,7 +9,7 @@ class RegisterUsecase {
 
   RegisterUsecase({required this.authRepoContract});
 
-  Future<BaseResponse<UserEntity>> call({
+  Future<BaseResponse<AuthUserEntity>> call({
     required String username,
     required String firstName,
     required String lastName,
