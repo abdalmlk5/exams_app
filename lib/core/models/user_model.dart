@@ -1,5 +1,5 @@
+import 'package:exams_app/features/authentication/domain/entities/user_entity.dart';
 import 'package:exams_app/features/profile_tab/domain/entities/profile_user_entity.dart';
-import 'package:exams_app/features/authentication/domain/entities/auth_user_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'user_model.g.dart';
@@ -35,8 +35,8 @@ class UserModel {
 
   Map<String, dynamic> toJson() => _$UserModelToJson(this);
 
-  AuthUserEntity toEntity() {
-    return AuthUserEntity(
+  UserEntity toEntity() {
+    return UserEntity(
       id: id ?? "",
       username: username ?? "",
       firstName: firstName ?? "",
@@ -45,7 +45,7 @@ class UserModel {
       phone: phoneNumber ?? "",
       role: role ?? "",
       isVerified: isVerified ?? false,
-      createdAt: createdAt ?? "",
+      createdAt: createdAt != null ? DateTime.parse(createdAt!) : DateTime.now(),
     );
   }
 

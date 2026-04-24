@@ -1,23 +1,21 @@
-class AuthUserEntity {
-  final String id;
+sealed class RegisterEven {}
+
+class Register extends RegisterEven {
   final String username;
   final String firstName;
   final String lastName;
   final String email;
+  final String password;
+  final String rePassword;
   final String phone;
-  final String role;
-  final bool isVerified;
-  final String createdAt;
 
-  const AuthUserEntity({
-    required this.id,
+  Register({
     required this.username,
     required this.firstName,
     required this.lastName,
     required this.email,
+    required this.password,
+    required this.rePassword,
     required this.phone,
-    required this.role,
-    required this.isVerified,
-    required this.createdAt,
   });
 }

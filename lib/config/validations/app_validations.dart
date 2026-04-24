@@ -88,6 +88,33 @@ class AppValidations {
     return null;
   }
 
+  // ── Now Password ──
+  static String? validateNowPassword(String? value, String currentPassword) {
+    if (value == null || value == currentPassword) {
+      return AppStrings.nowPasswordMatchTheOldOne;
+    } else if (value.isEmpty) {
+      return AppStrings.passwordRequired;
+    }
+
+    if (value.length < 8) {
+      return AppStrings.passwordTooShort;
+    }
+
+    if (!value.contains(RegExp(r'[a-z]'))) {
+      return AppStrings.passwordLowercase;
+    }
+
+    if (!value.contains(RegExp(r'[A-Z]'))) {
+      return AppStrings.passwordUppercase;
+    }
+
+    if (!value.contains(RegExp(r'[0-9]'))) {
+      return AppStrings.passwordNumber;
+    }
+
+    return null;
+  }
+
   static String? validateConfirmPassword(String? value, String? password) {
     if (value == null || value.isEmpty) {
       return AppStrings.confirmPasswordRequired;

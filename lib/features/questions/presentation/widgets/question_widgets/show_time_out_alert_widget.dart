@@ -1,6 +1,6 @@
 import 'package:exams_app/config/base_state/base_state.dart';
 import 'package:exams_app/core/utils/app_colors.dart';
-import 'package:exams_app/features/questions/presentation/cubit/question_event.dart';
+import 'package:exams_app/features/questions/presentation/cubit/questions_event.dart';
 import 'package:flutter/material.dart';
 import 'package:exams_app/features/questions/presentation/cubit/questions_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

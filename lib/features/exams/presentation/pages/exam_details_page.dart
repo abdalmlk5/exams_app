@@ -1,5 +1,5 @@
 import 'package:exams_app/config/di/di.dart';
-import 'package:exams_app/features/questions/presentation/cubit/question_event.dart';
+import 'package:exams_app/features/questions/presentation/cubit/questions_event.dart';
 import 'package:exams_app/features/questions/presentation/cubit/questions_cubit.dart';
 import 'package:exams_app/features/questions/presentation/pages/question_page.dart';
 import 'package:flutter/material.dart';

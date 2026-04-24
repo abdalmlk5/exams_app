@@ -19,14 +19,14 @@ class ChangePasswordPage extends StatefulWidget {
 
 class _ChangePasswordPageState extends State<ChangePasswordPage> {
   final _oldPasswordController = TextEditingController();
-  final _passwordController = TextEditingController();
+  final _nowPasswordController = TextEditingController();
   final _rePasswordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
     _oldPasswordController.dispose();
-    _passwordController.dispose();
+    _nowPasswordController.dispose();
     _rePasswordController.dispose();
     super.dispose();
   }
@@ -61,20 +61,24 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 child: Column(
                   children: [
                     SizedBox(height: 16.h),
+
                     AppTextField(
                       controller: _oldPasswordController,
-                      fieldType: FieldType.currentPassword,
-                    ),
-                    SizedBox(height: 16.h),
-                    AppTextField(
-                      controller: _passwordController,
                       fieldType: FieldType.password,
                     ),
                     SizedBox(height: 16.h),
+
+                    AppTextField(
+                      controller: _nowPasswordController,
+                      fieldType: FieldType.newPassword,
+                      compareController: _oldPasswordController,
+                    ),
+                    SizedBox(height: 16.h),
+
                     AppTextField(
                       controller: _rePasswordController,
-                      compareController: _passwordController,
                       fieldType: FieldType.confirmPassword,
+                      compareController: _nowPasswordController,
                     ),
                     SizedBox(height: 48.h),
                     CustomButton(
@@ -85,7 +89,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                           context.read<ChangePasswordCubit>().doEvent(
                             ChangePasswordSubmittedEvent(
                               oldPassword: _oldPasswordController.text,
-                              password: _passwordController.text,
+                              password: _nowPasswordController.text,
                               rePassword: _rePasswordController.text,
                             ),
                           );

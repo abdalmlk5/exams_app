@@ -43,6 +43,13 @@ abstract class AppTextStyles {
     color: AppColors.black30,
   );
 
+  // error Styles
+  static TextStyle red14400 = GoogleFonts.inter(
+    fontSize: 14.sp,
+    fontWeight: FontWeight.w400,
+    color: AppColors.black30,
+  );
+
   static TextStyle gray12400 = GoogleFonts.inter(
     fontSize: 12.sp,
     fontWeight: FontWeight.w400,

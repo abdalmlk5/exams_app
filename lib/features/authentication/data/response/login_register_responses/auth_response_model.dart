@@ -1,5 +1,5 @@
-import 'package:exams_app/core/models/user_model.dart';
 import 'package:json_annotation/json_annotation.dart';
+import '../../models/user_model.dart';
 
 part 'auth_response_model.g.dart';
 

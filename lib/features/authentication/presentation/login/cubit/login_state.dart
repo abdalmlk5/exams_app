@@ -1,7 +1,7 @@
 part of 'login_cubit.dart';
 
 class LoginState extends Equatable {
-  final BaseState<AuthUserEntity> loginState;
+  final BaseState<UserEntity> loginState;
   final bool isButtonEnabled;
   final bool rememberMe;
 
@@ -12,7 +12,7 @@ class LoginState extends Equatable {
   });
 
   LoginState copyWith({
-    BaseState<AuthUserEntity>? loginState,
+    BaseState<UserEntity>? loginState,
     bool? isButtonEnabled,
     bool? rememberMe,
   }) {

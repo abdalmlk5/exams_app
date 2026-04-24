@@ -1,7 +1,8 @@
-import 'package:exams_app/core/utils/app_colors.dart';
-import 'package:exams_app/core/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'package:exams_app/core/utils/app_colors.dart';
+import 'package:exams_app/core/utils/app_text_styles.dart';
 
 abstract class AppTheme {
   static ThemeData get mainTheme {
@@ -63,7 +64,7 @@ abstract class AppTheme {
           foregroundColor: AppColors.white,
           disabledBackgroundColor: AppColors.black30,
           elevation: 0,
-          minimumSize: Size(double.infinity, 48.h),
+          minimumSize: Size(double.infinity, 56.h),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(100.r),
           ),
@@ -82,15 +83,22 @@ abstract class AppTheme {
       // text field
       inputDecorationTheme: InputDecorationTheme(
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 18.h),
         hintStyle: AppTextStyles.gray14400,
-        labelStyle: AppTextStyles.black12400,
-        errorStyle: TextStyle(color: AppColors.error, fontSize: 12.sp),
+        errorStyle: const TextStyle(color: AppColors.error),
         border: _border(AppColors.black30),
         enabledBorder: _border(AppColors.black30),
-        focusedBorder: _border(AppColors.primary, 1.5),
+        focusedBorder: _border(AppColors.primary, 2),
         errorBorder: _border(AppColors.error),
-        focusedErrorBorder: _border(AppColors.error, 1.5),
+        focusedErrorBorder: _border(AppColors.error, 2),
+        labelStyle: WidgetStateTextStyle.resolveWith((states) {
+          if (states.contains(WidgetState.focused)) {
+            return AppTextStyles.gray14400;
+          } else if (states.contains(WidgetState.error)) {
+            return AppTextStyles.red14400;
+          } else {
+            return AppTextStyles.gray14400;
+          }
+        }),
       ),
     );
   }
@@ -98,6 +106,5 @@ abstract class AppTheme {
 
 OutlineInputBorder _border(Color color, [double width = 1]) =>
     OutlineInputBorder(
-      borderRadius: BorderRadius.circular(4.r),
       borderSide: BorderSide(color: color, width: width),
     );

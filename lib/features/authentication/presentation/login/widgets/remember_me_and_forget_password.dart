@@ -1,8 +1,8 @@
-import 'package:exams_app/core/utils/app_colors.dart';
-import 'package:exams_app/core/utils/app_strings.dart';
-import 'package:exams_app/core/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'package:exams_app/core/utils/app_colors.dart';
+import 'package:exams_app/core/utils/app_strings.dart';
 
 import '../../../../../core/utils/app_routes.dart';
 
@@ -41,6 +41,7 @@ class RememberMeAndForgetPassword extends StatelessWidget {
           },
           style: TextButton.styleFrom(
             padding: EdgeInsets.zero,
+            foregroundColor: AppColors.primary,
             minimumSize: Size.zero,
             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
           ),

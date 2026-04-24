@@ -1,21 +1,23 @@
-sealed class RegisterEvent {}
-
-class Register extends RegisterEvent {
+class UserEntity {
+  final String id;
   final String username;
   final String firstName;
   final String lastName;
   final String email;
-  final String password;
-  final String rePassword;
   final String phone;
+  final String role;
+  final bool isVerified;
+  final DateTime createdAt;
 
-  Register({
+  const UserEntity({
+    required this.id,
     required this.username,
     required this.firstName,
     required this.lastName,
     required this.email,
-    required this.password,
-    required this.rePassword,
     required this.phone,
+    required this.role,
+    required this.isVerified,
+    required this.createdAt,
   });
 }

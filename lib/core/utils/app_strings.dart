@@ -46,6 +46,7 @@ class AppStrings {
   static const String resetPasswordSubtitle =
       'Password must not be empty and must contain 6 characters with upper case letter and one number at least';
   static const String newPassword = 'New password';
+  static const String nowPasswordMatchTheOldOne = 'New password match the old Password, Please Write a Now Password';
   static const String passwordChangedSuccessfully =
       'Password changed successfully';
 

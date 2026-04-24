@@ -1,19 +1,22 @@
+import 'package:exams_app/features/authentication/presentation/auth_maneger/pages/auth_manager_page.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:exams_app/config/di/di.dart';
 import 'package:exams_app/core/utils/app_routes.dart';
 import 'package:exams_app/core/utils/app_theme.dart';
 import 'package:exams_app/core/widgets/custom_snack_bar.dart';
+import 'package:exams_app/features/authentication/presentation/auth_maneger/cubit/auth_manager_cubit.dart';
+import 'package:exams_app/features/authentication/presentation/auth_maneger/cubit/auth_manager_event.dart';
 import 'package:exams_app/features/home_screen/presentation/pages/home_screen.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'features/authentication/presentation/auth/cubit/auth_cubit.dart';
-import 'features/authentication/presentation/auth/pages/auth_page.dart';
+
 import 'features/authentication/presentation/forget_password/cubit/forget_password_cubit.dart';
 import 'features/authentication/presentation/login/cubit/login_cubit.dart';
 import 'features/authentication/presentation/register/cubit/register_cubit.dart';
+import 'features/exam_results/presentation/cubit/exam_results_cubit.dart';
 import 'features/explore/presentation/cubit/explore_cubit.dart';
 import 'features/home_screen/presentation/cubit/home_cubit.dart';
-import 'features/exam_results/presentation/cubit/exam_results_cubit.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,7 +38,7 @@ class MyApp extends StatelessWidget {
           providers: [
             BlocProvider(create: (_) => getIt<LoginCubit>()),
             BlocProvider(create: (_) => getIt<RegisterCubit>()),
-            BlocProvider(create: (_) => getIt<AuthCubit>()..checkAuth()),
+            BlocProvider(create: (_) => getIt<AuthManagerCubit>()..doEvent(CheckAuth())),
             BlocProvider(create: (_) => getIt<ForgetPasswordCubit>()),
             BlocProvider(create: (_) => getIt<HomeCubit>()),
             BlocProvider(create: (_) => getIt<ExploreCubit>()),
@@ -59,7 +62,7 @@ class AuthWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthCubit, AuthState>(
+    return BlocListener<AuthManagerCubit, AuthManagerState>(
       listenWhen: (previous, current) =>
           previous.authState.errorMessage != current.authState.errorMessage,
       listener: (context, state) {
@@ -68,7 +71,7 @@ class AuthWrapper extends StatelessWidget {
           CustomSnackBar.error(context, error);
         }
       },
-      child: BlocBuilder<AuthCubit, AuthState>(
+      child: BlocBuilder<AuthManagerCubit, AuthManagerState>(
         builder: (context, state) {
           if (state.authState.isLoading) {
             return const Scaffold(
@@ -78,7 +81,7 @@ class AuthWrapper extends StatelessWidget {
           if (state.authState.data != null) {
             return const HomeScreen();
           }
-          return const AuthPage();
+          return const AuthManagerPage();
         },
       ),
     );

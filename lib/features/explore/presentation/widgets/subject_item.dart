@@ -3,7 +3,6 @@ import 'package:exams_app/core/utils/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../core/utils/app_colors.dart';
 import '../../data/models/subject_model.dart';
 
 class SubjectItem extends StatelessWidget {

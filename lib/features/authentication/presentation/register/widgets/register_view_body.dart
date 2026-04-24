@@ -1,9 +1,9 @@
 import 'package:exams_app/core/utils/app_strings.dart';
 import 'package:exams_app/core/widgets/custom_button.dart';
 import 'package:exams_app/core/widgets/custom_text_field.dart';
-import 'package:exams_app/features/authentication/presentation/auth/widgets/widgets/auth_footer.dart';
 import 'package:exams_app/features/authentication/presentation/register/cubit/register_cubit.dart';
-import 'package:exams_app/features/authentication/presentation/register/cubit/register_event.dart';
+import 'package:exams_app/features/authentication/presentation/register/cubit/register_even.dart';
+import 'package:exams_app/features/authentication/presentation/auth_maneger/widgets/widgets/auth_footer.dart';
 import 'package:exams_app/core/widgets/custom_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -39,18 +39,6 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
     _rePasswordController.dispose();
     _phoneController.dispose();
     super.dispose();
-  }
-
-  void _validate() {
-    context.read<RegisterCubit>().validateForm(
-      username: _usernameController.text,
-      firstName: _firstNameController.text,
-      lastName: _lastNameController.text,
-      email: _emailController.text,
-      password: _passwordController.text,
-      rePassword: _rePasswordController.text,
-      phone: _phoneController.text,
-    );
   }
 
   void _register() {
@@ -90,7 +78,6 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
               AppTextField(
                 controller: _usernameController,
                 fieldType: FieldType.username,
-                onChanged: (_) => _validate(),
               ),
               SizedBox(height: 16.h),
               Row(
@@ -99,7 +86,6 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                     child: AppTextField(
                       controller: _firstNameController,
                       fieldType: FieldType.firstName,
-                      onChanged: (_) => _validate(),
                     ),
                   ),
                   SizedBox(width: 16.w),
@@ -107,7 +93,6 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                     child: AppTextField(
                       controller: _lastNameController,
                       fieldType: FieldType.lastName,
-                      onChanged: (_) => _validate(),
                     ),
                   ),
                 ],
@@ -116,7 +101,6 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
               AppTextField(
                 controller: _emailController,
                 fieldType: FieldType.email,
-                onChanged: (_) => _validate(),
               ),
               SizedBox(height: 16.h),
               Row(
@@ -125,7 +109,6 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                     child: AppTextField(
                       controller: _passwordController,
                       fieldType: FieldType.password,
-                      onChanged: (_) => _validate(),
                     ),
                   ),
                   SizedBox(width: 16.w),
@@ -134,7 +117,6 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                       controller: _rePasswordController,
                       fieldType: FieldType.confirmPassword,
                       compareController: _passwordController,
-                      onChanged: (_) => _validate(),
                     ),
                   ),
                 ],
@@ -143,7 +125,6 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
               AppTextField(
                 controller: _phoneController,
                 fieldType: FieldType.phoneNumber,
-                onChanged: (_) => _validate(),
               ),
               SizedBox(height: 48.h),
               BlocBuilder<RegisterCubit, RegisterState>(

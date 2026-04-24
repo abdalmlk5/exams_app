@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../config/di/di.dart';
-import '../../../../core/utils/app_colors.dart';
 import '../../data/models/exam_model.dart';
 import '../cubit/exams_cubit.dart';
 import '../cubit/exams_event.dart';

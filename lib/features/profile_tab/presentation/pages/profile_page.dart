@@ -46,12 +46,25 @@ class _ProfilePageState extends State<ProfilePage> {
     );
     _phoneController = TextEditingController();
 
+    // Listen for any keystroke across all fields
+    for (final ctrl in _editableControllers) {
+      ctrl.addListener(_onFieldsChanged);
+    }
+
     if (_cubit.state.profileState.data == null) {
       _cubit.doEvent(const GetProfileDataEvent());
     } else {
       _populateControllers(_cubit.state.profileState.data!);
     }
   }
+
+  List<TextEditingController> get _editableControllers => [
+    _usernameController,
+    _firstNameController,
+    _lastNameController,
+    _emailController,
+    _phoneController,
+  ];
 
   void _populateControllers(ProfileUserEntity user) {
     _usernameController.text = user.username ?? '';
@@ -77,12 +90,11 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   void dispose() {
-    _usernameController.dispose();
-    _firstNameController.dispose();
-    _lastNameController.dispose();
-    _emailController.dispose();
+    for (final ctrl in _editableControllers) {
+      ctrl.removeListener(_onFieldsChanged);
+      ctrl.dispose();
+    }
     _passwordController.dispose();
-    _phoneController.dispose();
     super.dispose();
   }
 
@@ -156,7 +168,6 @@ class _ProfilePageState extends State<ProfilePage> {
                   AppTextField(
                     controller: _usernameController,
                     fieldType: FieldType.username,
-                    onChanged: (_) => _onFieldsChanged(),
                   ),
                   SizedBox(height: 16.h),
                   Row(
@@ -165,7 +176,6 @@ class _ProfilePageState extends State<ProfilePage> {
                         child: AppTextField(
                           controller: _firstNameController,
                           fieldType: FieldType.firstName,
-                          onChanged: (_) => _onFieldsChanged(),
                         ),
                       ),
                       SizedBox(width: 16.w),
@@ -173,7 +183,6 @@ class _ProfilePageState extends State<ProfilePage> {
                         child: AppTextField(
                           controller: _lastNameController,
                           fieldType: FieldType.lastName,
-                          onChanged: (_) => _onFieldsChanged(),
                         ),
                       ),
                     ],
@@ -182,13 +191,11 @@ class _ProfilePageState extends State<ProfilePage> {
                   AppTextField(
                     controller: _emailController,
                     fieldType: FieldType.email,
-                    onChanged: (_) => _onFieldsChanged(),
                   ),
                   SizedBox(height: 16.h),
                   AppTextField(
                     controller: _passwordController,
                     fieldType: FieldType.profilePassword,
-                    readOnly: true,
                     suffix: TextButton(
                       onPressed: () {
                         Navigator.pushNamed(context, AppRoutes.changePassword);
@@ -207,7 +214,6 @@ class _ProfilePageState extends State<ProfilePage> {
                   AppTextField(
                     controller: _phoneController,
                     fieldType: FieldType.phoneNumber,
-                    onChanged: (_) => _onFieldsChanged(),
                   ),
                   SizedBox(height: 48.h),
                   CustomButton(

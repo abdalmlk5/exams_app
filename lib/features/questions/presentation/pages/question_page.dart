@@ -1,7 +1,7 @@
 import 'package:exams_app/config/base_state/base_state.dart';
 import 'package:exams_app/core/widgets/custom_snack_bar.dart';
-import 'package:exams_app/features/questions/presentation/cubit/question_event.dart';
 import 'package:exams_app/features/questions/presentation/cubit/questions_cubit.dart';
+import 'package:exams_app/features/questions/presentation/cubit/questions_event.dart';
 import 'package:exams_app/features/questions/presentation/pages/exam_score_page.dart';
 import 'package:exams_app/features/questions/presentation/widgets/question_widgets/answer_widget.dart';
 import 'package:exams_app/features/questions/presentation/widgets/question_widgets/question_button.dart';
@@ -152,6 +152,8 @@ class QuestionPage extends StatelessWidget {
                             : QuestionButtonType.next,
                         isLoading:
                             state.isLoading && state.data!.isLastQuestion,
+                        isDisabled: state.data!.isLastQuestion &&
+                            !state.data!.allQuestionsAnswered,
                         onPressed: () {
                                 if (state.data!.isLastQuestion) {
                                   context.read<QuestionsCubit>().doEvent(

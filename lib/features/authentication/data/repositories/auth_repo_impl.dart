@@ -2,9 +2,8 @@ import 'package:exams_app/config/base_response/base_response.dart';
 import 'package:exams_app/config/error_handler/error_handler.dart';
 import 'package:exams_app/features/authentication/data/datasources/auth_local_data_source_contract.dart';
 import 'package:exams_app/features/authentication/data/datasources/auth_remote_data_source_contract.dart';
-import 'package:exams_app/core/models/user_model.dart';
-import 'package:exams_app/features/authentication/domain/entities/auth_user_entity.dart';
-
+import 'package:exams_app/features/authentication/data/models/user_model.dart';
+import 'package:exams_app/features/authentication/domain/entities/user_entity.dart';
 import 'package:exams_app/features/authentication/domain/repositories/auth_repo.dart';
 import 'package:injectable/injectable.dart';
 
@@ -23,7 +22,7 @@ class AuthRepoImpl implements AuthRepo {
   });
 
   @override
-  Future<BaseResponse<AuthUserEntity>> login({
+  Future<BaseResponse<UserEntity>> login({
     required String email,
     required String password,
     bool rememberMe = false,
@@ -36,14 +35,14 @@ class AuthRepoImpl implements AuthRepo {
 
     switch (response) {
       case SuccessBaseResponse<UserModel>():
-        return SuccessBaseResponse<AuthUserEntity>(response.data.toEntity());
+        return SuccessBaseResponse<UserEntity>(response.data.toEntity());
       case ErrorBaseResponse<UserModel>():
-        return ErrorBaseResponse<AuthUserEntity>(response.errorMessage);
+        return ErrorBaseResponse<UserEntity>(response.errorMessage);
     }
   }
 
   @override
-  Future<BaseResponse<AuthUserEntity>> register({
+  Future<BaseResponse<UserEntity>> register({
     required String username,
     required String firstName,
     required String lastName,
@@ -66,9 +65,9 @@ class AuthRepoImpl implements AuthRepo {
 
     switch (response) {
       case SuccessBaseResponse<UserModel>():
-        return SuccessBaseResponse<AuthUserEntity>(response.data.toEntity());
+        return SuccessBaseResponse<UserEntity>(response.data.toEntity());
       case ErrorBaseResponse<UserModel>():
-        return ErrorBaseResponse<AuthUserEntity>(response.errorMessage);
+        return ErrorBaseResponse<UserEntity>(response.errorMessage);
     }
   }
 
@@ -88,14 +87,14 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<BaseResponse<AuthUserEntity>> getUserData() async {
+  Future<BaseResponse<UserEntity>> getUserData() async {
     final response = await authRemoteDataSourceContract.getUserData();
 
     switch (response) {
       case SuccessBaseResponse<UserModel>():
-        return SuccessBaseResponse<AuthUserEntity>(response.data.toEntity());
+        return SuccessBaseResponse<UserEntity>(response.data.toEntity());
       case ErrorBaseResponse<UserModel>():
-        return ErrorBaseResponse<AuthUserEntity>(response.errorMessage);
+        return ErrorBaseResponse<UserEntity>(response.errorMessage);
     }
   }
 

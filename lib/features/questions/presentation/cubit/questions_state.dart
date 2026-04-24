@@ -63,6 +63,10 @@ class ExamData extends Equatable {
   bool get isLastQuestion =>
       questions.isNotEmpty && currentIndex == questions.length - 1;
 
+  /// True only when every question has a selected answer.
+  bool get allQuestionsAnswered =>
+      questions.isNotEmpty && selectedAnswers.length == questions.length;
+
   @override
   List<Object?> get props => [
     questions,

@@ -1,10 +1,11 @@
+import 'package:exams_app/features/authentication/presentation/auth_maneger/cubit/auth_manager_cubit.dart';
+import 'package:exams_app/features/authentication/presentation/auth_maneger/cubit/auth_manager_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_strings.dart';
-import '../../../authentication/presentation/auth/cubit/auth_cubit.dart';
-import '../../../authentication/presentation/auth/cubit/auth_event.dart';
+
 
 void showLogoutDialog(BuildContext context) {
   showDialog(
@@ -20,7 +21,7 @@ void showLogoutDialog(BuildContext context) {
         TextButton(
           onPressed: () {
             Navigator.pop(context);
-            context.read<AuthCubit>().doEvent(Logout());
+            context.read<AuthManagerCubit>().doEvent(Logout());
           },
           child: const Text(
             AppStrings.logout,

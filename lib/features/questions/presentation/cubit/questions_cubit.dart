@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:exams_app/config/error_handler/error_handler.dart';
-import 'package:exams_app/features/questions/presentation/cubit/question_event.dart';
+import 'package:exams_app/features/questions/presentation/cubit/questions_event.dart';
 import 'package:injectable/injectable.dart';
 import 'package:exams_app/config/base_state/base_state.dart';
 import 'package:exams_app/features/questions/domain/usecases/get_questions_usecase.dart';

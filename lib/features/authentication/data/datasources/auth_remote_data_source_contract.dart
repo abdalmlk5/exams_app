@@ -1,5 +1,6 @@
 import 'package:exams_app/config/base_response/base_response.dart';
-import 'package:exams_app/core/models/user_model.dart';
+import 'package:exams_app/features/authentication/data/models/user_model.dart';
+
 import '../response/forget_password_models/forget_password_response.dart';
 import '../response/forget_password_models/reset_password_response.dart';
 import '../response/forget_password_models/verify_code_response.dart';

@@ -1,4 +1,3 @@
-import 'package:exams_app/core/utils/app_colors.dart';
 import 'package:exams_app/core/utils/app_text_styles.dart';
 import 'package:exams_app/core/utils/app_strings.dart';
 import 'package:exams_app/features/explore/presentation/cubit/explore_cubit.dart';

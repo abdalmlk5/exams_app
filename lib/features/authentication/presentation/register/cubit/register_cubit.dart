@@ -2,10 +2,9 @@ import 'package:equatable/equatable.dart';
 import 'package:exams_app/config/base_response/base_response.dart';
 import 'package:exams_app/config/base_state/base_state.dart';
 import 'package:exams_app/config/error_handler/error_handler.dart';
-import 'package:exams_app/config/validations/app_validations.dart';
-import 'package:exams_app/features/authentication/domain/entities/auth_user_entity.dart';
+import 'package:exams_app/features/authentication/domain/entities/user_entity.dart';
 import 'package:exams_app/features/authentication/domain/usecases/register_usecase.dart';
-import 'package:exams_app/features/authentication/presentation/register/cubit/register_event.dart';
+import 'package:exams_app/features/authentication/presentation/register/cubit/register_even.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
@@ -17,7 +16,7 @@ class RegisterCubit extends Cubit<RegisterState> {
 
   RegisterCubit(this._registerUsecase) : super(const RegisterState());
 
-  void doEvent(RegisterEvent event) {
+  void doEvent(RegisterEven event) {
     switch (event) {
       case Register():
         _register(event);
@@ -25,26 +24,6 @@ class RegisterCubit extends Cubit<RegisterState> {
     }
   }
 
-  void validateForm({
-    required String username,
-    required String firstName,
-    required String lastName,
-    required String email,
-    required String password,
-    required String rePassword,
-    required String phone,
-  }) {
-    final isValid =
-        AppValidations.validateUserName(username) == null &&
-        AppValidations.validateFirstName(firstName) == null &&
-        AppValidations.validateLastName(lastName) == null &&
-        AppValidations.validateEmail(email) == null &&
-        AppValidations.validatePassword(password) == null &&
-        AppValidations.validateConfirmPassword(rePassword, password) == null &&
-        AppValidations.validatePhoneNumber(phone) == null;
-
-    emit(state.copyWith(isButtonEnabled: isValid));
-  }
 
   Future<void> _register(Register event) async {
     try {
@@ -61,13 +40,13 @@ class RegisterCubit extends Cubit<RegisterState> {
       );
 
       switch (result) {
-        case SuccessBaseResponse<AuthUserEntity>():
+        case SuccessBaseResponse<UserEntity>():
           emit(
             state.copyWith(
               registerState: BaseState(data: result.data, isLoading: false),
             ),
           );
-        case ErrorBaseResponse<AuthUserEntity>():
+        case ErrorBaseResponse<UserEntity>():
           emit(
             state.copyWith(
               registerState: BaseState(

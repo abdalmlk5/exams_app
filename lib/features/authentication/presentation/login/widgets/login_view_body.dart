@@ -1,10 +1,10 @@
 import 'package:exams_app/core/utils/app_strings.dart';
 import 'package:exams_app/core/widgets/custom_button.dart';
 import 'package:exams_app/core/widgets/custom_text_field.dart';
-import 'package:exams_app/features/authentication/presentation/auth/widgets/widgets/auth_footer.dart';
 import 'package:exams_app/features/authentication/presentation/login/cubit/login_cubit.dart';
-import 'package:exams_app/features/authentication/presentation/login/cubit/login_event.dart';
+import 'package:exams_app/features/authentication/presentation/login/cubit/login_even.dart';
 import 'package:exams_app/features/authentication/presentation/login/widgets/remember_me_and_forget_password.dart';
+import 'package:exams_app/features/authentication/presentation/auth_maneger/widgets/widgets/auth_footer.dart';
 import 'package:exams_app/core/widgets/custom_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -65,23 +65,11 @@ class _LoginViewBodyState extends State<LoginViewBody> {
               AppTextField(
                 controller: _emailController,
                 fieldType: FieldType.email,
-                onChanged: (value) {
-                  context.read<LoginCubit>().validateForm(
-                        value,
-                        _passwordController.text,
-                      );
-                },
               ),
               SizedBox(height: 24.h),
               AppTextField(
                 controller: _passwordController,
                 fieldType: FieldType.password,
-                onChanged: (value) {
-                  context.read<LoginCubit>().validateForm(
-                        _emailController.text,
-                        value,
-                      );
-                },
               ),
               const SizedBox(height: 12),
               BlocBuilder<LoginCubit, LoginState>(

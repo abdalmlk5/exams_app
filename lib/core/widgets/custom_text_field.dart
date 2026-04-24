@@ -5,21 +5,17 @@ import 'package:flutter/material.dart';
 class AppTextField extends StatefulWidget {
   final TextEditingController controller;
   final FieldType fieldType;
-  final void Function(String)? onChanged;
   final Widget? suffix;
   final VoidCallback? onSuffixPressed;
   final TextEditingController? compareController;
-  final bool readOnly;
 
   const AppTextField({
     super.key,
     required this.controller,
     required this.fieldType,
-    this.onChanged,
     this.suffix,
     this.onSuffixPressed,
     this.compareController,
-    this.readOnly = false,
   });
 
   @override
@@ -40,12 +36,11 @@ class _AppTextFieldState extends State<AppTextField> {
     return TextFormField(
       controller: widget.controller,
       keyboardType: widget.fieldType.textInputType,
-      onChanged: widget.onChanged,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+
       validator: _validate,
       obscureText: _isPasswordField && _isObscured,
-      readOnly: widget.readOnly,
       decoration: InputDecoration(
-        floatingLabelBehavior: FloatingLabelBehavior.always,
         labelText: widget.fieldType.label,
         hintText: widget.fieldType.hint,
         suffixIcon: _isPasswordField
@@ -60,7 +55,7 @@ class _AppTextFieldState extends State<AppTextField> {
                   });
                 },
               )
-            : widget.suffix,
+            : widget.suffix ?? null,
       ),
     );
   }
@@ -72,7 +67,7 @@ class _AppTextFieldState extends State<AppTextField> {
       case FieldType.password:
         return AppValidations.validatePassword(value);
       case FieldType.newPassword:
-        return AppValidations.validatePassword(value);
+        return AppValidations.validateNowPassword(value, widget.compareController!.text);
       case FieldType.profilePassword:
         return null;
       case FieldType.confirmPassword:
@@ -90,8 +85,6 @@ class _AppTextFieldState extends State<AppTextField> {
         return AppValidations.validatePhoneNumber(value);
       case FieldType.none:
         return null;
-      case FieldType.currentPassword:
-        return AppValidations.validatePassword(value);
     }
   }
 }
@@ -112,14 +105,9 @@ enum FieldType {
     AppStrings.newPassword,
     TextInputType.text,
   ),
-  currentPassword(
-    AppStrings.currentPassword,
-    AppStrings.currentPassword,
-    TextInputType.text,
-  ),
   profilePassword(
     AppStrings.password,
-    AppStrings.profilePassword,
+    AppStrings.enterYourPassword,
     TextInputType.text,
   ),
   confirmPassword(
