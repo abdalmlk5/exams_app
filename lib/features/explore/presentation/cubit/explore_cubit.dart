@@ -1,4 +1,3 @@
-import 'package:exams_app/config/cache_helper/cache_helper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
@@ -29,27 +28,13 @@ class ExploreCubit extends Cubit<ExploreState> {
     }
   }
 
-  void _getSubjects({String? token}) async {
-    String? effectiveToken = token ?? await CacheHelper.getToken();
-
-    if (effectiveToken == null) {
-      emit(
-        state.copyWith(
-          stateParam: const BaseState<List<SubjectModel>>(
-            isLoading: false,
-            errorMessage: "No token found",
-          ),
-        ),
-      );
-      return;
-    }
-
+  void _getSubjects() async {
     emit(
       state.copyWith(
         stateParam: const BaseState<List<SubjectModel>>(isLoading: true),
       ),
     );
-    final result = await getSubjectsUseCase.call(effectiveToken);
+    final result = await getSubjectsUseCase.call();
     switch (result) {
       case SuccessBaseResponse():
         allSubjects.clear();
