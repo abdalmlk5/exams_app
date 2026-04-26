@@ -1,9 +1,9 @@
 import 'package:exams_app/core/utils/app_strings.dart';
 import 'package:exams_app/core/widgets/custom_button.dart';
 import 'package:exams_app/core/widgets/custom_text_field.dart';
+import 'package:exams_app/features/authentication/presentation/auth/widgets/widgets/auth_footer.dart';
 import 'package:exams_app/features/authentication/presentation/register/cubit/register_cubit.dart';
 import 'package:exams_app/features/authentication/presentation/register/cubit/register_even.dart';
-import 'package:exams_app/features/authentication/presentation/auth/widgets/widgets/auth_footer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -60,6 +60,10 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
       padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 12.h),
       child: Form(
         key: _formKey,
+        onChanged: () {
+          final isValid = _formKey.currentState?.validate() ?? false;
+          context.read<RegisterCubit>().doEvent(ChangeButtonStatus(isValid));
+        },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -116,6 +120,10 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
             ),
             SizedBox(height: 48.h),
             BlocBuilder<RegisterCubit, RegisterState>(
+              buildWhen: (previous, current) =>
+                  previous.registerState.isLoading !=
+                      current.registerState.isLoading ||
+                  previous.isButtonEnabled != current.isButtonEnabled,
               builder: (context, state) {
                 return CustomButton(
                   text: AppStrings.signup,
