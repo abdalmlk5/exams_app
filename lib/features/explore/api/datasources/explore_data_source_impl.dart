@@ -7,7 +7,7 @@ import '../../data/datasources/explore_data_source_contract.dart';
 import '../api_client/explore_api_client.dart';
 
 @Injectable(as: ExploreDataSourceContract)
-class ExploreDataSourceImpl extends ExploreDataSourceContract {
+class ExploreDataSourceImpl implements ExploreDataSourceContract {
   final ExploreApiClient apiClient;
 
   ExploreDataSourceImpl(this.apiClient);

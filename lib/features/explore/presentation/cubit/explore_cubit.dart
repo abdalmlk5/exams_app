@@ -1,21 +1,19 @@
+import 'package:exams_app/features/explore/domain/entities/subject_entity.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../config/base_response/base_response.dart';
 import '../../../../config/base_state/base_state.dart';
-import '../../data/models/subject_model.dart';
 import '../../domain/use_cases/get_subjects_use_case.dart';
 import 'explore_event.dart';
 import 'explore_state.dart';
 
 @injectable
 class ExploreCubit extends Cubit<ExploreState> {
-  List<SubjectModel> allSubjects = [];
+  List<SubjectEntity> allSubjects = [];
   final GetSubjectsUseCase getSubjectsUseCase;
 
-  ExploreCubit(this.getSubjectsUseCase) : super(ExploreState()) {
-    _getSubjects();
-  }
+  ExploreCubit(this.getSubjectsUseCase) : super(const ExploreState());
 
   void doEvent(ExploreEvent event) {
     switch (event) {
@@ -31,26 +29,25 @@ class ExploreCubit extends Cubit<ExploreState> {
   void _getSubjects() async {
     emit(
       state.copyWith(
-        stateParam: const BaseState<List<SubjectModel>>(isLoading: true),
+        stateParam: const BaseState<List<SubjectEntity>>(isLoading: true),
       ),
     );
     final result = await getSubjectsUseCase.call();
     switch (result) {
       case SuccessBaseResponse():
-        allSubjects.clear();
         allSubjects = result.data;
         emit(
           state.copyWith(
-            stateParam: BaseState<List<SubjectModel>>(
+            stateParam: BaseState<List<SubjectEntity>>(
               isLoading: false,
               data: result.data,
             ),
           ),
         );
-      case ErrorBaseResponse<List<SubjectModel>>():
+      case ErrorBaseResponse<List<SubjectEntity>>():
         emit(
           state.copyWith(
-            stateParam: BaseState<List<SubjectModel>>(
+            stateParam: BaseState<List<SubjectEntity>>(
               isLoading: false,
               errorMessage: result.errorMessage,
             ),
@@ -69,7 +66,7 @@ class ExploreCubit extends Cubit<ExploreState> {
         .toList();
     emit(
       state.copyWith(
-        stateParam: BaseState<List<SubjectModel>>(
+        stateParam: BaseState<List<SubjectEntity>>(
           isLoading: false,
           data: filteredSubjects,
         ),

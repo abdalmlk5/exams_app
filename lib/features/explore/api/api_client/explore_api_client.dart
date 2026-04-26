@@ -6,7 +6,7 @@ import 'package:retrofit/retrofit.dart';
 
 part 'explore_api_client.g.dart';
 
-@injectable
+@lazySingleton
 @RestApi()
 abstract class ExploreApiClient {
   @factoryMethod

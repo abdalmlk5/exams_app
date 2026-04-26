@@ -3,8 +3,7 @@ sealed class ExploreEvent {
 }
 
 class GetAllSubjectsEvent extends ExploreEvent {
-  final String token;
-  const GetAllSubjectsEvent(this.token);
+  const GetAllSubjectsEvent();
 }
 
 class GetFilteredSubjectsListEvent extends ExploreEvent {

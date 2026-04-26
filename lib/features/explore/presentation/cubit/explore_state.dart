@@ -1,17 +1,19 @@
+import 'package:equatable/equatable.dart';
+import 'package:exams_app/features/explore/domain/entities/subject_entity.dart';
+
 import '../../../../config/base_state/base_state.dart';
-import '../../data/models/subject_model.dart';
 
-class ExploreState {
-  BaseState<List<SubjectModel>> exploreState = BaseState<List<SubjectModel>>(
-    isLoading: true,
-    data: null,
-  );
-  ExploreState({BaseState<List<SubjectModel>>? state}) {
-    exploreState =
-        state ?? BaseState<List<SubjectModel>>(isLoading: true, data: null);
+class ExploreState extends Equatable {
+  final BaseState<List<SubjectEntity>> exploreState;
+
+  const ExploreState({
+    this.exploreState = const BaseState<List<SubjectEntity>>(isLoading: true),
+  });
+
+  ExploreState copyWith({BaseState<List<SubjectEntity>>? stateParam}) {
+    return ExploreState(exploreState: stateParam ?? exploreState);
   }
 
-  ExploreState copyWith({BaseState<List<SubjectModel>>? stateParam}) {
-    return ExploreState(state: stateParam ?? exploreState);
-  }
+  @override
+  List<Object?> get props => [exploreState];
 }
