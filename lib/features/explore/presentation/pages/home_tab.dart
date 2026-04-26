@@ -65,7 +65,13 @@ class _HomeTabState extends State<HomeTab> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(height: 8.h),
-                    Text(AppStrings.survey, style: AppTextStyles.black20500),
+                    Text(
+                      AppStrings.survey,
+                      style: AppTextStyles.blue14700.copyWith(
+                        fontSize: 20.sp,
+                        decoration: TextDecoration.none,
+                      ),
+                    ),
                     SizedBox(height: 16.h),
                     SearchTextField(controller: searchController),
                     SizedBox(height: 20.h),

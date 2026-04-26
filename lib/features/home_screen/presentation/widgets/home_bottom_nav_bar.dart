@@ -1,6 +1,7 @@
 import 'package:exams_app/core/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/utils/app_assets.dart';
 import '../../../../core/utils/app_colors.dart';
@@ -20,11 +21,12 @@ class HomeBottomNavBar extends StatelessWidget {
       selectedItemColor: AppColors.primary,
       unselectedItemColor: AppColors.primary,
       selectedLabelStyle: AppTextStyles.blue14700.copyWith(
-        fontSize: 12,
+        fontSize: 12.sp,
         decoration: TextDecoration.none,
       ),
-      unselectedLabelStyle: AppTextStyles.gray12400.copyWith(
-        color: AppColors.primary,
+      unselectedLabelStyle: AppTextStyles.blue14700.copyWith(
+        fontSize: 12.sp,
+        decoration: TextDecoration.none,
       ),
       onTap: (index) => context.read<HomeCubit>().changeTab(index),
       items: [
