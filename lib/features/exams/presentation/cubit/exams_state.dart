@@ -1,18 +1,19 @@
-import 'package:exams_app/features/exams/data/models/exam_model.dart';
+import 'package:equatable/equatable.dart';
+import 'package:exams_app/features/exams/domain/entities/exam_entity.dart';
 
 import '../../../../config/base_state/base_state.dart';
 
-class ExamsState {
-  BaseState<List<ExamModel>> examsState = BaseState<List<ExamModel>>(
-    isLoading: true,
-    data: null,
-  );
-  ExamsState({BaseState<List<ExamModel>>? state}) {
-    examsState =
-        state ?? BaseState<List<ExamModel>>(isLoading: true, data: null);
+class ExamsState extends Equatable {
+  final BaseState<List<ExamEntity>> examsState;
+
+  const ExamsState({
+    this.examsState = const BaseState<List<ExamEntity>>(isLoading: true),
+  });
+
+  ExamsState copyWith({BaseState<List<ExamEntity>>? stateParam}) {
+    return ExamsState(examsState: stateParam ?? examsState);
   }
 
-  ExamsState copyWith({BaseState<List<ExamModel>>? stateParam}) {
-    return ExamsState(state: stateParam ?? examsState);
-  }
+  @override
+  List<Object?> get props => [examsState];
 }

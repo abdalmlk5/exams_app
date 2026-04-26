@@ -1,3 +1,4 @@
+import 'package:exams_app/features/exams/domain/entities/exam_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -6,11 +7,10 @@ import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_strings.dart';
 import '../../../../core/utils/app_styles.dart';
 import '../../../../core/widgets/custom_elevated_button.dart';
-import '../../data/models/exam_model.dart';
 import '../widgets/instruction_item.dart';
 
 class ExamDetailsPage extends StatelessWidget {
-  final ExamModel exam;
+  final ExamEntity exam;
 
   const ExamDetailsPage({super.key, required this.exam});
 

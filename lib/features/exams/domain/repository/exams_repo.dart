@@ -1,7 +1,6 @@
-import 'package:exams_app/features/exams/data/models/exam_model.dart';
-
+import 'package:exams_app/features/exams/domain/entities/exam_entity.dart';
 import '../../../../config/base_response/base_response.dart';
 
-abstract class ExamsRepo {
-  Future<BaseResponse<List<ExamModel>>> getExams({String? subject});
+abstract interface class ExamsRepo {
+  Future<BaseResponse<List<ExamEntity>>> getExams({String? subject});
 }

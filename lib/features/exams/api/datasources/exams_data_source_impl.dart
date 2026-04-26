@@ -7,7 +7,7 @@ import '../../data/models/exams_response.dart';
 import '../api_client/exams_api_client.dart';
 
 @Injectable(as: ExamsDataSourceContract)
-class ExamsDataSourceImpl extends ExamsDataSourceContract {
+class ExamsDataSourceImpl implements ExamsDataSourceContract {
   final ExamsApiClient apiClient;
 
   ExamsDataSourceImpl(this.apiClient);

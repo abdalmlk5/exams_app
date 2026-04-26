@@ -1,4 +1,4 @@
-import 'package:exams_app/features/exams/data/models/exam_model.dart';
+import 'package:exams_app/features/exams/domain/entities/exam_entity.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../config/base_response/base_response.dart';
@@ -10,7 +10,7 @@ class GetExamsUseCase {
 
   GetExamsUseCase(this.repo);
 
-  Future<BaseResponse<List<ExamModel>>> call({String? subject}) async {
-    return await repo.getExams(subject: subject);
+  Future<BaseResponse<List<ExamEntity>>> call({String? subject}) {
+    return repo.getExams(subject: subject);
   }
 }

@@ -54,6 +54,7 @@ class AppStrings {
 
   // Exams & Details
   static const String exams = 'Exams';
+  static const String noExamsFound = 'No exams found';
   static const String minutes = 'Minutes';
   static const String highLevel = 'High level';
   static const String question = 'Question';

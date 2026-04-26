@@ -1,3 +1,5 @@
+import 'package:exams_app/core/utils/app_strings.dart';
+import 'package:exams_app/features/exams/domain/entities/exam_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -5,10 +7,9 @@ import '../../../../core/utils/app_assets.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_routes.dart';
 import '../../../../core/utils/app_styles.dart';
-import '../../data/models/exam_model.dart';
 
 class ExamItem extends StatelessWidget {
-  final ExamModel exam;
+  final ExamEntity exam;
 
   const ExamItem({super.key, required this.exam});
 
@@ -49,18 +50,21 @@ class ExamItem extends StatelessWidget {
                     children: [
                       Text(exam.title ?? "", style: AppStyles.black16500),
                       Text(
-                        "${exam.duration} Minutes",
+                        "${exam.duration} ${AppStrings.minutes}",
                         style: AppStyles.primary12500,
                       ),
                     ],
                   ),
                   SizedBox(height: 4.h),
                   Text(
-                    "${exam.numberOfQuestions} Question",
+                    "${exam.numberOfQuestions} ${AppStrings.question}",
                     style: AppStyles.gray12400,
                   ),
                   SizedBox(height: 8.h),
-                  Text("From: 1.00  To: 6.00", style: AppStyles.black12400),
+                  Text(
+                    "${AppStrings.from}: 1.00  ${AppStrings.to}: 6.00",
+                    style: AppStyles.black12400,
+                  ),
                 ],
               ),
             ),

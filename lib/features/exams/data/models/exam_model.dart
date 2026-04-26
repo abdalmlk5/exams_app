@@ -1,3 +1,4 @@
+import 'package:exams_app/features/exams/domain/entities/exam_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'exam_model.g.dart';
@@ -35,5 +36,17 @@ class ExamModel {
 
   Map<String, dynamic> toJson() {
     return _$ExamModelToJson(this);
+  }
+
+  ExamEntity toEntity() {
+    return ExamEntity(
+      id: id,
+      title: title,
+      duration: duration,
+      subject: subject,
+      numberOfQuestions: numberOfQuestions,
+      active: active,
+      createdAt: createdAt,
+    );
   }
 }
