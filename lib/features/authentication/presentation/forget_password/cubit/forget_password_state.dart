@@ -4,11 +4,14 @@ import 'package:exams_app/config/base_state/base_state.dart';
 class ForgetPasswordState extends Equatable {
   final BaseState<String?> forgetPasswordState;
 
-  const ForgetPasswordState({BaseState<String?>? state})
-      : forgetPasswordState = state ?? const BaseState<String?>();
+  const ForgetPasswordState({
+    this.forgetPasswordState = const BaseState<String?>(isLoading: false),
+  });
 
   ForgetPasswordState copyWith({BaseState<String?>? stateParam}) {
-    return ForgetPasswordState(state: stateParam ?? forgetPasswordState);
+    return ForgetPasswordState(
+      forgetPasswordState: stateParam ?? forgetPasswordState,
+    );
   }
 
   @override
