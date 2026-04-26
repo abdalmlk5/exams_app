@@ -29,10 +29,6 @@ class RememberMeAndForgetPassword extends StatelessWidget {
               child: Checkbox(
                 value: value,
                 onChanged: onChanged,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(4.r),
-                ),
-                activeColor: AppColors.primary,
               ),
             ),
             SizedBox(width: 8.w),

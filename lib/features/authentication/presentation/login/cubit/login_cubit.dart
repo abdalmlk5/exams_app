@@ -1,8 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:exams_app/config/base_response/base_response.dart';
 import 'package:exams_app/config/base_state/base_state.dart';
-import 'package:exams_app/config/error_handler/error_handler.dart';
-import 'package:exams_app/config/validations/app_validations.dart';
 import 'package:exams_app/features/authentication/domain/entities/user_entity.dart';
 import 'package:exams_app/features/authentication/domain/usecases/login_usecase.dart';
 import 'package:exams_app/features/authentication/presentation/login/cubit/login_even.dart';
@@ -28,13 +26,6 @@ class LoginCubit extends Cubit<LoginState> {
     }
   }
 
-  void validateForm(String email, String password) {
-    final emailError = AppValidations.validateEmail(email);
-    final passwordError = AppValidations.validatePassword(password);
-    final isValid = emailError == null && passwordError == null;
-    emit(state.copyWith(isButtonEnabled: isValid));
-  }
-
   void toggleRememberMe(bool value) {
     emit(state.copyWith(rememberMe: value));
   }
@@ -44,42 +35,30 @@ class LoginCubit extends Cubit<LoginState> {
     required String password,
     bool rememberMe = false,
   }) async {
-    try {
-      // Fresh BaseState clears any previous error/data automatically
-      emit(state.copyWith(loginState: const BaseState(isLoading: true)));
+    emit(state.copyWith(loginState: const BaseState(isLoading: true)));
 
-      final result = await _loginUsecase.call(
-        email: email,
-        password: password,
-        rememberMe: rememberMe,
-      );
+    final result = await _loginUsecase.call(
+      email: email,
+      password: password,
+      rememberMe: rememberMe,
+    );
 
-      switch (result) {
-        case SuccessBaseResponse<UserEntity>():
-          emit(
-            state.copyWith(
-              loginState: BaseState(data: result.data, isLoading: false),
-            ),
-          );
-        case ErrorBaseResponse<UserEntity>():
-          emit(
-            state.copyWith(
-              loginState: BaseState(
-                isLoading: false,
-                errorMessage: result.errorMessage,
-              ),
-            ),
-          );
-      }
-    } catch (e) {
-      emit(
-        state.copyWith(
-          loginState: BaseState(
-            isLoading: false,
-            errorMessage: ErrorHandler.handle(e),
+    switch (result) {
+      case SuccessBaseResponse<UserEntity>():
+        emit(
+          state.copyWith(
+            loginState: BaseState(data: result.data, isLoading: false),
           ),
-        ),
-      );
+        );
+      case ErrorBaseResponse<UserEntity>():
+        emit(
+          state.copyWith(
+            loginState: BaseState(
+              isLoading: false,
+              errorMessage: result.errorMessage,
+            ),
+          ),
+        );
     }
   }
 }

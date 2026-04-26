@@ -6,6 +6,7 @@ import 'package:exams_app/features/authentication/presentation/forget_password/c
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../../core/utils/app_strings.dart';
 import '../../../domain/usecases/reset_password_use_case.dart';
 import 'forget_password_event.dart';
 
@@ -38,28 +39,21 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
   }
 
   void _forgetPassword(String email) async {
-    _userEmail = email;
-    // Fresh BaseState clears any previous error/data automatically
     emit(state.copyWith(stateParam: const BaseState<String?>(isLoading: true)));
 
     final result = await _forgetPasswordUseCase.call(email);
     switch (result) {
       case SuccessBaseResponse():
+        _userEmail = email;
         emit(
           state.copyWith(
-            stateParam: BaseState<String?>(
-              isLoading: false,
-              data: result.data.info,
-            ),
+            stateParam: BaseState<String?>(data: result.data.info),
           ),
         );
       case ErrorBaseResponse():
         emit(
           state.copyWith(
-            stateParam: BaseState<String?>(
-              isLoading: false,
-              errorMessage: result.errorMessage,
-            ),
+            stateParam: BaseState<String?>(errorMessage: result.errorMessage),
           ),
         );
     }
@@ -72,30 +66,34 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
       case SuccessBaseResponse():
         emit(
           state.copyWith(
-            stateParam: BaseState<String?>(
-              isLoading: false,
-              data: result.data.status,
-            ),
+            stateParam: BaseState<String?>(data: result.data.status),
           ),
         );
       case ErrorBaseResponse():
         emit(
           state.copyWith(
-            stateParam: BaseState<String?>(
-              isLoading: false,
-              errorMessage: result.errorMessage,
-            ),
+            stateParam: BaseState<String?>(errorMessage: result.errorMessage),
           ),
         );
     }
   }
 
   void _resetPassword(String password, String confirmPassword) async {
+    if (password != confirmPassword) {
+      emit(
+        state.copyWith(
+          stateParam: const BaseState<String?>(
+            errorMessage: AppStrings.passwordNotMatched,
+          ),
+        ),
+      );
+      return;
+    }
+
     if (_userEmail == null) {
       emit(
         state.copyWith(
           stateParam: const BaseState<String?>(
-            isLoading: false,
             errorMessage: "Email is missing, please go back to step 1",
           ),
         ),
@@ -110,19 +108,13 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
       case SuccessBaseResponse():
         emit(
           state.copyWith(
-            stateParam: BaseState<String?>(
-              isLoading: false,
-              data: result.data.message,
-            ),
+            stateParam: BaseState<String?>(data: result.data.message),
           ),
         );
       case ErrorBaseResponse():
         emit(
           state.copyWith(
-            stateParam: BaseState<String?>(
-              isLoading: false,
-              errorMessage: result.errorMessage,
-            ),
+            stateParam: BaseState<String?>(errorMessage: result.errorMessage),
           ),
         );
     }
