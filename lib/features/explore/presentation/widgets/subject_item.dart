@@ -1,14 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:exams_app/core/utils/app_routes.dart';
+import 'package:exams_app/features/explore/domain/entities/subject_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_styles.dart';
-import '../../data/models/subject_model.dart';
 
 class SubjectItem extends StatelessWidget {
-  final SubjectModel subject;
+  final SubjectEntity subject;
 
   const SubjectItem({super.key, required this.subject});
 
@@ -18,7 +18,7 @@ class SubjectItem extends StatelessWidget {
       onTap: () {
         Navigator.pushNamed(
           context,
-          AppRoutes.examsPage,
+          Routes.examsPage,
           arguments: subject.id,
         );
       },
@@ -44,7 +44,7 @@ class SubjectItem extends StatelessWidget {
               width: 48.w,
               height: 48.h,
               placeholder: (context, url) =>
-                  Center(child: const CircularProgressIndicator()),
+                  const Center(child: CircularProgressIndicator()),
               errorWidget: (context, url, error) => const Icon(Icons.error),
             ),
             SizedBox(width: 16.w),

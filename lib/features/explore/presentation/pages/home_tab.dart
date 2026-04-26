@@ -1,13 +1,14 @@
 import 'package:exams_app/core/utils/app_strings.dart';
 import 'package:exams_app/core/utils/app_styles.dart';
 import 'package:exams_app/core/widgets/custom_snack_bar.dart';
+import 'package:exams_app/features/explore/domain/entities/subject_entity.dart';
 import 'package:exams_app/features/explore/presentation/widgets/search_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../data/models/subject_model.dart';
 import '../cubit/explore_cubit.dart';
+import '../cubit/explore_event.dart';
 import '../cubit/explore_state.dart';
 import '../widgets/subject_item.dart';
 
@@ -25,6 +26,7 @@ class _HomeTabState extends State<HomeTab> {
   void initState() {
     super.initState();
     searchController = TextEditingController();
+    context.read<ExploreCubit>().doEvent(const GetAllSubjectsEvent());
   }
 
   @override
@@ -54,7 +56,7 @@ class _HomeTabState extends State<HomeTab> {
         if (state.exploreState.errorMessage != null) {
           return const SizedBox();
         } else {
-          List<SubjectModel> subjects = state.exploreState.data ?? [];
+          List<SubjectEntity> subjects = state.exploreState.data ?? [];
           return Column(
             children: [
               Padding(
@@ -75,12 +77,22 @@ class _HomeTabState extends State<HomeTab> {
                 ),
               ),
               Expanded(
-                child: ListView.separated(
-                  separatorBuilder: (context, index) => SizedBox(height: 16.h),
-                  itemCount: subjects.length,
-                  itemBuilder: (context, index) =>
-                      SubjectItem(subject: subjects[index]),
-                ),
+                child: subjects.isEmpty
+                    ? Center(
+                        child: Text(
+                          searchController.text.isEmpty
+                              ? AppStrings.noSubjectsFound
+                              : AppStrings.noSearchResultsFound,
+                          style: AppStyles.gray14400,
+                        ),
+                      )
+                    : ListView.separated(
+                        separatorBuilder: (context, index) =>
+                            SizedBox(height: 16.h),
+                        itemCount: subjects.length,
+                        itemBuilder: (context, index) =>
+                            SubjectItem(subject: subjects[index]),
+                      ),
               ),
             ],
           );

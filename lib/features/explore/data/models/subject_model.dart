@@ -1,3 +1,4 @@
+import 'package:exams_app/features/explore/domain/entities/subject_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'subject_model.g.dart';
@@ -21,5 +22,9 @@ class SubjectModel {
 
   Map<String, dynamic> toJson() {
     return _$SubjectModelToJson(this);
+  }
+
+  SubjectEntity toEntity() {
+    return SubjectEntity(id: id, name: name, icon: icon, createdAt: createdAt);
   }
 }

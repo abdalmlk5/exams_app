@@ -1,8 +1,8 @@
+import 'package:exams_app/features/explore/domain/entities/subject_entity.dart';
 import 'package:exams_app/features/explore/domain/repository/explore_repo.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../config/base_response/base_response.dart';
-import '../../data/models/subject_model.dart';
 
 @injectable
 class GetSubjectsUseCase {
@@ -10,7 +10,7 @@ class GetSubjectsUseCase {
 
   GetSubjectsUseCase(this.repo);
 
-  Future<BaseResponse<List<SubjectModel>>> call() async {
-    return await repo.getSubjects();
+  Future<BaseResponse<List<SubjectEntity>>> call() {
+    return repo.getSubjects();
   }
 }

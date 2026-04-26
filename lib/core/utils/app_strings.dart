@@ -51,6 +51,8 @@ class AppStrings {
   static const String search = 'Search';
   static const String survey = 'Survey';
   static const String browseBySubject = 'Browse by subject';
+  static const String noSubjectsFound = 'No subjects found';
+  static const String noSearchResultsFound = 'No search results found';
 
   // Exams & Details
   static const String exams = 'Exams';
