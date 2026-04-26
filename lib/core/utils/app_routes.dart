@@ -1,5 +1,7 @@
 import 'package:exams_app/config/di/di.dart';
+import 'package:exams_app/features/authentication/presentation/auth/pages/auth_page.dart';
 import 'package:exams_app/features/authentication/presentation/forget_password/cubit/forget_password_cubit.dart';
+import 'package:exams_app/main_page_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -8,6 +10,11 @@ import '../../features/authentication/presentation/forget_password/pages/forget_
 import '../../features/authentication/presentation/forget_password/pages/reset_password_page.dart';
 
 class AppRoutes {
+  static final GlobalKey<NavigatorState> navigatorKey =
+      GlobalKey<NavigatorState>();
+
+  static const String auth = '/auth';
+  static const String home = '/home';
   static const String forgetPassword = '/forgetPassword';
   static const String emailVerification = '/emailVerification';
   static const String resetPassword = '/resetPassword';
@@ -17,6 +24,12 @@ class AppRoutes {
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
+      case auth:
+        return MaterialPageRoute(builder: (_) => const AuthPage());
+
+      case home:
+        return MaterialPageRoute(builder: (_) => const MainPageTest());
+
       case forgetPassword:
         return MaterialPageRoute(
           builder: (_) => BlocProvider.value(
