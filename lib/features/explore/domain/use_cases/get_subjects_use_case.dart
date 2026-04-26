@@ -10,7 +10,7 @@ class GetSubjectsUseCase {
 
   GetSubjectsUseCase(this.repo);
 
-  Future<BaseResponse<List<SubjectModel>>> call(String token) async {
-    return await repo.getSubjects(token);
+  Future<BaseResponse<List<SubjectModel>>> call() async {
+    return await repo.getSubjects();
   }
 }

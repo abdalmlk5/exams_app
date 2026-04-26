@@ -13,5 +13,5 @@ abstract class ExploreApiClient {
   factory ExploreApiClient(Dio dio) = _ExploreApiClient;
 
   @GET(EndPoints.subjects)
-  Future<ExploreResponse> getSubjects(@Queries() Map<String, dynamic> queries);
+  Future<ExploreResponse> getSubjects();
 }
