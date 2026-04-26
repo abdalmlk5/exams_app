@@ -1,9 +1,11 @@
+import 'package:equatable/equatable.dart';
+
 import '../../../../config/base_state/base_state.dart';
 import '../../domain/entities/profile_user_entity.dart';
 
 enum ProfileStatus { idle, loading, success, error }
 
-class ProfileState {
+class ProfileState extends Equatable {
   final BaseState<ProfileUserEntity> profileState;
   final bool isDataChanged;
   final ProfileStatus status;
@@ -25,4 +27,7 @@ class ProfileState {
       status: status ?? this.status,
     );
   }
+
+  @override
+  List<Object?> get props => [profileState, isDataChanged, status];
 }
