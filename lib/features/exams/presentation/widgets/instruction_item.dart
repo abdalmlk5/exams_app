@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/utils/app_colors.dart';
-import '../../../../core/utils/app_styles.dart';
+import '../../../../core/utils/app_text_styles.dart';
 
 class InstructionItem extends StatelessWidget {
   final String text;
@@ -25,7 +25,7 @@ class InstructionItem extends StatelessWidget {
             ),
           ),
           SizedBox(width: 12.w),
-          Expanded(child: Text(text, style: AppStyles.gray14400)),
+          Expanded(child: Text(text, style: AppTextStyles.gray14400)),
         ],
       ),
     );

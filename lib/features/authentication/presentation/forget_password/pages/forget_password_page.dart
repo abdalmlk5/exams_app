@@ -7,8 +7,7 @@ import 'package:exams_app/features/authentication/presentation/auth/widgets/widg
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../../../../../core/widgets/custom_elevated_button.dart';
+import '../../../../../core/widgets/custom_button.dart';
 import '../cubit/forget_password_cubit.dart';
 import '../cubit/forget_password_event.dart';
 import '../cubit/forget_password_state.dart';
@@ -21,15 +20,8 @@ class ForgetPasswordPage extends StatefulWidget {
 }
 
 class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
-  late final TextEditingController emailController;
-  late final GlobalKey<FormState> formKey;
-
-  @override
-  void initState() {
-    super.initState();
-    emailController = TextEditingController();
-    formKey = GlobalKey<FormState>();
-  }
+  final emailController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {

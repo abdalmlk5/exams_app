@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/utils/app_assets.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_routes.dart';
-import '../../../../core/utils/app_styles.dart';
+import '../../../../core/utils/app_text_styles.dart';
 
 class ExamItem extends StatelessWidget {
   final ExamEntity exam;
@@ -44,22 +44,25 @@ class ExamItem extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(exam.title ?? "", style: AppStyles.black16500),
+                      Text(exam.title ?? "", style: AppTextStyles.black16400),
                       Text(
                         "${exam.duration} ${AppStrings.minutes}",
-                        style: AppStyles.primary12500,
+                        style: AppTextStyles.blue14700.copyWith(
+                          fontSize: 12.sp,
+                          decoration: TextDecoration.none,
+                        ),
                       ),
                     ],
                   ),
                   SizedBox(height: 4.h),
                   Text(
                     "${exam.numberOfQuestions} ${AppStrings.question}",
-                    style: AppStyles.gray12400,
+                    style: AppTextStyles.gray12400,
                   ),
                   SizedBox(height: 8.h),
                   Text(
                     "${AppStrings.from}: 1.00  ${AppStrings.to}: 6.00",
-                    style: AppStyles.black12400,
+                    style: AppTextStyles.black12400,
                   ),
                 ],
               ),

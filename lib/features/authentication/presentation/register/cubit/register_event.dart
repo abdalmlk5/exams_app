@@ -19,3 +19,8 @@ class Register extends RegisterEvent {
     required this.phone,
   });
 }
+
+class ChangeButtonStatus extends RegisterEvent {
+  final bool isEnabled;
+  ChangeButtonStatus(this.isEnabled);
+}

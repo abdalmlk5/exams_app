@@ -5,8 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/utils/app_assets.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_strings.dart';
-import '../../../../core/utils/app_styles.dart';
-import '../../../../core/widgets/custom_elevated_button.dart';
+import '../../../../core/utils/app_text_styles.dart';
+import '../../../../core/widgets/custom_button.dart';
 import '../widgets/instruction_item.dart';
 
 class ExamDetailsPage extends StatelessWidget {
@@ -39,10 +39,16 @@ class ExamDetailsPage extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(exam.title ?? "", style: AppStyles.black18500),
+                          Text(
+                            exam.title ?? "",
+                            style: AppTextStyles.black18500,
+                          ),
                           Text(
                             "${exam.duration} ${AppStrings.minutes}",
-                            style: AppStyles.primary12500,
+                            style: AppTextStyles.blue14700.copyWith(
+                              fontSize: 12.sp,
+                              decoration: TextDecoration.none,
+                            ),
                           ),
                         ],
                       ),
@@ -51,7 +57,7 @@ class ExamDetailsPage extends StatelessWidget {
                         children: [
                           Text(
                             AppStrings.highLevel,
-                            style: AppStyles.black16400,
+                            style: AppTextStyles.black16400,
                           ),
                           Container(
                             height: 15.h,
@@ -61,7 +67,7 @@ class ExamDetailsPage extends StatelessWidget {
                           ),
                           Text(
                             "${exam.numberOfQuestions} ${AppStrings.question}",
-                            style: AppStyles.gray14400,
+                            style: AppTextStyles.gray14400,
                           ),
                         ],
                       ),
@@ -73,7 +79,7 @@ class ExamDetailsPage extends StatelessWidget {
             SizedBox(height: 24.h),
             const Divider(color: AppColors.blue10),
             SizedBox(height: 16.h),
-            Text(AppStrings.instructions, style: AppStyles.black18500),
+            Text(AppStrings.instructions, style: AppTextStyles.black18500),
             SizedBox(height: 16.h),
             Expanded(
               child: ListView(

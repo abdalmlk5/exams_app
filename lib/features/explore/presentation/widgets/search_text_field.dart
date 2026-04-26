@@ -1,6 +1,6 @@
 import 'package:exams_app/core/utils/app_colors.dart';
-import 'package:exams_app/core/utils/app_styles.dart';
 import 'package:exams_app/core/utils/app_strings.dart';
+import 'package:exams_app/core/utils/app_text_styles.dart';
 import 'package:exams_app/features/explore/presentation/cubit/explore_cubit.dart';
 import 'package:exams_app/features/explore/presentation/cubit/explore_event.dart';
 import 'package:flutter/material.dart';
@@ -15,13 +15,13 @@ class SearchTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
-      style: AppStyles.black16400,
+      style: AppTextStyles.black16400,
       onChanged: (value) => context.read<ExploreCubit>().doEvent(
         GetFilteredSubjectsListEvent(value),
       ),
       decoration: InputDecoration(
         hintText: AppStrings.search,
-        hintStyle: AppStyles.placeholder14400,
+        hintStyle: AppTextStyles.gray14400,
         prefixIcon: Padding(
           padding: const EdgeInsets.only(left: 12, right: 8),
           child: SvgPicture.asset(
@@ -54,10 +54,7 @@ class SearchTextField extends StatelessWidget {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
-          borderSide: BorderSide(
-            color: AppColors.gray,
-            width: 2,
-          ),
+          borderSide: const BorderSide(color: AppColors.gray, width: 2),
         ),
       ),
     );

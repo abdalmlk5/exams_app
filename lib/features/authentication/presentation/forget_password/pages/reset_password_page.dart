@@ -7,11 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../../core/widgets/custom_elevated_button.dart';
+import '../../../../../core/widgets/custom_button.dart';
 import '../cubit/forget_password_cubit.dart';
 import '../cubit/forget_password_event.dart';
 import '../cubit/forget_password_state.dart';
-import '../cubit/forget_password_stateord_event.dart';
 
 class ResetPasswordPage extends StatefulWidget {
   const ResetPasswordPage({super.key});
@@ -21,22 +20,14 @@ class ResetPasswordPage extends StatefulWidget {
 }
 
 class _ResetPasswordPageState extends State<ResetPasswordPage> {
-  late final TextEditingController oldPasswordController;
-  late final TextEditingController newPasswordController;
-  late final GlobalKey<FormState> formKey;
-
-  @override
-  void initState() {
-    super.initState();
-    oldPasswordController = TextEditingController();
-    newPasswordController = TextEditingController();
-    formKey = GlobalKey<FormState>();
-  }
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
-    oldPasswordController.dispose();
-    newPasswordController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
     super.dispose();
   }
 
@@ -56,12 +47,8 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
           return;
         }
         if (state.forgetPasswordState.data != null) {
-          CustomSnackBar.show(context, AppStrings.passwordChangedSuccessfully);
-          Navigator.pushNamedAndRemoveUntil(
-            context,
-            AppRoutes.login,
-            (route) => false,
-          );
+          CustomSnackBar.success(context, AppStrings.passwordResetSuccessfully);
+          Navigator.of(context).popUntil((route) => route.isFirst);
         }
       },
       child: Scaffold(
@@ -73,40 +60,55 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
           padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: Form(
             key: formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(height: 40.h),
-                Text(AppStrings.resetPassword, style: AppTextStyles.black18500),
-                SizedBox(height: 32.h),
-                AppTextField(
-                  controller: oldPasswordController,
-                  fieldType: FieldType.password,
-                  hint: AppStrings.oldPassword,
-                ),
-                SizedBox(height: 16.h),
-                AppTextField(
-                  controller: newPasswordController,
-                  fieldType: FieldType.password,
-                  hint: AppStrings.newPassword,
-                ),
-                const Spacer(),
-                BlocBuilder<ForgetPasswordCubit, ForgetPasswordState>(
-                  builder: (context, state) {
-                    return CustomButton(
-                      isEnabled: true,
-                      isLoading: state.forgetPasswordState.isLoading,
-                      onPressed: () {
-                        if (formKey.currentState!.validate()) {
-                          // TODO: Trigger Reset Password Event
-                        }
-                      },
-                      text: AppStrings.continueText,
-                    );
-                  },
-                ),
-                SizedBox(height: 40.h),
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(height: 40.h),
+                  Text(
+                    AppStrings.resetPassword,
+                    style: AppTextStyles.black18500,
+                  ),
+                  SizedBox(height: 16.h),
+                  Text(
+                    AppStrings.resetPasswordSubtitle,
+                    style: AppTextStyles.gray14400,
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 32.h),
+                  AppTextField(
+                    controller: passwordController,
+                    fieldType: FieldType.newPassword,
+                  ),
+                  SizedBox(height: 24.h),
+                  AppTextField(
+                    controller: confirmPasswordController,
+                    fieldType: FieldType.confirmPassword,
+                    compareController: passwordController,
+                  ),
+                  SizedBox(height: 40.h),
+                  BlocBuilder<ForgetPasswordCubit, ForgetPasswordState>(
+                    builder: (context, state) {
+                      return CustomButton(
+                        text: AppStrings.continueText,
+                        isLoading: state.forgetPasswordState.isLoading,
+                        isEnabled: true,
+                        onPressed: () {
+                          if (formKey.currentState!.validate()) {
+                            context.read<ForgetPasswordCubit>().doEvent(
+                              ForgetPasswordResetPasswordEvent(
+                                passwordController.text,
+                                confirmPasswordController.text,
+                              ),
+                            );
+                          }
+                        },
+                      );
+                    },
+                  ),
+                  SizedBox(height: 40.h),
+                ],
+              ),
             ),
           ),
         ),

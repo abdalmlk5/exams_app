@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 class AppTextField extends StatefulWidget {
   final TextEditingController controller;
   final FieldType fieldType;
-  final void Function(String)? onChanged;
   final String? suffixText;
   final VoidCallback? onSuffixPressed;
   final TextEditingController? compareController;
@@ -15,7 +14,6 @@ class AppTextField extends StatefulWidget {
     super.key,
     required this.controller,
     required this.fieldType,
-    this.onChanged,
     this.suffixText,
     this.onSuffixPressed,
     this.compareController,
@@ -35,60 +33,39 @@ class _AppTextFieldState extends State<AppTextField> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).colorScheme;
     return TextFormField(
       controller: widget.controller,
       keyboardType: widget.fieldType.textInputType,
-      onChanged: widget.onChanged,
       validator: _validate,
       obscureText: _isPasswordField && _isObscured,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
-        floatingLabelBehavior: FloatingLabelBehavior.always,
         labelText: widget.fieldType.label,
         hintText: widget.fieldType.hint,
-        suffixIcon:
-            _isPasswordField
-                ? IconButton(
-                  icon: Icon(
-                    _isObscured ? Icons.visibility_off : Icons.visibility,
-                    color: AppColors.black30,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      _isObscured = !_isObscured;
-                    });
-                  },
-                )
-                : widget.suffixText != null
-                ? TextButton(
-                  onPressed: widget.onSuffixPressed,
-                  child: Text(
-                    widget.suffixText!,
-                    style: const TextStyle(color: AppColors.primary),
-                  ),
-                )
-                : null,
-        labelStyle: WidgetStateTextStyle.resolveWith((states) {
-          if (states.contains(WidgetState.error)) {
-            return const TextStyle(color: AppColors.error);
-          }
-          return const TextStyle(color: AppColors.black30);
-        }),
-        errorStyle: const TextStyle(color: AppColors.error),
-        border: _border(AppColors.black30),
-        enabledBorder: _border(AppColors.black30),
-        focusedBorder: _border(Theme.of(context).colorScheme.primary, 2),
-        errorBorder: _border(AppColors.error),
-        focusedErrorBorder: _border(AppColors.error, 2),
+        suffixIcon: _isPasswordField
+            ? IconButton(
+                icon: Icon(
+                  _isObscured ? Icons.visibility_off : Icons.visibility,
+                  color: theme.tertiary,
+                ),
+                onPressed: () {
+                  setState(() {
+                    _isObscured = !_isObscured;
+                  });
+                },
+              )
+            : widget.suffixText != null
+            ? TextButton(
+                onPressed: widget.onSuffixPressed,
+                child: Text(
+                  widget.suffixText!,
+                ),
+              )
+            : null,
       ),
     );
   }
-
-  OutlineInputBorder _border(Color color, [double width = 1]) =>
-      OutlineInputBorder(
-        borderRadius: BorderRadius.circular(4),
-        borderSide: BorderSide(color: color, width: width),
-      );
 
   String? _validate(String? value) {
     switch (widget.fieldType) {
@@ -118,13 +95,41 @@ class _AppTextFieldState extends State<AppTextField> {
 }
 
 enum FieldType {
-  email(AppStrings.email, AppStrings.enterYourEmail, TextInputType.emailAddress),
-  password(AppStrings.password, AppStrings.enterYourPassword, TextInputType.text),
-  newPassword(AppStrings.newPassword, AppStrings.newPassword, TextInputType.text),
-  confirmPassword(AppStrings.confirmPassword, AppStrings.confirmPassword, TextInputType.text),
-  username(AppStrings.userName, AppStrings.enterYourUserName, TextInputType.name),
-  phoneNumber(AppStrings.phoneNumber, AppStrings.enterPhoneNumber, TextInputType.phone),
-  firstName(AppStrings.firstName, AppStrings.enterFirstName, TextInputType.name),
+  email(
+    AppStrings.email,
+    AppStrings.enterYourEmail,
+    TextInputType.emailAddress,
+  ),
+  password(
+    AppStrings.password,
+    AppStrings.enterYourPassword,
+    TextInputType.text,
+  ),
+  newPassword(
+    AppStrings.newPassword,
+    AppStrings.newPassword,
+    TextInputType.text,
+  ),
+  confirmPassword(
+    AppStrings.confirmPassword,
+    AppStrings.confirmPassword,
+    TextInputType.text,
+  ),
+  username(
+    AppStrings.userName,
+    AppStrings.enterYourUserName,
+    TextInputType.name,
+  ),
+  phoneNumber(
+    AppStrings.phoneNumber,
+    AppStrings.enterPhoneNumber,
+    TextInputType.phone,
+  ),
+  firstName(
+    AppStrings.firstName,
+    AppStrings.enterFirstName,
+    TextInputType.name,
+  ),
   lastName(AppStrings.lastName, AppStrings.enterLastName, TextInputType.name),
   none('', '', TextInputType.text);
 

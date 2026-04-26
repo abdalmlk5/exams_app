@@ -1,5 +1,5 @@
 import 'package:exams_app/core/utils/app_strings.dart';
-import 'package:exams_app/core/utils/app_styles.dart';
+import 'package:exams_app/core/utils/app_text_styles.dart';
 import 'package:exams_app/core/widgets/custom_snack_bar.dart';
 import 'package:exams_app/features/explore/domain/entities/subject_entity.dart';
 import 'package:exams_app/features/explore/presentation/widgets/search_text_field.dart';
@@ -65,13 +65,13 @@ class _HomeTabState extends State<HomeTab> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(height: 8.h),
-                    Text(AppStrings.survey, style: AppStyles.primary20500),
+                    Text(AppStrings.survey, style: AppTextStyles.black20500),
                     SizedBox(height: 16.h),
                     SearchTextField(controller: searchController),
                     SizedBox(height: 20.h),
                     Text(
                       AppStrings.browseBySubject,
-                      style: AppStyles.black18500,
+                      style: AppTextStyles.black18500,
                     ),
                   ],
                 ),
@@ -83,7 +83,7 @@ class _HomeTabState extends State<HomeTab> {
                           searchController.text.isEmpty
                               ? AppStrings.noSubjectsFound
                               : AppStrings.noSearchResultsFound,
-                          style: AppStyles.gray14400,
+                          style: AppTextStyles.gray14400,
                         ),
                       )
                     : ListView.separated(

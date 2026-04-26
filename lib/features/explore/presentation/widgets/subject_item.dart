@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:exams_app/core/utils/app_routes.dart';
+import 'package:exams_app/core/utils/app_text_styles.dart';
 import 'package:exams_app/features/explore/domain/entities/subject_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/utils/app_colors.dart';
-import '../../../../core/utils/app_styles.dart';
 
 class SubjectItem extends StatelessWidget {
   final SubjectEntity subject;
@@ -18,7 +18,7 @@ class SubjectItem extends StatelessWidget {
       onTap: () {
         Navigator.pushNamed(
           context,
-          Routes.examsPage,
+          AppRoutes.examsPage,
           arguments: subject.id,
         );
       },
@@ -48,7 +48,7 @@ class SubjectItem extends StatelessWidget {
               errorWidget: (context, url, error) => const Icon(Icons.error),
             ),
             SizedBox(width: 16.w),
-            Text(subject.name ?? "", style: AppStyles.black16400),
+            Text(subject.name ?? "", style: AppTextStyles.black16400),
           ],
         ),
       ),

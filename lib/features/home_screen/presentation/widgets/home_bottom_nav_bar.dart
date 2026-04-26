@@ -1,9 +1,9 @@
+import 'package:exams_app/core/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/utils/app_assets.dart';
 import '../../../../core/utils/app_colors.dart';
-import '../../../../core/utils/app_styles.dart';
 import '../cubit/home_cubit.dart';
 import 'nav_item.dart';
 
@@ -19,8 +19,13 @@ class HomeBottomNavBar extends StatelessWidget {
       type: BottomNavigationBarType.fixed,
       selectedItemColor: AppColors.primary,
       unselectedItemColor: AppColors.primary,
-      selectedLabelStyle: AppStyles.primary12500,
-      unselectedLabelStyle: AppStyles.primary12500,
+      selectedLabelStyle: AppTextStyles.blue14700.copyWith(
+        fontSize: 12,
+        decoration: TextDecoration.none,
+      ),
+      unselectedLabelStyle: AppTextStyles.gray12400.copyWith(
+        color: AppColors.primary,
+      ),
       onTap: (index) => context.read<HomeCubit>().changeTab(index),
       items: [
         navItem(

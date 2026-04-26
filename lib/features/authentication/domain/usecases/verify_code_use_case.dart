@@ -1,7 +1,7 @@
 import 'package:exams_app/config/base_response/base_response.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../api/models/forget_password_models/verify_code_response.dart';
+import '../../data/response/forget_password_models/verify_code_response.dart';
 import '../repositories/auth_repo.dart';
 
 @injectable

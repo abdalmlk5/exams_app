@@ -1,77 +1,78 @@
+import 'package:exams_app/config/di/di.dart';
+import 'package:exams_app/features/authentication/presentation/auth/pages/auth_page.dart';
+import 'package:exams_app/features/authentication/presentation/forget_password/cubit/forget_password_cubit.dart';
+import 'package:exams_app/features/home_screen/presentation/pages/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../features/authentication/presentation/forget_password/pages/email_verification_page.dart';
 import '../../features/authentication/presentation/forget_password/pages/forget_password_page.dart';
 import '../../features/authentication/presentation/forget_password/pages/reset_password_page.dart';
-import '../../features/authentication/presentation/login/pages/login_page.dart';
-import '../../features/authentication/presentation/register/pages/register_page.dart';
 import '../../features/exams/domain/entities/exam_entity.dart';
 import '../../features/exams/presentation/pages/exam_details_page.dart';
 import '../../features/exams/presentation/pages/exams_page.dart';
-import '../../features/home_screen/presentation/pages/home_screen.dart';
 
-class Routes {
-  static const String login = '/login';
-  static const String register = '/register';
+class AppRoutes {
+  static final GlobalKey<NavigatorState> navigatorKey =
+      GlobalKey<NavigatorState>();
+
+  static const String auth = '/auth';
+  static const String home = '/home';
   static const String forgetPassword = '/forgetPassword';
   static const String emailVerification = '/emailVerification';
   static const String resetPassword = '/resetPassword';
-  static const String home = '/home';
   static const String examsPage = '/examsPage';
   static const String examDetailsPage = '/examDetailsPage';
-}
 
-class AppRoutes {
+  static final ForgetPasswordCubit _forgetPasswordCubit =
+      getIt<ForgetPasswordCubit>();
+
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
-    try {
-      switch (settings.name) {
-        case Routes.login:
-          return MaterialPageRoute(builder: (_) => const LoginPage());
+    switch (settings.name) {
+      case auth:
+        return MaterialPageRoute(builder: (_) => const AuthPage());
 
-        case Routes.register:
-          return MaterialPageRoute(builder: (_) => const RegisterPage());
+      case home:
+        return MaterialPageRoute(builder: (_) => const HomeScreen());
 
-        case Routes.forgetPassword:
-          return MaterialPageRoute(builder: (_) => const ForgetPasswordPage());
-
-        case Routes.emailVerification:
-          return MaterialPageRoute(
-            builder: (_) => const EmailVerificationPage(),
-          );
-
-        case Routes.resetPassword:
-          return MaterialPageRoute(builder: (_) => const ResetPasswordPage());
-
-        case Routes.home:
-          return MaterialPageRoute(builder: (_) => const HomeScreen());
-
-        case Routes.examsPage:
-          final subject = settings.arguments as String?;
-          return MaterialPageRoute(builder: (_) => ExamsPage(subject: subject));
-
-        case Routes.examDetailsPage:
-          final exam = settings.arguments as ExamEntity;
-          return MaterialPageRoute(builder: (_) => ExamDetailsPage(exam: exam));
-
-        default:
-          return _errorRoute(settings);
-      }
-    } catch (e) {
-      return _errorRoute(settings);
-    }
-  }
-
-  static Route<dynamic> _errorRoute(RouteSettings settings) {
-    return MaterialPageRoute(
-      builder: (_) => Scaffold(
-        appBar: AppBar(title: const Text("Navigation Error")),
-        body: Center(
-          child: Text(
-            'No route defined or wrong arguments for ${settings.name}',
-            textAlign: TextAlign.center,
+      case forgetPassword:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider.value(
+            value: _forgetPasswordCubit,
+            child: const ForgetPasswordPage(),
           ),
-        ),
-      ),
-    );
+        );
+
+      case emailVerification:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider.value(
+            value: _forgetPasswordCubit,
+            child: const EmailVerificationPage(),
+          ),
+        );
+
+      case resetPassword:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider.value(
+            value: _forgetPasswordCubit,
+            child: const ResetPasswordPage(),
+          ),
+        );
+
+      case examsPage:
+        final subject = settings.arguments as String?;
+        return MaterialPageRoute(builder: (_) => ExamsPage(subject: subject));
+
+      case examDetailsPage:
+        final exam = settings.arguments as ExamEntity;
+        return MaterialPageRoute(builder: (_) => ExamDetailsPage(exam: exam));
+
+      default:
+        return MaterialPageRoute(
+          builder: (_) => Scaffold(
+            body: Center(child: Text('No route defined for ${settings.name}')),
+          ),
+        );
+    }
   }
 }

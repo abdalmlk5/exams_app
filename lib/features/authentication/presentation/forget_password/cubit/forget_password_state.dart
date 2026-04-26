@@ -1,6 +1,7 @@
-import '../../../../config/base_state/base_state.dart';
+import 'package:equatable/equatable.dart';
+import 'package:exams_app/config/base_state/base_state.dart';
 
-class ForgetPasswordState {
+class ForgetPasswordState extends Equatable {
   final BaseState<String?> forgetPasswordState;
 
   const ForgetPasswordState({
@@ -12,4 +13,7 @@ class ForgetPasswordState {
       forgetPasswordState: stateParam ?? forgetPasswordState,
     );
   }
+
+  @override
+  List<Object?> get props => [forgetPasswordState];
 }
