@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/utils/app_colors.dart';
-import '../../../../core/utils/app_styles.dart';
+import '../../../../core/utils/app_text_styles.dart';
 
 class SubjectItem extends StatelessWidget {
   final SubjectEntity subject;
@@ -16,11 +16,7 @@ class SubjectItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(
-          context,
-          Routes.examsPage,
-          arguments: subject.id,
-        );
+        Navigator.pushNamed(context, Routes.examsPage, arguments: subject.id);
       },
       child: Container(
         height: 80.h,
@@ -48,7 +44,7 @@ class SubjectItem extends StatelessWidget {
               errorWidget: (context, url, error) => const Icon(Icons.error),
             ),
             SizedBox(width: 16.w),
-            Text(subject.name ?? "", style: AppStyles.black16400),
+            Text(subject.name ?? "", style: AppTextStyles.black16400),
           ],
         ),
       ),
