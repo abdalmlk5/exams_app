@@ -13,11 +13,8 @@ class ExamsRepoImpl extends ExamsRepo {
   ExamsRepoImpl(this.dataSource);
 
   @override
-  Future<BaseResponse<List<ExamModel>>> getExams(
-    String token, {
-    String? subject,
-  }) async {
-    final response = await dataSource.getExams(token: token, subject: subject);
+  Future<BaseResponse<List<ExamModel>>> getExams({String? subject}) async {
+    final response = await dataSource.getExams(subject: subject);
 
     switch (response) {
       case SuccessBaseResponse():

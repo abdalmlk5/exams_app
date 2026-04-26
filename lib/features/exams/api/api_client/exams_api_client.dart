@@ -7,7 +7,7 @@ import '../../data/models/exams_response.dart';
 
 part 'exams_api_client.g.dart';
 
-@injectable
+@lazySingleton
 @RestApi()
 abstract class ExamsApiClient {
   @factoryMethod

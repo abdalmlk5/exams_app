@@ -1,4 +1,3 @@
-import 'package:exams_app/config/cache_helper/cache_helper.dart';
 import 'package:exams_app/features/exams/data/models/exam_model.dart';
 import 'package:exams_app/features/exams/domain/use_cases/get_exams_use_case.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,30 +22,13 @@ class ExamsCubit extends Cubit<ExamsState> {
     }
   }
 
-  void _getSubjects({String? token, String? subject}) async {
-    String? effectiveToken = token ?? await CacheHelper.getToken();
-
-    if (effectiveToken == null) {
-      emit(
-        state.copyWith(
-          stateParam: const BaseState<List<ExamModel>>(
-            isLoading: false,
-            errorMessage: "No token found",
-          ),
-        ),
-      );
-      return;
-    }
-
+  void _getSubjects({String? subject}) async {
     emit(
       state.copyWith(
         stateParam: const BaseState<List<ExamModel>>(isLoading: true),
       ),
     );
-    final result = await getSubjectsUseCase.call(
-      effectiveToken,
-      subject: subject,
-    );
+    final result = await getSubjectsUseCase.call(subject: subject);
     switch (result) {
       case SuccessBaseResponse():
         emit(
