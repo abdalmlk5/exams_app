@@ -8,9 +8,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'core/utils/app_theme.dart';
 import 'features/authentication/presentation/auth/cubit/auth_cubit.dart';
 import 'features/authentication/presentation/auth/pages/auth_page.dart';
-import 'features/authentication/presentation/forget_password/cubit/forget_password_cubit.dart';
-import 'features/authentication/presentation/login/cubit/login_cubit.dart';
-import 'features/authentication/presentation/register/cubit/register_cubit.dart';
 import 'main_page_test.dart';
 
 void main() {
@@ -31,10 +28,7 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return MultiBlocProvider(
           providers: [
-            BlocProvider(create: (_) => getIt<LoginCubit>()),
-            BlocProvider(create: (_) => getIt<RegisterCubit>()),
             BlocProvider(create: (_) => getIt<AuthCubit>()..checkAuth()),
-            BlocProvider(create: (_) => getIt<ForgetPasswordCubit>()),
           ],
           child: MaterialApp(
             theme: AppTheme.mainTheme,
