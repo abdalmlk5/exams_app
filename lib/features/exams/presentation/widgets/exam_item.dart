@@ -17,7 +17,11 @@ class ExamItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, Routes.examDetailsPage, arguments: exam);
+        Navigator.pushNamed(
+          context,
+          AppRoutes.examDetailsPage,
+          arguments: exam,
+        );
       },
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),

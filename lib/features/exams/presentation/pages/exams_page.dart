@@ -33,7 +33,7 @@ class ExamsPage extends StatelessWidget {
               prev.examsState.errorMessage != curr.examsState.errorMessage,
           listener: (context, state) {
             if (state.examsState.errorMessage != null) {
-              CustomSnackBar.error(
+              showErrorSnackBar(
                 context,
                 state.examsState.errorMessage ?? AppStrings.someThingWentWrong,
               );
