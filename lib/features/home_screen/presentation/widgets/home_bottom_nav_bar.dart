@@ -1,3 +1,4 @@
+import 'package:exams_app/core/utils/app_strings.dart';
 import 'package:exams_app/core/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,19 +33,19 @@ class HomeBottomNavBar extends StatelessWidget {
       items: [
         navItem(
           icon: AppIcons.home,
-          label: 'Home',
+          label: AppStrings.home,
           index: 0,
           selectedIndex: selectedTab,
         ),
         navItem(
           icon: AppIcons.resultDraft,
-          label: 'Result',
+          label: AppStrings.results,
           index: 1,
           selectedIndex: selectedTab,
         ),
         navItem(
           icon: AppIcons.person,
-          label: 'Profile',
+          label: AppStrings.profile,
           index: 2,
           selectedIndex: selectedTab,
         ),

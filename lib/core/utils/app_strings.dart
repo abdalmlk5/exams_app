@@ -55,6 +55,10 @@ class AppStrings {
   static const String noSubjectsFound = 'No subjects found';
   static const String noSearchResultsFound = 'No search results found';
 
+  static const String home = 'Home';
+  static const String results = 'Results';
+  static const String profile = 'Profile';
+
   // Exams & Details
   static const String exams = 'Exams';
   static const String noExamsFound = 'No exams found';
