@@ -1,45 +1,44 @@
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
-
+import '../../../../config/cache/cache_helper.dart';
 import '../../data/datasources/auth_local_data_source_contract.dart';
 
 @Injectable(as: AuthLocalDataSourceContract)
 class AuthLocalDataSourceImpl implements AuthLocalDataSourceContract {
-  final FlutterSecureStorage secureStorage;
+  final CacheHelper _cacheHelper;
 
-  AuthLocalDataSourceImpl(this.secureStorage);
+  AuthLocalDataSourceImpl(this._cacheHelper);
 
   static const String _tokenKey = 'auth_token';
   static const String _rememberMeKey = 'remember_me';
 
   @override
   Future<void> saveToken(String token) async {
-    await secureStorage.write(key: _tokenKey, value: token);
+    await _cacheHelper.writeData(key: _tokenKey, value: token);
   }
 
   @override
   Future<String?> getToken() async {
-    return await secureStorage.read(key: _tokenKey);
+    return await _cacheHelper.readData(key: _tokenKey);
   }
 
   @override
   Future<void> deleteToken() async {
-    await secureStorage.delete(key: _tokenKey);
+    await _cacheHelper.deleteData(key: _tokenKey);
   }
 
   @override
   Future<void> saveRememberMe(bool value) async {
-    await secureStorage.write(key: _rememberMeKey, value: value.toString());
+    await _cacheHelper.writeData(key: _rememberMeKey, value: value.toString());
   }
 
   @override
   Future<bool> getRememberMe() async {
-    final value = await secureStorage.read(key: _rememberMeKey);
+    final value = await _cacheHelper.readData(key: _rememberMeKey);
     return value == 'true';
   }
 
   @override
   Future<void> deleteRememberMe() async {
-    await secureStorage.delete(key: _rememberMeKey);
+    await _cacheHelper.deleteData(key: _rememberMeKey);
   }
 }

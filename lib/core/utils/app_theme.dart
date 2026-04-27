@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
-
 import 'package:exams_app/core/utils/app_colors.dart';
 import 'package:exams_app/core/utils/app_text_styles.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 abstract class AppTheme {
@@ -54,9 +53,7 @@ abstract class AppTheme {
           }
           return Colors.white;
         }),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(4),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
       ),
 
       // elevated button theme
@@ -94,12 +91,35 @@ abstract class AppTheme {
         errorBorder: _border(AppColors.error),
         focusedErrorBorder: _border(AppColors.error, 2),
       ),
+
+      // snack bar theme
+      snackBarTheme: SnackBarThemeData(
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.r),
+        ),
+        contentTextStyle: AppTextStyles.white16500,
+      ),
     );
   }
-  
-}
 
-UnderlineInputBorder _border(Color color, [double width = 1]) =>
-    UnderlineInputBorder(
-      borderSide: BorderSide(color: color, width: width),
-    );
+  static UnderlineInputBorder _border(Color color, [double width = 1]) =>
+      UnderlineInputBorder(
+        borderSide: BorderSide(color: color, width: width),
+      );
+
+  static InputDecoration otpInputDecoration(BuildContext context) =>
+      InputDecoration(
+        counterText: "",
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.r),
+          borderSide: const BorderSide(color: AppColors.blue10),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.r),
+          borderSide: const BorderSide(color: AppColors.primary),
+        ),
+        filled: true,
+        fillColor: AppColors.lightBlue,
+      );
+}
