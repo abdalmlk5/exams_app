@@ -1,4 +1,4 @@
-class AppStrings {
+abstract class AppStrings {
   AppStrings._();
 
   // Common & Auth

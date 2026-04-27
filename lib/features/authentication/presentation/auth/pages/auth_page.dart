@@ -38,7 +38,7 @@ class _AuthPageState extends State<AuthPage> {
               prev.loginState.data != curr.loginState.data,
           listener: (context, state) {
             if (state.loginState.errorMessage != null) {
-              CustomSnackBar.error(context, state.loginState.errorMessage!);
+              showErrorSnackBar(context, state.loginState.errorMessage!);
             }
             if (state.loginState.data != null) {
               context.read<AuthCubit>().doEvent(GetUserData());
@@ -57,7 +57,7 @@ class _AuthPageState extends State<AuthPage> {
               prev.registerState.data != curr.registerState.data,
           listener: (context, state) {
             if (state.registerState.errorMessage != null) {
-              CustomSnackBar.error(context, state.registerState.errorMessage!);
+              showErrorSnackBar(context, state.registerState.errorMessage!);
             }
             if (state.registerState.data != null) {
               context.read<AuthCubit>().doEvent(GetUserData());

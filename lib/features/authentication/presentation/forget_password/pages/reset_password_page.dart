@@ -40,14 +40,11 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
               curr.forgetPasswordState.errorMessage,
       listener: (context, state) {
         if (state.forgetPasswordState.errorMessage != null) {
-          CustomSnackBar.error(
-            context,
-            state.forgetPasswordState.errorMessage!,
-          );
+          showErrorSnackBar(context, state.forgetPasswordState.errorMessage!);
           return;
         }
         if (state.forgetPasswordState.data != null) {
-          CustomSnackBar.success(context, AppStrings.passwordResetSuccessfully);
+          showSuccessSnackBar(context, AppStrings.passwordResetSuccessfully);
           Navigator.of(context).popUntil((route) => route.isFirst);
         }
       },

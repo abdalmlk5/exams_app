@@ -43,7 +43,7 @@ class _HomeTabState extends State<HomeTab> {
           current.exploreState.errorMessage,
       listener: (context, state) {
         if (state.exploreState.errorMessage != null) {
-          CustomSnackBar.error(
+          showErrorSnackBar(
             context,
             state.exploreState.errorMessage ?? AppStrings.someThingWentWrong,
           );

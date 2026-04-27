@@ -7,6 +7,7 @@ import 'package:exams_app/features/authentication/presentation/auth/widgets/widg
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import '../../../../../core/widgets/custom_button.dart';
 import '../cubit/forget_password_cubit.dart';
 import '../cubit/forget_password_event.dart';
@@ -38,10 +39,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
               curr.forgetPasswordState.errorMessage,
       listener: (context, state) {
         if (state.forgetPasswordState.errorMessage != null) {
-          CustomSnackBar.error(
-            context,
-            state.forgetPasswordState.errorMessage!,
-          );
+          showErrorSnackBar(context, state.forgetPasswordState.errorMessage!);
           return;
         }
         if (state.forgetPasswordState.data != null) {
