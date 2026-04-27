@@ -22,12 +22,13 @@ class AuthCubit extends Cubit<AuthState> {
     this._logoutUseCase,
     this._getUserDataUseCase,
     this._isRememberedUseCase,
-  ) : super(const AuthState());
+  ) : super(const AuthState(authState: BaseState(isLoading: true)));
 
   void checkAuth() async {
+    emit(state.copyWith(authState: const BaseState(isLoading: true)));
     final isRemembered = await _isRememberedUseCase.call();
     if (isRemembered) {
-      _getUserData();
+      await _getUserData();
     } else {
       emit(
         state.copyWith(
@@ -106,23 +107,18 @@ class AuthCubit extends Cubit<AuthState> {
         case ErrorBaseResponse<UserEntity>():
           emit(
             state.copyWith(
-              authState: BaseState<UserEntity>(
+              authState: const BaseState<UserEntity>(
                 isLoading: false,
                 data: null,
-                errorMessage: result.errorMessage,
               ),
             ),
           );
       }
     } catch (e) {
-      // Clear data and show error on exception
+      // Clear data on exception
       emit(
         state.copyWith(
-          authState: BaseState<UserEntity>(
-            isLoading: false,
-            data: null,
-            errorMessage: ErrorHandler.handle(e),
-          ),
+          authState: const BaseState<UserEntity>(isLoading: false, data: null),
         ),
       );
     }

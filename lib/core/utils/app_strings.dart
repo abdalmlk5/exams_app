@@ -1,6 +1,4 @@
 abstract class AppStrings {
-  AppStrings._();
-
   // Common & Auth
   static const String login = 'Login';
   static const String signup = 'Signup';
@@ -61,7 +59,6 @@ abstract class AppStrings {
 
   // Exams & Details
   static const String exams = 'Exams';
-  static const String noExamsFound = 'No exams found';
   static const String minutes = 'Minutes';
   static const String highLevel = 'High level';
   static const String question = 'Question';
@@ -69,6 +66,7 @@ abstract class AppStrings {
   static const String start = 'Start';
   static const String from = 'From';
   static const String to = 'To';
+  static const String noExamsFound = 'No exams found';
 
   // Error messages
   static const String someThingWentWrong = 'Something went wrong';
@@ -98,4 +96,15 @@ abstract class AppStrings {
   static const String nameNoNumbers = 'Name must not contain numbers';
   static const String phoneRequired = 'Phone number is required';
   static const String invalidPhone = 'Enter a valid phone number';
+
+  // profile string
+  static const String update = 'Update';
+  static const String change = 'Change';
+  static const String profilePassword = '★★★★★★★';
+  static const String currentPassword = 'Current password';
+  static const String enterCurrentPassword = 'Enter current password';
+  static const String profileUpdatedSuccessfully =
+      'Profile updated successfully';
+  static const String passwordChangedSuccessfully =
+      'Password changed successfully';
 }

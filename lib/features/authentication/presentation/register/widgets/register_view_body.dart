@@ -60,10 +60,6 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
       padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 12.h),
       child: Form(
         key: _formKey,
-        onChanged: () {
-          final isValid = _formKey.currentState?.validate() ?? false;
-          context.read<RegisterCubit>().doEvent(ChangeButtonStatus(isValid));
-        },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [

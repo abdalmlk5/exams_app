@@ -1,3 +1,4 @@
+import 'package:exams_app/config/di/di.dart';
 import 'package:exams_app/core/utils/app_strings.dart';
 import 'package:exams_app/core/utils/app_text_styles.dart';
 import 'package:exams_app/core/widgets/custom_snack_bar.dart';
@@ -26,7 +27,6 @@ class _HomeTabState extends State<HomeTab> {
   void initState() {
     super.initState();
     searchController = TextEditingController();
-    context.read<ExploreCubit>().doEvent(const GetAllSubjectsEvent());
   }
 
   @override
@@ -37,73 +37,77 @@ class _HomeTabState extends State<HomeTab> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<ExploreCubit, ExploreState>(
-      listenWhen: (previous, current) =>
-          previous.exploreState.errorMessage !=
-          current.exploreState.errorMessage,
-      listener: (context, state) {
-        if (state.exploreState.errorMessage != null) {
-          showErrorSnackBar(
-            context,
-            state.exploreState.errorMessage ?? AppStrings.someThingWentWrong,
-          );
-        }
-      },
-      builder: (context, state) {
-        if (state.exploreState.isLoading) {
-          return const Center(child: CircularProgressIndicator());
-        }
-        if (state.exploreState.errorMessage != null) {
-          return const SizedBox();
-        } else {
-          List<SubjectEntity> subjects = state.exploreState.data ?? [];
-          return Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0.w),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 8.h),
-                    Text(
-                      AppStrings.survey,
-                      style: AppTextStyles.blue14700.copyWith(
-                        fontSize: 20.sp,
-                        decoration: TextDecoration.none,
-                      ),
-                    ),
-                    SizedBox(height: 16.h),
-                    SearchTextField(controller: searchController),
-                    SizedBox(height: 20.h),
-                    Text(
-                      AppStrings.browseBySubject,
-                      style: AppTextStyles.black18500,
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: subjects.isEmpty
-                    ? Center(
-                        child: Text(
-                          searchController.text.isEmpty
-                              ? AppStrings.noSubjectsFound
-                              : AppStrings.noSearchResultsFound,
-                          style: AppTextStyles.gray14400,
+    return BlocProvider(
+      create: (context) =>
+          getIt<ExploreCubit>()..doEvent(const GetAllSubjectsEvent()),
+      child: BlocConsumer<ExploreCubit, ExploreState>(
+        listenWhen: (previous, current) =>
+            previous.exploreState.errorMessage !=
+            current.exploreState.errorMessage,
+        listener: (context, state) {
+          if (state.exploreState.errorMessage != null) {
+            showErrorSnackBar(
+              context,
+              state.exploreState.errorMessage ?? AppStrings.someThingWentWrong,
+            );
+          }
+        },
+        builder: (context, state) {
+          if (state.exploreState.isLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (state.exploreState.errorMessage != null) {
+            return const SizedBox();
+          } else {
+            List<SubjectEntity> subjects = state.exploreState.data ?? [];
+            return Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 8.h),
+                      Text(
+                        AppStrings.survey,
+                        style: AppTextStyles.blue14700.copyWith(
+                          fontSize: 20.sp,
+                          decoration: TextDecoration.none,
                         ),
-                      )
-                    : ListView.separated(
-                        separatorBuilder: (context, index) =>
-                            SizedBox(height: 16.h),
-                        itemCount: subjects.length,
-                        itemBuilder: (context, index) =>
-                            SubjectItem(subject: subjects[index]),
                       ),
-              ),
-            ],
-          );
-        }
-      },
+                      SizedBox(height: 16.h),
+                      SearchTextField(controller: searchController),
+                      SizedBox(height: 20.h),
+                      Text(
+                        AppStrings.browseBySubject,
+                        style: AppTextStyles.black18500,
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: subjects.isEmpty
+                      ? Center(
+                          child: Text(
+                            searchController.text.isEmpty
+                                ? AppStrings.noSubjectsFound
+                                : AppStrings.noSearchResultsFound,
+                            style: AppTextStyles.gray14400,
+                          ),
+                        )
+                      : ListView.separated(
+                          separatorBuilder: (context, index) =>
+                              SizedBox(height: 16.h),
+                          itemCount: subjects.length,
+                          itemBuilder: (context, index) =>
+                              SubjectItem(subject: subjects[index]),
+                        ),
+                ),
+              ],
+            );
+          }
+        },
+      ),
     );
   }
 }

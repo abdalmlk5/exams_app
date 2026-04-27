@@ -1,12 +1,9 @@
-import 'package:exams_app/core/utils/app_strings.dart';
 import 'package:exams_app/features/exams/domain/entities/exam_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/utils/app_assets.dart';
-import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_routes.dart';
-import '../../../../core/utils/app_text_styles.dart';
 
 class ExamItem extends StatelessWidget {
   final ExamEntity exam;
@@ -15,6 +12,7 @@ class ExamItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return InkWell(
       onTap: () {
         Navigator.pushNamed(
@@ -27,7 +25,7 @@ class ExamItem extends StatelessWidget {
         margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
         padding: EdgeInsets.all(16.r),
         decoration: BoxDecoration(
-          color: AppColors.white,
+          color: theme.cardColor,
           borderRadius: BorderRadius.circular(10.r),
           boxShadow: [
             BoxShadow(
@@ -39,7 +37,18 @@ class ExamItem extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Image.asset(App3DIcons.profit, width: 60.w, height: 60.h),
+            // استخدام Image.asset لأن الملف بامتداد png
+            Image.asset(
+              App3DIcons.profit,
+              width: 60.w,
+              height: 60.h,
+              fit: BoxFit.contain,
+              errorBuilder: (context, error, stackTrace) => Icon(
+                Icons.image_not_supported,
+                color: Colors.grey,
+                size: 60.r,
+              ),
+            ),
             SizedBox(width: 8.w),
             Expanded(
               child: Column(
@@ -48,25 +57,37 @@ class ExamItem extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(exam.title ?? "", style: AppTextStyles.black16400),
+                      Expanded(
+                        child: Text(
+                          exam.title ?? "",
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: theme.textTheme.bodyLarge?.copyWith(
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 8.w),
                       Text(
-                        "${exam.duration} ${AppStrings.minutes}",
-                        style: AppTextStyles.blue14700.copyWith(
-                          fontSize: 12.sp,
-                          decoration: TextDecoration.none,
+                        "${exam.duration} Minutes",
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: theme.colorScheme.primary,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
                     ],
                   ),
                   SizedBox(height: 4.h),
                   Text(
-                    "${exam.numberOfQuestions} ${AppStrings.question}",
-                    style: AppTextStyles.gray12400,
+                    "${exam.numberOfQuestions} Question",
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: theme.hintColor,
+                    ),
                   ),
                   SizedBox(height: 8.h),
                   Text(
-                    "${AppStrings.from}: 1.00  ${AppStrings.to}: 6.00",
-                    style: AppTextStyles.black12400,
+                    "From: 1.00  To: 6.00",
+                    style: theme.textTheme.bodySmall,
                   ),
                 ],
               ),
