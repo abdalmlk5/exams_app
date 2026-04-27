@@ -1,6 +1,6 @@
 import 'package:exams_app/core/utils/app_strings.dart';
 
-class AppValidations {
+abstract class AppValidations {
   AppValidations._();
 
   // ── Generic ──

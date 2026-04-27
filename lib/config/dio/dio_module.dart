@@ -1,21 +1,25 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:logger/logger.dart';
 
-import '../../features/authentication/data/datasources/auth_local_data_source_contract.dart';
 import '../api/end_points.dart';
+import '../interceptors/auth_interceptor.dart';
+import '../interceptors/logging_interceptor.dart';
 
 @module
 abstract class DioModule {
   @lazySingleton
-  Dio dio(AuthLocalDataSourceContract authLocalDataSource) {
+  Dio dio(
+    AuthInterceptor authInterceptor,
+    LoggingInterceptor loggingInterceptor,
+  ) {
     final dio = Dio();
 
     dio.options.baseUrl = EndPoints.baseUrl;
     dio.options.connectTimeout = const Duration(seconds: 30);
     dio.options.receiveTimeout = const Duration(seconds: 30);
 
+<<<<<<< HEAD
     if (kDebugMode) {
       final logger = Logger(
         printer: PrettyPrinter(
@@ -54,11 +58,14 @@ abstract class DioModule {
       );
     }
 
+=======
+>>>>>>> feature/explore-subjects-list
     dio.options.headers = {
       "Content-Type": "application/json",
       "Accept": "application/json",
     };
 
+<<<<<<< HEAD
     dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
@@ -72,6 +79,9 @@ abstract class DioModule {
         },
       ),
     );
+=======
+    dio.interceptors.addAll([authInterceptor, loggingInterceptor]);
+>>>>>>> feature/explore-subjects-list
 
     return dio;
   }

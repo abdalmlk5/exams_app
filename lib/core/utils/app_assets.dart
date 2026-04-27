@@ -1,7 +1,7 @@
 const _iconsPath = 'assets/icons/';
 const _threeDIconsPath = 'assets/3DIcons/';
 
-class AppIcons {
+abstract class AppIcons {
   static const String add = '${_iconsPath}add.svg';
   static const String gift = '${_iconsPath}gift.svg';
   static const String home = '${_iconsPath}home.svg';
@@ -31,7 +31,7 @@ class AppIcons {
   static const String visibilityOff = '${_iconsPath}visibility_off.svg';
 }
 
-class App3DIcons {
+abstract class App3DIcons {
   static const String alarm = '${_threeDIconsPath}alarm.svg';
   static const String profit = '${_threeDIconsPath}Profit.png';
   static const String sandClock = '${_threeDIconsPath}sand-clock.svg';

@@ -1,4 +1,4 @@
-class EndPoints {
+abstract class EndPoints {
   EndPoints._();
 
   // Base URL:
