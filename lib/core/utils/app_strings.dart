@@ -1,5 +1,4 @@
 abstract class AppStrings {
-
   // Common & Auth
   static const String login = 'Login';
   static const String signup = 'Signup';
@@ -51,6 +50,12 @@ abstract class AppStrings {
   static const String search = 'Search';
   static const String survey = 'Survey';
   static const String browseBySubject = 'Browse by subject';
+  static const String noSubjectsFound = 'No subjects found';
+  static const String noSearchResultsFound = 'No search results found';
+
+  static const String home = 'Home';
+  static const String results = 'Results';
+  static const String profile = 'Profile';
 
   // Exams & Details
   static const String exams = 'Exams';
@@ -92,7 +97,6 @@ abstract class AppStrings {
   static const String invalidPhone = 'Enter a valid phone number';
 
   // profile string
-  static const String profile = 'Profile';
   static const String update = 'Update';
   static const String change = 'Change';
   static const String profilePassword = '★★★★★★★';
