@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:exams_app/config/base_response/base_response.dart';
 import 'package:exams_app/config/base_state/base_state.dart';
 import 'package:exams_app/config/error_handler/error_handler.dart';
@@ -7,7 +8,6 @@ import 'package:exams_app/features/authentication/domain/usecases/is_remembered_
 import 'package:exams_app/features/authentication/domain/usecases/logout_usecase.dart';
 import 'package:exams_app/features/authentication/presentation/auth/cubit/auth_even.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
 
 part 'auth_state.dart';
@@ -22,12 +22,13 @@ class AuthCubit extends Cubit<AuthState> {
     this._logoutUsecase,
     this._getUserDataUsecase,
     this._isRememberedUsecase,
-  ) : super(const AuthState());
+  ) : super(const AuthState(authState: BaseState(isLoading: true)));
 
   void checkAuth() async {
+    emit(state.copyWith(authState: const BaseState(isLoading: true)));
     final isRemembered = await _isRememberedUsecase.call();
     if (isRemembered) {
-      _getUserData();
+      await _getUserData();
     } else {
       emit(
         state.copyWith(

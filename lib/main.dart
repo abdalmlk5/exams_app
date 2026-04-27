@@ -6,6 +6,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'core/utils/app_theme.dart';
 import 'features/authentication/presentation/auth/cubit/auth_cubit.dart';
+import 'features/authentication/presentation/auth/pages/auth_page.dart';
+import 'main_page_test.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,33 +27,13 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return BlocProvider(
           create: (_) => getIt<AuthCubit>()..checkAuth(),
-          child: BlocListener<AuthCubit, AuthState>(
-            listenWhen: (previous, current) =>
-                previous.authState.data != current.authState.data ||
-                previous.authState.isLoading != current.authState.isLoading,
-            listener: (context, state) {
-              if (!state.authState.isLoading) {
-                if (state.authState.data != null) {
-                  AppRoutes.navigatorKey.currentState?.pushNamedAndRemoveUntil(
-                    AppRoutes.home,
-                    (route) => false,
-                  );
-                } else {
-                  AppRoutes.navigatorKey.currentState?.pushNamedAndRemoveUntil(
-                    AppRoutes.auth,
-                    (route) => false,
-                  );
-                }
-              }
-            },
-            child: MaterialApp(
-              navigatorKey: AppRoutes.navigatorKey,
-              theme: AppTheme.mainTheme,
-              debugShowCheckedModeBanner: false,
-              title: 'Exams App',
-              onGenerateRoute: AppRoutes.onGenerateRoute,
-              home: const AuthWrapper(),
-            ),
+          child: MaterialApp(
+            navigatorKey: AppRoutes.navigatorKey,
+            theme: AppTheme.mainTheme,
+            debugShowCheckedModeBanner: false,
+            title: 'Exams App',
+            onGenerateRoute: AppRoutes.onGenerateRoute,
+            home: const AuthWrapper(),
           ),
         );
       },
@@ -64,6 +46,18 @@ class AuthWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    return BlocBuilder<AuthCubit, AuthState>(
+      builder: (context, state) {
+        if (state.authState.isLoading) {
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        }
+        if (state.authState.data != null) {
+          return const MainPageTest();
+        }
+        return const AuthPage();
+      },
+    );
   }
 }
