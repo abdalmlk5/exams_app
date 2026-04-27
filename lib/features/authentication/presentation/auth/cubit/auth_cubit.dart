@@ -22,12 +22,13 @@ class AuthCubit extends Cubit<AuthState> {
     this._logoutUsecase,
     this._getUserDataUsecase,
     this._isRememberedUsecase,
-  ) : super(const AuthState());
+  ) : super(const AuthState(authState: BaseState(isLoading: true)));
 
   void checkAuth() async {
+    emit(state.copyWith(authState: const BaseState(isLoading: true)));
     final isRemembered = await _isRememberedUsecase.call();
     if (isRemembered) {
-      _getUserData();
+      await _getUserData();
     } else {
       emit(
         state.copyWith(
