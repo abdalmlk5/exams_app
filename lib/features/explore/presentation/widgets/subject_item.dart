@@ -16,7 +16,11 @@ class SubjectItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, Routes.examsPage, arguments: subject.id);
+        Navigator.pushNamed(
+          context,
+          AppRoutes.examsPage,
+          arguments: subject.id,
+        );
       },
       child: Container(
         height: 80.h,
