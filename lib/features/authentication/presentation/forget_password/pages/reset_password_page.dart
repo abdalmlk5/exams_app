@@ -1,16 +1,16 @@
 import 'package:exams_app/core/utils/app_strings.dart';
 import 'package:exams_app/core/utils/app_text_styles.dart';
+import 'package:exams_app/core/widgets/custom_snack_bar.dart';
 import 'package:exams_app/core/widgets/custom_text_field.dart';
 import 'package:exams_app/features/authentication/presentation/auth/widgets/widgets/auth_app_bar.dart';
-import 'package:exams_app/core/widgets/custom_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../core/widgets/custom_button.dart';
+import '../cubit/forget_password_cubit.dart';
 import '../cubit/forget_password_event.dart';
 import '../cubit/forget_password_state.dart';
-import '../cubit/forget_password_cubit.dart';
 
 class ResetPasswordPage extends StatefulWidget {
   const ResetPasswordPage({super.key});
@@ -40,14 +40,11 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
               curr.forgetPasswordState.errorMessage,
       listener: (context, state) {
         if (state.forgetPasswordState.errorMessage != null) {
-          CustomSnackBar.error(
-            context,
-            state.forgetPasswordState.errorMessage!,
-          );
+          showErrorSnackBar(context, state.forgetPasswordState.errorMessage!);
           return;
         }
         if (state.forgetPasswordState.data != null) {
-          CustomSnackBar.success(context, AppStrings.passwordResetSuccessfully);
+          showSuccessSnackBar(context, AppStrings.passwordResetSuccessfully);
           Navigator.of(context).popUntil((route) => route.isFirst);
         }
       },

@@ -1,5 +1,4 @@
 import 'package:exams_app/config/validations/app_validations.dart';
-import 'package:exams_app/core/utils/app_colors.dart';
 import 'package:exams_app/core/utils/app_strings.dart';
 import 'package:flutter/material.dart';
 
@@ -58,9 +57,7 @@ class _AppTextFieldState extends State<AppTextField> {
             : widget.suffixText != null
             ? TextButton(
                 onPressed: widget.onSuffixPressed,
-                child: Text(
-                  widget.suffixText!,
-                ),
+                child: Text(widget.suffixText!),
               )
             : null,
       ),

@@ -48,10 +48,7 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
               curr.forgetPasswordState.errorMessage,
       listener: (context, state) {
         if (state.forgetPasswordState.errorMessage != null) {
-          CustomSnackBar.error(
-            context,
-            state.forgetPasswordState.errorMessage!,
-          );
+          showErrorSnackBar(context, state.forgetPasswordState.errorMessage!);
           return;
         }
         if (state.forgetPasswordState.data != null) {
